@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/views/login.dart';
 import 'package:multi_tp/views/welcome.dart';
+import 'package:multi_tp/views/welcome2.dart';
+import 'package:multi_tp/views/signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: Welcome2Page(),
       routes: {
         '/welcome/': (context) => const WelcomePage(),
       },

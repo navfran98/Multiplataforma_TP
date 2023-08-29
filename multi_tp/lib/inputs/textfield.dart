@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/utils/colors.dart';
 import 'package:multi_tp/utils/font.dart';
-import 'package:multi_tp/buttons/cta_button.dart';
 
 class CustomTextField extends StatefulWidget {
-  const CustomTextField({Key? key, required this.isDisabled, required this.isError, required this.floatingLabel, this.hintText, required this.labelText}) : super(key: key);
+  const CustomTextField({Key? key, required this.isDisabled, required this.isError, required this.floatingLabel, this.hintText, required this.labelText, this.isObscure}) : super(key: key);
   final bool isDisabled;
   final bool isError;
   final bool floatingLabel;
   final String? hintText;
   final String labelText;
+  final bool? isObscure;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -19,12 +19,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
+  late bool _isObscure;
   
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(_handleFocusChange);
+    _isObscure = widget.isObscure == true ? true : false;
   }
 
   void _handleFocusChange() {
@@ -57,6 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return TextField(
       controller: _controller,
       focusNode: _focusNode,
+      obscureText: _isObscure,
       decoration: InputDecoration(
         floatingLabelBehavior: widget.floatingLabel ? FloatingLabelBehavior.always : FloatingLabelBehavior.auto,
         enabled: !widget.isDisabled,
@@ -64,7 +67,31 @@ class _CustomTextFieldState extends State<CustomTextField> {
         hintStyle: const CustomFont.subtitle01(ColorPalette.neutral50),
         errorText: widget.isError ? "Suporting text" : null,
         errorStyle: const CustomFont.body02(ColorPalette.error100),
-        suffixIcon: widget.isError ? const Icon(Icons.error_rounded, color: ColorPalette.error100,): _isFocused ? InkWell(onTap: clearText,child: const Icon(Icons.close, color: ColorPalette.primary100,)) :  null,
+        suffixIcon: (() {
+          if (widget.isError) {
+            return const Icon(Icons.error_rounded, color: ColorPalette.error100);
+          }
+          if (widget.isObscure != null) {
+            return InkWell(
+              onTap: () {
+                setState(() {
+                  _isObscure = !_isObscure;
+                });
+              },
+              child: Icon(
+                _isObscure == true ? Icons.visibility_off : Icons.visibility,
+                color: ColorPalette.neutral75,
+              ),
+            );
+          }
+          if (_isFocused) {
+            return InkWell(
+              onTap: clearText,
+              child: const Icon(Icons.close, color: ColorPalette.primary100),
+            );
+          }
+          return null;
+        }()),
         contentPadding: const EdgeInsets.only(left: 16),
         labelText: widget.labelText,
         labelStyle: TextStyle(
