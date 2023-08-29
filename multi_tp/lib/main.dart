@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:multi_tp/views/login.dart';
+import 'package:multi_tp/views/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +33,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: LoginPage(),
+      routes: {
+        '/welcome/': (context) => const WelcomePage(),
+      },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -84,7 +90,7 @@ class MyHomePage extends StatelessWidget {
                                   color: Color.fromRGBO(25, 25, 25, 1)),
                               textAlign: TextAlign.start,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 4,
                             ),
                             Container(
@@ -155,7 +161,10 @@ class MyHomePage extends StatelessWidget {
                       )
                     ],
                   ),
-                )
+                ),
+                TextButton(onPressed: (){
+                    Navigator.of(context).pushNamed('/welcome/');
+                    }, child: Text("HOLAAA"))
               ],
             ),
           ),
