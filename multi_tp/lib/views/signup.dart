@@ -9,17 +9,19 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
+        body: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(child: Container()), 
+            Expanded(child: Container()),
             Image.asset('images/Welcome_logo.png', fit: BoxFit.fill),
-            const SizedBox(height: 31,),
+            const SizedBox(
+              height: 31,
+            ),
             const CustomTextField(
-              isDisabled: false, 
+              isDisabled: false,
               isError: false,
               labelText: "Nombre",
               hintText: "Ej: Juan",
@@ -27,37 +29,43 @@ class SignupPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             const CustomTextField(
-              isDisabled: false, 
+              isDisabled: false,
               isError: false,
               labelText: "Apellido",
               hintText: "Ej: Barcena",
               floatingLabel: true,
-            ),  
+            ),
             const SizedBox(height: 24),
             const CustomTextField(
-              isDisabled: false, 
+              isDisabled: false,
               isError: false,
               labelText: "Email",
               hintText: "Ej: juanbarcena@mail.com",
               floatingLabel: true,
-            ), 
+            ),
             const SizedBox(height: 24),
             const CustomTextField(
-              isDisabled: false, 
+              isDisabled: false,
               isError: false,
               labelText: "Contraseña",
               hintText: "Ej: ABCD1234",
               floatingLabel: true,
               isObscure: true,
-            ), 
-            Expanded(child: Container()),          
-            const CtaButton(isTransparent: false, isDisabled: false, text: "Registrarse"),
-            const SizedBox(height: 16,),
-            const CtaButton(isTransparent: true, isDisabled: false, text: "Ya tengo cuenta"),
-            const  SizedBox(height: 32,)
-          ]
-        ),
-      )
-    );
+            ),
+            Expanded(child: Container()),
+            const CtaButton(
+                isTransparent: false, isDisabled: false, text: "Registrarse"),
+            const SizedBox(
+              height: 16,
+            ),
+            const CtaButton(
+                isTransparent: true,
+                isDisabled: false,
+                text: "Ya tengo cuenta"),
+            const SizedBox(
+              height: 32,
+            )
+          ]),
+    ));
   }
 }
