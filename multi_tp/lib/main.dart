@@ -3,6 +3,7 @@ import 'package:multi_tp/views/login.dart';
 import 'package:multi_tp/views/welcome.dart';
 import 'package:multi_tp/views/welcome2.dart';
 import 'package:multi_tp/views/signup.dart';
+import 'package:multi_tp/views/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Welcome2Page(),
+      home: HomePage(),
       routes: {
         '/welcome/': (context) => const WelcomePage(),
       },
