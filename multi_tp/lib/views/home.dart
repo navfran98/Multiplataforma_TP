@@ -4,6 +4,7 @@ import 'package:multi_tp/utils/colors.dart';
 import 'package:multi_tp/utils/font.dart';
 import 'package:multi_tp/inputs/searchfield.dart';
 import 'package:multi_tp/components/volcard.dart';
+import 'package:multi_tp/components/currentvolcard.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -69,21 +70,49 @@ class _HomePageContent extends StatelessWidget {
       body: TabBarView(
         children: <Widget>[
           Container(
-              padding: EdgeInsets.only(top: 24),
-              margin: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SearchField(),
-                  ListView(
-                    children: [
-                      ListTile(
-                        leading: CtaButton(
-                          isTransparent: false,
-                          isDisabled: false,
-                          text: "hola",
-                        ),
-                      )
-                    ],
+                  const SearchField(),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  const Visibility(
+                      visible: true,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Tu Actividad",
+                            style:
+                                CustomFont.headline01(ColorPalette.neutral100),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          CurrentVolCard(),
+                          SizedBox(
+                            height: 24,
+                          )
+                        ],
+                      )),
+                  const Text(
+                    "Voluntariados",
+                    style: CustomFont.headline01(ColorPalette.neutral100),
+                    textAlign: TextAlign.start,
+                  ),
+                  const SizedBox(height: 24),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 3,
+                      itemBuilder: (BuildContext context, int index) {
+                        return const ListTile(
+                          contentPadding: EdgeInsets.all(0),
+                          title: VolCard(),
+                          subtitle: SizedBox(height: 24),
+                        );
+                      },
+                    ),
                   )
                 ],
               )),
@@ -97,8 +126,4 @@ class _HomePageContent extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(home: HomePage()));
 }

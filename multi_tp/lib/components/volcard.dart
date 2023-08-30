@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/utils/font.dart';
+import 'package:multi_tp/utils/colors.dart';
 import 'package:multi_tp/buttons/cta_button.dart';
 
 class VolCard extends StatelessWidget {
@@ -8,11 +9,33 @@ class VolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      decoration: BoxDecoration(
+        color: ColorPalette.neutral0,
+        boxShadow: const [
+          BoxShadow(
+              blurRadius: 6,
+              spreadRadius: 2,
+              offset: Offset(0, 2),
+              color: Color.fromRGBO(0, 0, 0, 0.15)),
+          BoxShadow(
+              blurRadius: 2,
+              spreadRadius: 0,
+              offset: Offset(0, 1),
+              color: Color.fromRGBO(0, 0, 0, 0.3))
+        ],
+        borderRadius: BorderRadius.circular(2),
+      ),
       height: 234,
       child: Column(
         children: [
-          Image.asset('images/Landscape-Color.jpg', fit: BoxFit.fill),
+          SizedBox(
+            height: 138,
+            width: double.infinity,
+            child: Image.asset(
+              'images/Landscape-Color.jpg',
+              fit: BoxFit.fitWidth,
+            ),
+          ),
           Container(
             padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
             child: Row(
@@ -20,27 +43,18 @@ class VolCard extends StatelessWidget {
               children: [
                 Container(
                   alignment: AlignmentDirectional.centerStart,
-                  width: 232,
                   height: 72,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
                         "ACCION SOCIAL",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            letterSpacing: 1.5,
-                            color: Color.fromRGBO(102, 102, 102, 1)),
+                        style: CustomFont.overline(ColorPalette.neutral75),
                         textAlign: TextAlign.start,
                       ),
                       const Text(
                         "Un Techo para mi Pais",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            letterSpacing: 0.15,
-                            color: Color.fromRGBO(25, 25, 25, 1)),
+                        style: CustomFont.subtitle01(ColorPalette.neutral100),
                         textAlign: TextAlign.start,
                       ),
                       const SizedBox(
@@ -51,19 +65,14 @@ class VolCard extends StatelessWidget {
                         height: 28,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4.0),
-                          color: const Color.fromRGBO(202, 229, 251, 1),
+                          color: ColorPalette.secondary25,
                         ),
                         child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                "Vacantes:",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    letterSpacing: 0.4,
-                                    color: Color.fromRGBO(25, 25, 25, 1)),
-                              ),
+                              Text("Vacantes:",
+                                  style: CustomFont.body02(
+                                      ColorPalette.neutral100)),
                               SizedBox(
                                 width: 8,
                               ),
@@ -71,17 +80,12 @@ class VolCard extends StatelessWidget {
                                 children: [
                                   Icon(
                                     Icons.person,
-                                    color: Color.fromRGBO(13, 71, 161, 1),
+                                    color: ColorPalette.secondary200,
                                     size: 20,
                                   ),
-                                  Text(
-                                    "10",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16,
-                                        letterSpacing: 0.15,
-                                        color: Color.fromRGBO(13, 71, 161, 1)),
-                                  )
+                                  Text("10",
+                                      style: CustomFont.subtitle01(
+                                          ColorPalette.secondary200))
                                 ],
                               ),
                             ]),
@@ -89,35 +93,29 @@ class VolCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  height: 24,
-                  width: 64,
-                  child: const Row(
-                    children: [
-                      Icon(
-                        Icons.favorite_border,
-                        size: 24,
-                        color: Colors.green,
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Icon(
-                        Icons.location_pin,
-                        size: 24,
-                        color: Colors.green,
-                      )
-                    ],
-                  ),
+                Expanded(
+                  child: Container(),
+                ),
+                const Row(
+                  children: [
+                    Icon(
+                      Icons.favorite_border,
+                      size: 24,
+                      color: ColorPalette.primary100,
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Icon(
+                      Icons.location_pin,
+                      size: 24,
+                      color: ColorPalette.primary100,
+                    )
+                  ],
                 )
               ],
             ),
           ),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/welcome/');
-              },
-              child: Text("HOLAAA"))
         ],
       ),
     );
