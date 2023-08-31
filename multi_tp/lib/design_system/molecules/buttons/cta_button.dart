@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multi_tp/utils/font.dart';
-import 'package:multi_tp/utils/colors.dart';
+import 'package:multi_tp/design_system/tokens/font.dart';
+import 'package:multi_tp/design_system/tokens/colors.dart';
 
 class CtaButton extends StatelessWidget {
   const CtaButton(

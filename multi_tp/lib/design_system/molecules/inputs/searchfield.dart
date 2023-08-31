@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multi_tp/utils/colors.dart';
-import 'package:multi_tp/utils/font.dart';
+import 'package:multi_tp/design_system/tokens/colors.dart';
+import 'package:multi_tp/design_system/tokens/font.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({Key? key}) : super(key: key);

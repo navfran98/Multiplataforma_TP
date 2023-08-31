@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/router.dart';
-import 'package:multi_tp/utils/colors.dart';
-import 'package:multi_tp/utils/font.dart';
+import 'package:multi_tp/design_system/tokens/colors.dart';
+import 'package:multi_tp/design_system/tokens//font.dart';
 import 'package:multi_tp/views/login.dart';
 import 'package:multi_tp/views/welcome.dart';
 import 'package:multi_tp/views/user_welcome.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:multi_tp/buttons/cta_button.dart';
-import 'package:multi_tp/utils/colors.dart';
-import 'package:multi_tp/utils/font.dart';
-import 'package:multi_tp/inputs/searchfield.dart';
-import 'package:multi_tp/components/volunteering_card.dart';
-import 'package:multi_tp/components/currentvolcard.dart';
-import 'package:multi_tp/components/novolunteering.dart';
+import 'package:multi_tp/design_system/molecules/buttons/cta_button.dart';
+import 'package:multi_tp/design_system/tokens/colors.dart';
+import 'package:multi_tp/design_system/tokens/font.dart';
+import 'package:multi_tp/design_system/molecules/inputs/searchfield.dart';
+import 'package:multi_tp/design_system/molecules/components/volunteering_card.dart';
+import 'package:multi_tp/design_system/molecules/components/currentvolcard.dart';
+import 'package:multi_tp/design_system/molecules/components/novolunteering.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -130,7 +130,7 @@ class _HomePageContent extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return const ListTile(
                 contentPadding: EdgeInsets.all(0),
-                title: VolCard(),
+                title: VolunteeringCard(),
                 subtitle: SizedBox(height: 24),
               );
           },

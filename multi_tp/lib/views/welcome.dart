@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multi_tp/utils/font.dart';
-import 'package:multi_tp/buttons/cta_button.dart';
+import 'package:multi_tp/design_system/tokens/font.dart';
+import 'package:multi_tp/design_system/molecules/buttons/cta_button.dart';
 import 'package:go_router/go_router.dart';
 
 class WelcomePage extends StatelessWidget {
