@@ -5,6 +5,7 @@ import 'package:multi_tp/utils/font.dart';
 import 'package:multi_tp/inputs/searchfield.dart';
 import 'package:multi_tp/components/volunteering_card.dart';
 import 'package:multi_tp/components/currentvolcard.dart';
+import 'package:multi_tp/components/novolunteering.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -104,18 +105,7 @@ class _HomePageContent extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(height: 24),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (BuildContext context, int index) {
-                        return const ListTile(
-                          contentPadding: EdgeInsets.all(0),
-                          title: VolunteeringCard(),
-                          subtitle: SizedBox(height: 24),
-                        );
-                      },
-                    ),
-                  )
+                  renderVolunteering(),                
                 ],
               )),
           Center(
@@ -127,5 +117,25 @@ class _HomePageContent extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget renderVolunteering(){
+    //TODO: aca va la cantidad de voluntariados que hay
+    if(true){
+      return NoVolunteering();
+    } else {
+      return Expanded(
+        child: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (BuildContext context, int index) {
+            return const ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: VolCard(),
+                subtitle: SizedBox(height: 24),
+              );
+          },
+        ),
+      );
+    }
   }
 }
