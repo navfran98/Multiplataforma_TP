@@ -28,7 +28,7 @@ class CtaButton extends StatelessWidget {
             ? ColorPalette.neutral0
             : ColorPalette.primary100;
     return FilledButton(
-        onPressed: onPressedFunction,
+        onPressed: isDisabled ? null : onPressedFunction,
         style: ButtonStyle(
           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
@@ -36,6 +36,16 @@ class CtaButton extends StatelessWidget {
           padding: const MaterialStatePropertyAll<EdgeInsets>(
               EdgeInsets.fromLTRB(8, 12, 8, 12)),
           minimumSize: const MaterialStatePropertyAll(Size.fromHeight(44)),
+          // splashFactory: InkRipple.splashFactory
+          overlayColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed))
+                return isTransparent
+                    ? ColorPalette.neutral25
+                    : ColorPalette.neutral10.withOpacity(0.10); //<-- SEE HERE
+              return null; // Defer to the widget's default.
+            },
+          ),
         ),
         child: Text(
           text,
