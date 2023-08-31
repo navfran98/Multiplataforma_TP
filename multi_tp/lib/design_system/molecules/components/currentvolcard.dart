@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/design_system/tokens/font.dart';
 import 'package:multi_tp/design_system/tokens/colors.dart';
+import 'package:multi_tp/design_system/tokens/shadows.dart';
 
 class CurrentVolCard extends StatelessWidget {
   const CurrentVolCard({Key? key}) : super(key: key);
@@ -8,29 +9,19 @@ class CurrentVolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
           color: ColorPalette.primary5,
           boxShadow: const [
-            BoxShadow(
-              blurRadius: 6,
-              spreadRadius: 2,
-              offset: Offset(0, 2),
-              color: Color.fromRGBO(0, 0, 0, 0.15),
-            ),
-            BoxShadow(
-              blurRadius: 2,
-              spreadRadius: 0,
-              offset: Offset(0, 1),
-              color: Color.fromRGBO(0, 0, 0, 0.3),
-            )
+            CustomShadow.shadow02_1(),
+            CustomShadow.shadow02_2()
           ],
           borderRadius: BorderRadius.circular(6),
           border: Border.all(width: 2, color: ColorPalette.primary100)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -44,7 +35,7 @@ class CurrentVolCard extends StatelessWidget {
             ],
           ),
           Expanded(child: Container()),
-          Icon(
+          const Icon(
             Icons.location_pin,
             color: ColorPalette.primary100,
           )

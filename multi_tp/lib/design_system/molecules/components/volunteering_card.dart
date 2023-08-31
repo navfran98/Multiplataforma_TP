@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/design_system/tokens/font.dart';
 import 'package:multi_tp/design_system/tokens/colors.dart';
+import 'package:multi_tp/design_system/tokens/shadows.dart';
 
 class VolunteeringCard extends StatelessWidget {
   const VolunteeringCard({Key? key}) : super(key: key);
@@ -10,18 +11,7 @@ class VolunteeringCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: ColorPalette.neutral0,
-        boxShadow: const [
-          BoxShadow(
-              blurRadius: 6,
-              spreadRadius: 2,
-              offset: Offset(0, 2),
-              color: Color.fromRGBO(0, 0, 0, 0.15)),
-          BoxShadow(
-              blurRadius: 2,
-              spreadRadius: 0,
-              offset: Offset(0, 1),
-              color: Color.fromRGBO(0, 0, 0, 0.3))
-        ],
+        boxShadow: const [CustomShadow.shadow02_1(), CustomShadow.shadow02_2()],
         borderRadius: BorderRadius.circular(2),
       ),
       height: 234,

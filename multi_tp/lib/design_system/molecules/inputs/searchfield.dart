@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/design_system/tokens/colors.dart';
 import 'package:multi_tp/design_system/tokens/font.dart';
+import 'package:multi_tp/design_system/tokens/shadows.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({Key? key}) : super(key: key);
@@ -49,18 +50,9 @@ class _SearchFieldState extends State<SearchField> {
   Widget build(BuildContext context) {
     return Container(
       height: 48,
-      decoration: const BoxDecoration(color: ColorPalette.neutral0, boxShadow: [
-        BoxShadow(
-            blurRadius: 3,
-            spreadRadius: 1,
-            color: Color.fromRGBO(0, 0, 0, 0.15),
-            offset: Offset(0, 1)),
-        BoxShadow(
-            blurRadius: 2,
-            spreadRadius: 0,
-            color: Color.fromRGBO(0, 0, 0, 0.3),
-            offset: Offset(0, 1))
-      ]),
+      decoration: const BoxDecoration(
+          color: ColorPalette.neutral0,
+          boxShadow: [CustomShadow.shadow01_1(), CustomShadow.shadow01_2()]),
       child: TextField(
         controller: _controller,
         focusNode: _focusNode,
