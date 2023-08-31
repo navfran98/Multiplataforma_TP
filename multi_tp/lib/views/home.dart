@@ -3,7 +3,7 @@ import 'package:multi_tp/buttons/cta_button.dart';
 import 'package:multi_tp/utils/colors.dart';
 import 'package:multi_tp/utils/font.dart';
 import 'package:multi_tp/inputs/searchfield.dart';
-import 'package:multi_tp/components/volcard.dart';
+import 'package:multi_tp/components/volunteering_card.dart';
 import 'package:multi_tp/components/currentvolcard.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,6 +18,8 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+
 
 class _HomePageContent extends StatelessWidget {
   late TabController _tabController;
@@ -108,7 +110,7 @@ class _HomePageContent extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return const ListTile(
                           contentPadding: EdgeInsets.all(0),
-                          title: VolCard(),
+                          title: VolunteeringCard(),
                           subtitle: SizedBox(height: 24),
                         );
                       },

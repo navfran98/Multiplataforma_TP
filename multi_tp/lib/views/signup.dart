@@ -2,9 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:multi_tp/utils/font.dart';
 import 'package:multi_tp/buttons/cta_button.dart';
 import 'package:multi_tp/inputs/textfield.dart';
+import 'package:go_router/go_router.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({Key? key}) : super(key: key);
+
+
+  void Function() _handleLogin(BuildContext context) {
+    return () {
+      context.go('/login');
+    };
+  }
+
+  void Function() _handleHomeButton(BuildContext context) {
+    return () {
+      context.go('/userwelcome');
+    };
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +68,15 @@ class SignupPage extends StatelessWidget {
               isObscure: true,
             ),
             Expanded(child: Container()),
-            const CtaButton(
-                isTransparent: false, isDisabled: false, text: "Registrarse"),
+            CtaButton(
+                isTransparent: false, isDisabled: false, text: "Registrarse", onPressedFunction: _handleHomeButton(context)),
             const SizedBox(
               height: 16,
             ),
-            const CtaButton(
+            CtaButton(
                 isTransparent: true,
                 isDisabled: false,
-                text: "Ya tengo cuenta"),
+                text: "Ya tengo cuenta", onPressedFunction: _handleLogin(context)),
             const SizedBox(
               height: 32,
             )

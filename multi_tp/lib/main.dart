@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:multi_tp/router.dart';
 import 'package:multi_tp/utils/colors.dart';
 import 'package:multi_tp/utils/font.dart';
 import 'package:multi_tp/views/login.dart';
 import 'package:multi_tp/views/welcome.dart';
-import 'package:multi_tp/views/welcome2.dart';
+import 'package:multi_tp/views/user_welcome.dart';
 import 'package:multi_tp/views/signup.dart';
 import 'package:multi_tp/views/home.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -38,14 +39,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
-      routes: {
-        '/welcome/': (context) => const WelcomePage(),
-      },
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
     );
   }
 }
+
+
 
 //TODO: falta agregar "roboto" como font a los text
 class MyHomePage extends StatelessWidget {

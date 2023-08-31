@@ -3,8 +3,8 @@ import 'package:multi_tp/utils/font.dart';
 import 'package:multi_tp/utils/colors.dart';
 import 'package:multi_tp/buttons/cta_button.dart';
 
-class VolCard extends StatelessWidget {
-  const VolCard({Key? key}) : super(key: key);
+class VolunteeringCard extends StatelessWidget {
+  const VolunteeringCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
