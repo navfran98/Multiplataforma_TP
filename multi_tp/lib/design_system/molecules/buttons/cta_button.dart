@@ -36,14 +36,14 @@ class CtaButton extends StatelessWidget {
           padding: const MaterialStatePropertyAll<EdgeInsets>(
               EdgeInsets.fromLTRB(8, 12, 8, 12)),
           minimumSize: const MaterialStatePropertyAll(Size.fromHeight(44)),
-          // splashFactory: InkRipple.splashFactory
           overlayColor: MaterialStateProperty.resolveWith<Color?>(
             (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed))
+              if (states.contains(MaterialState.pressed)){
                 return isTransparent
                     ? ColorPalette.neutral25
-                    : ColorPalette.neutral10.withOpacity(0.10); //<-- SEE HERE
-              return null; // Defer to the widget's default.
+                    : ColorPalette.neutral10.withOpacity(0.10);
+               }
+              return null;
             },
           ),
         ),

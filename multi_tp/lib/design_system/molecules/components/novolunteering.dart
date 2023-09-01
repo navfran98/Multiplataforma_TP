@@ -8,7 +8,7 @@ class NoVolunteering extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 108,
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
       decoration: BoxDecoration(
       color: ColorPalette.neutral0,

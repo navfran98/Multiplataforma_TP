@@ -27,16 +27,13 @@ class ShortButton extends StatelessWidget {
           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
           padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.zero),
-          maximumSize:
-              const MaterialStatePropertyAll<Size>(Size.fromWidth(123)),
-          // splashFactory: InkRipple.splashFactory
           backgroundColor: MaterialStatePropertyAll(buttonColor),
           overlayColor: MaterialStateProperty.resolveWith<Color?>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
                 return ColorPalette.neutral10.withOpacity(0.10);
               }
-              return null; // Defer to the widget's default.
+              return null;
             },
           ),
         ),
@@ -44,8 +41,8 @@ class ShortButton extends StatelessWidget {
           padding: !isSmall
               ? const EdgeInsets.all(12)
               : const EdgeInsets.fromLTRB(12, 8, 12, 8),
-          // constraints: BoxConstraints(maxWidth: 123),
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
