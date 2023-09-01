@@ -12,13 +12,26 @@ class SearchField extends StatefulWidget {
 
 class _SearchFieldState extends State<SearchField> {
   final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode(); 
   bool _isFocused = false;
+  bool _isEmpty = true;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(_handleFocusChange);
+    _controller.addListener(() {
+      if(_controller.text.isNotEmpty){
+        setState(() {
+          _isEmpty = false;
+        });
+      }
+      else {
+        setState(() {
+          _isEmpty = true;
+        });
+      }
+     });
   }
 
   void _handleFocusChange() {
@@ -58,20 +71,30 @@ class _SearchFieldState extends State<SearchField> {
         focusNode: _focusNode,
         decoration: InputDecoration(
           fillColor: ColorPalette.neutral0,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 48),
           hintText: "Buscar", // Add a placeholder text
           hintStyle: const CustomFont.subtitle01(ColorPalette.neutral50),
-          prefixIcon: const Padding(
-            padding: EdgeInsets.only(left: 16, right: 8),
-            child: Icon(
-              Icons.search,
-              color: ColorPalette.neutral75,
-            ),
-          ),
-          suffixIcon: const Padding(
-            padding: EdgeInsets.only(left: 8, right: 16),
-            child: Icon(Icons.map, color: ColorPalette.primary100),
-          ),
+          prefixIcon: (() {
+              if(_isEmpty){
+                return const Padding(
+                  padding: EdgeInsets.only(left: 16, right: 8),
+                  child: Icon(
+                    Icons.search,
+                    color: ColorPalette.neutral75,
+                  ),
+                );
+              }
+            }()),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(left: 8,right: 12), 
+            child: (() {
+              if (_isFocused || !_isEmpty) {
+                return InkWell(
+                  onTap: clearText,
+                  child: const Icon(Icons.close, color: ColorPalette.neutral75),
+                );
+              }
+              return const Icon(Icons.map, color: ColorPalette.primary100);
+          }()),),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(2.0),
