@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:multi_tp/design_system/cells/custom_modal.dart';
 import 'package:multi_tp/design_system/molecules/buttons/cta_button.dart';
+import 'package:multi_tp/design_system/molecules/buttons/short_button.dart';
 import 'package:multi_tp/design_system/tokens/colors.dart';
 import 'package:multi_tp/design_system/tokens/font.dart';
 import 'package:multi_tp/design_system/molecules/inputs/searchfield.dart';
 import 'package:multi_tp/design_system/molecules/components/volunteering_card.dart';
 import 'package:multi_tp/design_system/molecules/components/currentvolcard.dart';
 import 'package:multi_tp/design_system/molecules/components/novolunteering.dart';
+import 'package:multi_tp/design_system/molecules/components/vacante.dart';
+import 'package:multi_tp/design_system/cells/custom_modal.dart';
+import 'package:multi_tp/design_system/cells/cards/news_card.dart';
+import 'package:multi_tp/design_system/cells/cards/input_Card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -121,21 +127,22 @@ class _HomePageContent extends StatelessWidget {
 
   Widget renderVolunteering(){
     //TODO: aca va la cantidad de voluntariados que hay
-    if(true){
+    if(false){
       return NoVolunteering();
     } else {
-      return Expanded(
-        child: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return const ListTile(
-                contentPadding: EdgeInsets.all(0),
-                title: VolunteeringCard(),
-                subtitle: SizedBox(height: 24),
-              );
-          },
-        ),
-      );
+      // return Expanded(
+      //   child: ListView.builder(
+      //     itemCount: 3,
+      //     itemBuilder: (BuildContext context, int index) {
+      //       return const ListTile(
+      //           contentPadding: EdgeInsets.all(0),
+      //           title: VolunteeringCard(),
+      //           subtitle: SizedBox(height: 24),
+      //         );
+      //     },
+      //   ),
+      // );
+      return InputCard();
     }
   }
 }
