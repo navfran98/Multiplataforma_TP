@@ -6,16 +6,8 @@ import 'package:multi_tp/design_system/tokens/colors.dart';
 import 'package:multi_tp/design_system/tokens/shadows.dart';
 import 'package:multi_tp/design_system/molecules/components/vacante.dart';
 
-class InputCard extends StatefulWidget {
-  const InputCard({Key? key}) : super(key: key);
-
-  @override
-  State<InputCard> createState() => _InputCardState();
-}
-
-class _InputCardState extends State<InputCard> {
-  String? _selected;
-  final List<String> _options = ["Hombre", "Mujer", "no Binario"];
+class InfoCard extends StatelessWidget {
+  const InfoCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,29 +27,21 @@ class _InputCardState extends State<InputCard> {
             padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
             color: ColorPalette.secondary25,
             child: const Text(
-              "Información de perfil",
+              "Titulo",
               style: CustomFont.subtitle01(ColorPalette.neutral100),
             )
           ),
-          ListView.builder(
-            itemCount: 3,
-            shrinkWrap: true,
+          Container(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text(_options.elementAt(index), style: CustomFont.body01(ColorPalette.neutral100),),
-                leading: Radio<String>(
-                  value: _options.elementAt(index), 
-                  groupValue: _selected, 
-                  fillColor: const MaterialStatePropertyAll(ColorPalette.primary100),
-                  onChanged: (String? value){
-                    setState(() {
-                      _selected = value;
-                    });
-                  },
-                ),
-              );
-            },
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Label", style: CustomFont.overline(ColorPalette.neutral75),),
+                Text("Content", style: CustomFont.body01(ColorPalette.neutral100),),
+                SizedBox(height: 8,),
+                Text("Label", style: CustomFont.overline(ColorPalette.neutral75),),
+                Text("Content", style: CustomFont.body01(ColorPalette.neutral100),),
+              ]),
           )
         ],
       ),
