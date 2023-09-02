@@ -31,11 +31,11 @@ class ProfilePicCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text("Foto de perfil", style: CustomFont.subtitle01(ColorPalette.neutral100),),
-              const SizedBox(height: 8,),
-              if (picPath != null) ShortButton(isSmall: true, isDisabled: false, text: "Cambiar foto", onPressedFunction: (){}),
+              if (picPath != null) Container(margin: const EdgeInsets.only(top: 8), child: ShortButton(isSmall: true, isDisabled: false, text: "Cambiar foto", onPressedFunction: (){})),
             ],
           ),
           Expanded(child: Container()),
