@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:multi_tp/design_system/cells/cards/profile_pic_card.dart';
 import 'package:multi_tp/design_system/cells/custom_modal.dart';
+import 'package:multi_tp/design_system/cells/forms/personal_form.dart';
 import 'package:multi_tp/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/design_system/molecules/buttons/short_button.dart';
 import 'package:multi_tp/design_system/tokens/colors.dart';
@@ -11,7 +13,9 @@ import 'package:multi_tp/design_system/molecules/components/novolunteering.dart'
 import 'package:multi_tp/design_system/molecules/components/vacante.dart';
 import 'package:multi_tp/design_system/cells/custom_modal.dart';
 import 'package:multi_tp/design_system/cells/cards/news_card.dart';
-import 'package:multi_tp/design_system/cells/cards/input_Card.dart';
+import 'package:multi_tp/design_system/cells/cards/input_card.dart';
+import 'package:multi_tp/design_system/cells/cards/info_card.dart';
+import 'package:multi_tp/views/profile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -114,10 +118,8 @@ class _HomePageContent extends StatelessWidget {
                   renderVolunteering(),                
                 ],
               )),
-          Center(
-            child: Text("It's rainy here"),
-          ),
-          Center(
+          const ProfilePage(),
+          const Center(
             child: Text("It's sunny here"),
           ),
         ],
@@ -130,19 +132,18 @@ class _HomePageContent extends StatelessWidget {
     if(false){
       return NoVolunteering();
     } else {
-      // return Expanded(
-      //   child: ListView.builder(
-      //     itemCount: 3,
-      //     itemBuilder: (BuildContext context, int index) {
-      //       return const ListTile(
-      //           contentPadding: EdgeInsets.all(0),
-      //           title: VolunteeringCard(),
-      //           subtitle: SizedBox(height: 24),
-      //         );
-      //     },
-      //   ),
-      // );
-      return InputCard();
+      return Expanded(
+        child: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (BuildContext context, int index) {
+            return const ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: VolunteeringCard(),
+                subtitle: SizedBox(height: 24),
+              );
+          },
+        ),
+      );
     }
   }
 }

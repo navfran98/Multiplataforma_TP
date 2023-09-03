@@ -15,7 +15,7 @@ class InputCard extends StatefulWidget {
 
 class _InputCardState extends State<InputCard> {
   String? _selected;
-  final List<String> _options = ["Hombre", "Mujer", "no Binario"];
+  final List<String> _options = ["Hombre", "Mujer", "No Binario"];
 
   @override
   Widget build(BuildContext context) {
