@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+      body: Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
