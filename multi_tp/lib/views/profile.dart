@@ -14,10 +14,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: ColorPalette.neutral0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: renderCompletedProfile(),
     );

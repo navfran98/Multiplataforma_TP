@@ -20,13 +20,20 @@ class NewsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(2),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start, // Asegura que ambos hijos tengan la misma altura
+        crossAxisAlignment: CrossAxisAlignment
+            .start, // Asegura que ambos hijos tengan la misma altura
         children: [
-          SizedBox(
-            width: 118.0,
-            child: Image.asset(
-              'images/news_card.png',
-              fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(2),
+              bottomLeft: Radius.circular(2),
+            ),
+            child: SizedBox(
+              width: 118.0,
+              child: Image.asset(
+                'images/news_card.png',
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           Expanded(
@@ -50,11 +57,19 @@ class NewsCard extends StatelessWidget {
                     style: CustomFont.body02(ColorPalette.neutral75),
                     softWrap: true,
                   ),
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      SizedBox(width: 75, child: CtaButton(isTransparent: true, isDisabled: false, text: "Leer Mas", onPressedFunction: (){}))
+                      SizedBox(
+                          width: 75,
+                          child: CtaButton(
+                              isTransparent: true,
+                              isDisabled: false,
+                              text: "Leer Mas",
+                              onPressedFunction: () {}))
                     ],
                   )
                 ],

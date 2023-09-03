@@ -30,8 +30,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-
-
 class _HomePageContent extends StatelessWidget {
   late TabController _tabController;
 
@@ -39,7 +37,6 @@ class _HomePageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     _tabController = DefaultTabController.of(context);
     return Scaffold(
-      backgroundColor: ColorPalette.secondary10,
       appBar: AppBar(
         centerTitle: false,
         backgroundColor: ColorPalette.secondary90,
@@ -83,67 +80,105 @@ class _HomePageContent extends StatelessWidget {
       body: TabBarView(
         children: <Widget>[
           Container(
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SearchField(),
-                  const SizedBox(
-                    height: 32,
+            color: ColorPalette.secondary10,
+            child: Column(
+              children: [
+                Container(
+                  color: ColorPalette.secondary10,
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SearchField(),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      const Visibility(
+                          visible: true,
+                          child: Column(
+                            children: [
+                              Text(
+                                "Tu Actividad",
+                                style: CustomFont.headline01(
+                                    ColorPalette.neutral100),
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              CurrentVolCard(),
+                              SizedBox(
+                                height: 24,
+                              )
+                            ],
+                          )),
+                      const Text(
+                        "Voluntariados",
+                        style: CustomFont.headline01(ColorPalette.neutral100),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: 24),
+                    ],
                   ),
-                  const Visibility(
-                      visible: true,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Tu Actividad",
-                            style:
-                                CustomFont.headline01(ColorPalette.neutral100),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          CurrentVolCard(),
-                          SizedBox(
-                            height: 24,
-                          )
-                        ],
-                      )),
-                  const Text(
-                    "Voluntariados",
-                    style: CustomFont.headline01(ColorPalette.neutral100),
-                    textAlign: TextAlign.start,
-                  ),
-                  const SizedBox(height: 24),
-                  renderVolunteering(),                
-                ],
-              )),
-          const ProfilePage(),
-          const Center(
-            child: Text("It's sunny here"),
+                ),
+                renderVolunteering(),
+              ],
+            ),
           ),
+          const ProfilePage(),
+          renderNews(),
         ],
       ),
     );
   }
 
-  Widget renderVolunteering(){
-    //TODO: aca va la cantidad de voluntariados que hay
-    if(false){
-      return NoVolunteering();
-    } else {
-      return Expanded(
-        child: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return const ListTile(
-                contentPadding: EdgeInsets.all(0),
-                title: VolunteeringCard(),
-                subtitle: SizedBox(height: 24),
-              );
-          },
-        ),
-      );
-    }
+  Widget renderVolunteering() {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: 3,
+        itemBuilder: (BuildContext context, int index) {
+          return const ListTile(
+            minVerticalPadding: 0,
+            contentPadding: EdgeInsets.symmetric(horizontal: 16),
+            title: VolunteeringCard(),
+            subtitle: SizedBox(height: 24),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget renderNews() {
+    return Container(
+        color: ColorPalette.secondary10,
+        child: false
+            ? Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [NewsCard()],
+                ),
+              )
+            : Container(
+                color: ColorPalette.secondary10,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.only(top: 32, bottom: 8),
+                        itemCount: 5,
+                        itemBuilder: (BuildContext context, int index) {
+                          return const ListTile(
+                            title: NewsCard(),
+                            minVerticalPadding: 0,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                            ),
+                            subtitle: SizedBox(height: 24),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ));
   }
 }

@@ -18,12 +18,18 @@ class VolunteeringCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            height: 138,
-            width: double.infinity,
-            child: Image.asset(
-              'images/Landscape-Color.jpg',
-              fit: BoxFit.fitWidth,
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(2),
+              topRight: Radius.circular(2),
+            ),
+            child: SizedBox(
+              height: 138,
+              width: double.infinity,
+              child: Image.asset(
+                'images/Landscape-Color.jpg',
+                fit: BoxFit.fitWidth,
+              ),
             ),
           ),
           Container(

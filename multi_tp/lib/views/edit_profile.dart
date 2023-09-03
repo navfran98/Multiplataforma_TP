@@ -31,6 +31,7 @@ class EditProfilePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
+          color: ColorPalette.neutral0,
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
           child: Column(
             children: [
