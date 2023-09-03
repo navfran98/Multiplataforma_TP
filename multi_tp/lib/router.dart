@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multi_tp/views/edit_profile.dart';
 import 'package:multi_tp/views/login.dart';
+import 'package:multi_tp/views/news.dart';
 import 'package:multi_tp/views/signup.dart';
 import 'package:multi_tp/views/welcome.dart';
 import 'package:multi_tp/views/user_welcome.dart';
@@ -44,6 +45,12 @@ final GoRouter router = GoRouter(
       path: '/editprofile',
       builder: (BuildContext context, GoRouterState state) {
         return const EditProfilePage();
+      },
+    ),
+    GoRoute(
+      path: '/news',
+      builder: (BuildContext context, GoRouterState state) {
+        return const NewsPage();
       },
     ),
   ],

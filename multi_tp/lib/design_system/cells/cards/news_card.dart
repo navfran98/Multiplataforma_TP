@@ -5,9 +5,16 @@ import 'package:multi_tp/design_system/tokens/font.dart';
 import 'package:multi_tp/design_system/tokens/colors.dart';
 import 'package:multi_tp/design_system/tokens/shadows.dart';
 import 'package:multi_tp/design_system/molecules/components/vacante.dart';
+import 'package:go_router/go_router.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({Key? key}) : super(key: key);
+
+  void Function() _handleNews(BuildContext context) {
+    return () {
+      context.go('/news');
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +76,7 @@ class NewsCard extends StatelessWidget {
                               isTransparent: true,
                               isDisabled: false,
                               text: "Leer Mas",
-                              onPressedFunction: () {}))
+                              onPressedFunction: _handleNews(context)))
                     ],
                   )
                 ],

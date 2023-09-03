@@ -146,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
             isDisabled: false,
             text: "Completar",
             onPressedFunction: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.add,
               color: ColorPalette.neutral0,
             ),
