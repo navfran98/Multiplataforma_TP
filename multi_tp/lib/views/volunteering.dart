@@ -13,10 +13,17 @@ class VolunteeringPage extends StatefulWidget {
 }
 
 class _VolunteeringPageState extends State<VolunteeringPage> {
-  int _freeSpaces = 10;
+  int _freeSpaces = 0;
   bool _applied = false;
   bool _participating = false;
-  bool _alreadyVolunteering = true;
+  bool _alreadyVolunteering = false;
+
+  void Function() _handleBack(BuildContext context) {
+    return () {
+      context.go('/home');
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,11 +38,12 @@ class _VolunteeringPageState extends State<VolunteeringPage> {
                 height: 240, // Altura fija de 240
                 fit: BoxFit.cover, // Ajustar la imagen al tamaño del contenedor
               ),
-              const Positioned(
+              Positioned(
                 top: 20, // Espacio superior
                 left: 16, // Espacio izquierdo
                 child: BackButton(
                   color: ColorPalette.neutral0,
+                  onPressed: _handleBack(context),
                 ),
               ),
             ],
