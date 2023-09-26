@@ -1,64 +1,95 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:multi_tp/views/edit_profile.dart';
-import 'package:multi_tp/views/login.dart';
-import 'package:multi_tp/views/news.dart';
-import 'package:multi_tp/views/signup.dart';
-import 'package:multi_tp/views/volunteering.dart';
-import 'package:multi_tp/views/welcome.dart';
-import 'package:multi_tp/views/user_welcome.dart';
+import 'package:multi_tp/presentation/screens/home_screen.dart';
+import 'package:multi_tp/presentation/screens/login_screen.dart';
+import 'package:multi_tp/presentation/screens/news_screen.dart';
+import 'package:multi_tp/presentation/screens/profile_screen.dart';
+import 'package:multi_tp/presentation/screens/signup_screen.dart';
+import 'package:multi_tp/presentation/screens/user_welcome_screen.dart';
+import 'package:multi_tp/presentation/screens/volunteering_screen.dart';
+import 'package:multi_tp/presentation/screens/welcome_screen.dart';
+import 'package:multi_tp/router_locations/home_location.dart';
+import 'package:multi_tp/router_locations/login_location.dart';
+import 'package:multi_tp/router_locations/news_location.dart';
+import 'package:multi_tp/router_locations/profile_location.dart';
+import 'package:multi_tp/router_locations/signup_location.dart';
+import 'package:multi_tp/router_locations/user_welcome_location.dart';
+import 'package:multi_tp/router_locations/volunteering_location.dart';
+import 'package:multi_tp/router_locations/welcome_location.dart';
+import 'package:multi_tp/utils/logger.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'views/home.dart';
+part 'generated/router.g.dart';
 
-final GoRouter router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const WelcomePage();
-      },
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (BuildContext context, GoRouterState state) {
-        return const LoginPage();
-      },
-    ),
-    GoRoute(
-      path: '/signup',
-      builder: (BuildContext context, GoRouterState state) {
-        return const SignupPage();
-      },
-    ),
-    GoRoute(
-      path: '/home',
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
-      },
-    ),
-    GoRoute(
-      path: '/userwelcome',
-      builder: (BuildContext context, GoRouterState state) {
-        return const UserWelcomePage();
-      },
-    ),
-    GoRoute(
-      path: '/editprofile',
-      builder: (BuildContext context, GoRouterState state) {
-        return const EditProfilePage();
-      },
-    ),
-    GoRoute(
-      path: '/news',
-      builder: (BuildContext context, GoRouterState state) {
-        return const NewsPage();
-      },
-    ),
-    GoRoute(
-      path: '/volunteering',
-      builder: (BuildContext context, GoRouterState state) {
-        return const VolunteeringPage();
-      },
-    ),
-  ],
-);
+@Riverpod(keepAlive: true)
+Raw<BeamerDelegate> mainBeamerDelegate(MainBeamerDelegateRef ref) =>
+    BeamerDelegate(
+        initialPath: _getInitialPath(),
+        locationBuilder: _locationBuilder,
+        guards: [getLoggerGuard()]);
+
+BeamGuard getLoggerGuard() {
+  return BeamGuard(
+    pathPatterns: ['*'],
+    check: (context, location) {
+      logger.d('Navigating to ${location.state.routeInformation.location}');
+      return true;
+    },
+  );
+}
+
+// BeamGuard getAuthGuard() {
+  // AuthRepositoryImpl authRepository = AuthRepositoryImpl();
+  // return BeamGuard(
+  //   pathPatterns: [
+  //     '/home',
+  //     '/home/tickets/:ticketId',
+  //     '/home/tickets/purchase',
+  //     '/home/tickets/purchase/bus/*',
+  //     '/home/tickets/purchase/bus/:line/summary'
+  //   ],
+  //   check: (context, location) {
+  //     logger.d(
+  //         "Navigation from Main Beamer -> ${location.state.routeInformation.location}");
+  //     return authRepository.currentUser != null;
+  //   },
+  //   beamToNamed: (origin, target) => LoginScreen.route,
+  // );
+// }
+
+String _getInitialPath() {
+  // if (FirebaseAuth.instance.currentUser != null) {
+  //   return HomeScreen.route;
+  // }
+  //
+  // return LoginScreen.route;
+  return WelcomeScreen.route;
+}
+
+BeamLocation<RouteInformationSerializable<dynamic>> _locationBuilder(
+    RouteInformation routeInformation,
+    BeamParameters? beamParameters,
+    ) {
+    if(routeInformation.location.contains(WelcomeScreen.routeName)) {
+      return WelcomeLocation(routeInformation);
+    }
+    if(routeInformation.location.contains(UserWelcomeScreen.routeName)) {
+      return UserWelcomeLocation(routeInformation);
+    }
+    if(routeInformation.location.contains(LoginScreen.routeName)) {
+      return LoginLocation(routeInformation);
+    }
+    if(routeInformation.location.contains(SignupScreen.routeName)) {
+      return SignupLocation(routeInformation);
+    }
+    if(routeInformation.location.contains(VolunteeringScreen.routeName)) {
+      return VolunteeringLocation(routeInformation);
+    }
+    if(routeInformation.location.contains(ProfileScreen.routeName)) {
+      return ProfileLocation(routeInformation);
+    }
+    if(routeInformation.location.contains(NewsScreen.routeName)) {
+      return NewsLocation(routeInformation);
+    }
+    return HomeLocation(routeInformation);
+}
