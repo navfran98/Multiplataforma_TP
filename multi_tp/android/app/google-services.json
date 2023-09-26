@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "184584972042",
+    "project_id": "ser-manos-2c2023",
+    "storage_bucket": "ser-manos-2c2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184584972042:android:9f3aa959fd54324afbfcf3",
+        "android_client_info": {
+          "package_name": "com.example.multi_tp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcuhaPQo0HnviC9Iw8DX1jzqCtX9eCK6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

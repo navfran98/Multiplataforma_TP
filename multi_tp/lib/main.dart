@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:multi_tp/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/utils/logger.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire
     // application in a "ProviderScope" widget.
