@@ -11,6 +11,7 @@ class PersonalForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -23,7 +24,7 @@ class PersonalForm extends StatelessWidget {
         children: [
           const Text("Datos de perfil", style: CustomFont.headline01(ColorPalette.neutral100),),
           const SizedBox(height: 24,),
-          const CustomTextField(isDisabled: false, isError: false, floatingLabel: true, labelText: "Fecha de nacimiento"),
+          CustomTextField(isDisabled: false, floatingLabel: true, labelText: "Fecha de nacimiento", controller: controller,),
           const SizedBox(height: 24,),
           const InputCard(),
           const SizedBox(height: 24,),

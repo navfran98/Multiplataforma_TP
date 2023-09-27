@@ -4,13 +4,42 @@ import 'package:go_router/go_router.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
 import 'package:multi_tp/presentation/screens/signup_screen.dart';
+import 'package:multi_tp/presentation/utils/validators.dart';
 import 'package:multi_tp/router.dart';
 
-class LoginScreen extends ConsumerWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   static const route = "/login";
   static const routeName = "login";
 
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  bool isEmailNotEmpty = false;
+  bool isPassNotEmpty = false;
+
+  @override
+  void initState() {
+    super.initState();
+    passController.addListener(() {
+      setState(() {
+      isPassNotEmpty = passController.text.isNotEmpty;
+      });
+    });
+    emailController.addListener(() {
+      setState(() {
+        isEmailNotEmpty = emailController.text.isNotEmpty;
+      });
+    });
+  }
 
   void Function() _handleSignup(BuildContext context, WidgetRef ref) {
     return () {
@@ -18,58 +47,67 @@ class LoginScreen extends ConsumerWidget {
     };
   }
 
-  void Function() _handleLogin(BuildContext context, WidgetRef ref) {
-    return () {
-      context.go('/userwelcome');
-    };
+  void _handleLogin(String email, String password) async {
+
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(child: Container()),
-            Image.asset('images/Welcome_logo.png', fit: BoxFit.fill),
-            const SizedBox(
-              height: 32,
-            ),
-            const CustomTextField(
-              isDisabled: false,
-              isError: false,
-              labelText: "Email",
-              floatingLabel: false,
-            ),
-            const SizedBox(height: 24),
-            const CustomTextField(
-              isDisabled: false,
-              isError: false,
-              labelText: "Contraseña",
-              floatingLabel: false,
-              isObscure: true,
-            ),
-            Expanded(child: Container()),
-            CtaButton(
-                isTransparent: false,
-                isDisabled: true,
-                text: "Iniciar Sesion",
-                onPressedFunction: _handleLogin(context, ref)),
-            const SizedBox(
-              height: 16,
-            ),
-            CtaButton(
-                isTransparent: true,
+      body: Form(
+        key: _formKey,
+        child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: Container()),
+              Image.asset('images/Welcome_logo.png', fit: BoxFit.fill),
+              const SizedBox(
+                height: 32,
+              ),
+              CustomTextField(
                 isDisabled: false,
-                text: "No tengo cuenta",
-                onPressedFunction: _handleSignup(context, ref)),
-            const SizedBox(
-              height: 32,
-            )
-          ]),
-    ));
+                labelText: "Email",
+                floatingLabel: false,
+                controller: emailController,
+                validator: Validators.validateEmail,
+              ),
+              const SizedBox(height: 24),
+              CustomTextField(
+                isDisabled: false,
+                labelText: "Contraseña",
+                floatingLabel: false,
+                isObscure: true,
+                controller: passController,
+                validator: Validators.validatePassword,
+              ),
+              Expanded(child: Container()),
+              isLoading ?
+                const CircularProgressIndicator() :
+                CtaButton(
+                  isTransparent: false,
+                  isDisabled: !(isEmailNotEmpty && isPassNotEmpty) ,
+                  text: "Iniciar Sesion",
+                  onPressedFunction: (){
+                    if (_formKey.currentState!.validate()) {
+                      _handleLogin(emailController.text, passController.text);
+                    }
+                  }),
+              const SizedBox(
+                height: 16,
+              ),
+              CtaButton(
+                  isTransparent: true,
+                  isDisabled: false,
+                  text: "No tengo cuenta",
+                  onPressedFunction: _handleSignup(context, ref)),
+              const SizedBox(
+                height: 32,
+              )
+            ]),
+    ),
+      ));
   }
 }

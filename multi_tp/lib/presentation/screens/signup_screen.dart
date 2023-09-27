@@ -8,11 +8,21 @@ import 'package:multi_tp/presentation/screens/login_screen.dart';
 import 'package:multi_tp/presentation/screens/volunteering_screen.dart';
 import 'package:multi_tp/router.dart';
 
-class SignupScreen extends ConsumerWidget {
+class SignupScreen extends ConsumerStatefulWidget {
   static const route = "/signup";
   static const routeName = "signup";
 
   const SignupScreen({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => SignupScreenState();
+}
+
+class SignupScreenState extends ConsumerState<SignupScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
 
   void Function() _handleLogin(BuildContext context, WidgetRef ref) {
     return () {
@@ -27,7 +37,7 @@ class SignupScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -43,37 +53,37 @@ class SignupScreen extends ConsumerWidget {
               const SizedBox(
                 height: 31,
               ),
-              const CustomTextField(
+              CustomTextField(
                 isDisabled: false,
-                isError: false,
                 labelText: "Nombre",
                 hintText: "Ej: Juan",
                 floatingLabel: true,
+                controller: nameController,
               ),
               const SizedBox(height: 24),
-              const CustomTextField(
+              CustomTextField(
                 isDisabled: false,
-                isError: false,
                 labelText: "Apellido",
                 hintText: "Ej: Barcena",
                 floatingLabel: true,
+                controller: lastNameController,
               ),
               const SizedBox(height: 24),
-              const CustomTextField(
+              CustomTextField(
                 isDisabled: false,
-                isError: false,
                 labelText: "Email",
                 hintText: "Ej: juanbarcena@mail.com",
                 floatingLabel: true,
+                controller: emailController,
               ),
               const SizedBox(height: 24),
-              const CustomTextField(
+              CustomTextField(
                 isDisabled: false,
-                isError: false,
                 labelText: "Contraseña",
                 hintText: "Ej: ABCD1234",
                 floatingLabel: true,
                 isObscure: true,
+                controller: passwordController,
               ),
               const SizedBox(
                 height: 150,

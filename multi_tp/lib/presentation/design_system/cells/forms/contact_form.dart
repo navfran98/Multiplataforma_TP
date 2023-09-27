@@ -9,43 +9,45 @@ class ContactForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    TextEditingController controller = TextEditingController();
+    TextEditingController controller2 = TextEditingController();
+    return SizedBox(
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Datos de contacto",
             style: CustomFont.headline01(ColorPalette.neutral100),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
-          Text(
+          const Text(
             "Estos datos serán compartidos con la organización para ponerse en contacto contigo",
             style: CustomFont.subtitle01(ColorPalette.neutral100),
             softWrap: true,
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           CustomTextField(
             isDisabled: false,
-            isError: false,
             floatingLabel: true,
             labelText: "Telefono",
             hintText: "Ej: +541178445459",
+            controller: controller,
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           CustomTextField(
             isDisabled: false,
-            isError: false,
             floatingLabel: true,
             labelText: "Email",
             hintText: "Ej: mimail@mail.com",
+            controller: controller2,
           ),
         ],
       ),

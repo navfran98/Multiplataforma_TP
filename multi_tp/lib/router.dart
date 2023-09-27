@@ -1,6 +1,5 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_tp/presentation/screens/home_screen.dart';
 import 'package:multi_tp/presentation/screens/login_screen.dart';
 import 'package:multi_tp/presentation/screens/news_screen.dart';
 import 'package:multi_tp/presentation/screens/profile_screen.dart';
@@ -70,25 +69,25 @@ BeamLocation<RouteInformationSerializable<dynamic>> _locationBuilder(
     RouteInformation routeInformation,
     BeamParameters? beamParameters,
     ) {
-    if(routeInformation.location.contains(WelcomeScreen.routeName)) {
+    if(routeInformation.location!.contains(WelcomeScreen.routeName)) {
       return WelcomeLocation(routeInformation);
     }
-    if(routeInformation.location.contains(UserWelcomeScreen.routeName)) {
+    if(routeInformation.location!.contains(UserWelcomeScreen.routeName)) {
       return UserWelcomeLocation(routeInformation);
     }
-    if(routeInformation.location.contains(LoginScreen.routeName)) {
+    if(routeInformation.location!.contains(LoginScreen.routeName)) {
       return LoginLocation(routeInformation);
     }
-    if(routeInformation.location.contains(SignupScreen.routeName)) {
+    if(routeInformation.location!.contains(SignupScreen.routeName)) {
       return SignupLocation(routeInformation);
     }
-    if(routeInformation.location.contains(VolunteeringScreen.routeName)) {
+    if(routeInformation.location!.contains(VolunteeringScreen.routeName)) {
       return VolunteeringLocation(routeInformation);
     }
-    if(routeInformation.location.contains(ProfileScreen.routeName)) {
+    if(routeInformation.location!.contains(ProfileScreen.routeName)) {
       return ProfileLocation(routeInformation);
     }
-    if(routeInformation.location.contains(NewsScreen.routeName)) {
+    if(routeInformation.location!.contains(NewsScreen.routeName)) {
       return NewsLocation(routeInformation);
     }
     return HomeLocation(routeInformation);

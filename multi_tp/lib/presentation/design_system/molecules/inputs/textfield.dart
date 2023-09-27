@@ -6,32 +6,31 @@ class CustomTextField extends StatefulWidget {
   const CustomTextField(
       {Key? key,
       required this.isDisabled,
-      required this.isError,
       required this.floatingLabel,
       this.hintText,
       required this.labelText,
-      this.errorText,
-      this.isObscure})
+      this.isObscure,
+      required this.controller,
+      this.validator})
       : super(key: key);
 
   final bool isDisabled;
-  final bool isError;
   final bool floatingLabel;
   final String? hintText;
-  final String? errorText;
   final String labelText;
   final bool? isObscure;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode =
-      FocusNode(); 
+  final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
   late bool _isObscure;
+  bool _isError = false;
 
   @override
   void initState() {
@@ -61,14 +60,25 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   void clearText() {
     setState(() {
-      _controller.clear();
+      widget.controller.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _controller,
+    return TextFormField(
+      validator: (value) {
+        if(widget.validator != null) {
+          final s = widget.validator!(value);
+          setState(() {
+            _isError = s != null;
+          });
+          return s;
+        } else {
+          return null;
+        }
+      },
+      controller: widget.controller,
       focusNode: _focusNode,
       obscureText: _isObscure,
       decoration: InputDecoration(
@@ -78,10 +88,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
           enabled: !widget.isDisabled,
           hintText: widget.hintText, // Add a placeholder text
           hintStyle: const CustomFont.subtitle01(ColorPalette.neutral50),
-          errorText: widget.isError ? widget.errorText : null,
           errorStyle: const CustomFont.body02(ColorPalette.error100),
           suffixIcon: (() {
-            if (widget.isError) {
+            if (_isError) {
               return const Icon(Icons.error_rounded,
                   color: ColorPalette.error100);
             }
@@ -109,7 +118,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           contentPadding: const EdgeInsets.only(left: 16),
           labelText: widget.labelText,
           labelStyle: TextStyle(
-            color: _isFocused && widget.isError
+            color: _isFocused && _isError
                 ? ColorPalette.error100
                 : _isFocused
                     ? ColorPalette.secondary200
@@ -142,7 +151,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
               color: ColorPalette.neutral50,
             ),
             borderRadius: BorderRadius.circular(4),
-          )),
+          ),
+      ),
+      onTapOutside: (e) {
+        _focusNode.unfocus();
+      },
+      onEditingComplete: () {
+        _focusNode.unfocus();
+      },
+      onFieldSubmitted: (value) {
+        _focusNode.unfocus();
+      },
+
     );
   }
 }
