@@ -182,12 +182,12 @@ app.*.symbols
 
 
 #PUBSPEC.LOCK LO AGREGUE YO
-pubspec.lock
+multi_tp/pubspec.lock
 
-linux/
+multi_tp/linux/
 
-macos/
+multi_tp/macos/
 
-windows/
+multi_tp/windows/
 
-web/
+multi_tp/web/
