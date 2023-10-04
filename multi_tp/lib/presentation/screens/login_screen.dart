@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
 import 'package:multi_tp/presentation/screens/signup_screen.dart';
 import 'package:multi_tp/presentation/utils/validators.dart';
 import 'package:multi_tp/router.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
+class LoginScreen extends StatefulHookConsumerWidget {
   static const route = "/login";
   static const routeName = "login";
 
@@ -15,31 +15,11 @@ class LoginScreen extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
-
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  bool isEmailNotEmpty = false;
-  bool isPassNotEmpty = false;
-
-  @override
-  void initState() {
-    super.initState();
-    passController.addListener(() {
-      setState(() {
-      isPassNotEmpty = passController.text.isNotEmpty;
-      });
-    });
-    emailController.addListener(() {
-      setState(() {
-        isEmailNotEmpty = emailController.text.isNotEmpty;
-      });
-    });
-  }
 
   void Function() _handleSignup(BuildContext context, WidgetRef ref) {
     return () {
@@ -47,16 +27,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     };
   }
 
-  void _handleLogin(String email, String password) async {
-
-  }
+  void _handleLogin(String email, String password) async {}
 
   @override
   Widget build(BuildContext context) {
+    final emailController = useTextEditingController();
+    final passController = useTextEditingController();
+    final bool isEmailEmpty = useListenableSelector(
+        emailController, () => emailController.text.isEmpty);
+    final bool isPassEmpty = useListenableSelector(
+        passController, () => passController.text.isEmpty);
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: Container(
+        body: Form(
+      key: _formKey,
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -84,17 +68,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 validator: Validators.validatePassword,
               ),
               Expanded(child: Container()),
-              isLoading ?
-                const CircularProgressIndicator() :
-                CtaButton(
-                  isTransparent: false,
-                  isDisabled: !(isEmailNotEmpty && isPassNotEmpty) ,
-                  text: "Iniciar Sesion",
-                  onPressedFunction: (){
-                    if (_formKey.currentState!.validate()) {
-                      _handleLogin(emailController.text, passController.text);
-                    }
-                  }),
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : CtaButton(
+                      isTransparent: false,
+                      isDisabled: (isEmailEmpty || isPassEmpty),
+                      text: "Iniciar Sesion",
+                      onPressedFunction: () {
+                        if (_formKey.currentState!.validate()) {
+                          _handleLogin(
+                              emailController.text, passController.text);
+                        }
+                      }),
               const SizedBox(
                 height: 16,
               ),
@@ -107,7 +92,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 height: 32,
               )
             ]),
-    ),
-      ));
+      ),
+    ));
   }
 }

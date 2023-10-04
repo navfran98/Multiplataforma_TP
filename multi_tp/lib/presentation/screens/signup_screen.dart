@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
 import 'package:multi_tp/presentation/screens/home_screen.dart';
@@ -8,7 +10,7 @@ import 'package:multi_tp/presentation/screens/login_screen.dart';
 import 'package:multi_tp/presentation/screens/volunteering_screen.dart';
 import 'package:multi_tp/router.dart';
 
-class SignupScreen extends ConsumerStatefulWidget {
+class SignupScreen extends StatefulHookConsumerWidget {
   static const route = "/signup";
   static const routeName = "signup";
 
@@ -19,11 +21,6 @@ class SignupScreen extends ConsumerStatefulWidget {
 }
 
 class SignupScreenState extends ConsumerState<SignupScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-
   void Function() _handleLogin(BuildContext context, WidgetRef ref) {
     return () {
       ref.read(mainBeamerDelegateProvider).beamToNamed(LoginScreen.route);
@@ -32,12 +29,26 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
 
   void Function() _handleHomeButton(BuildContext context, WidgetRef ref) {
     return () {
-      ref.read(mainBeamerDelegateProvider).beamToNamed(VolunteeringScreen.route);
+      ref
+          .read(mainBeamerDelegateProvider)
+          .beamToNamed(VolunteeringScreen.route);
     };
   }
 
   @override
   Widget build(BuildContext context) {
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final nameController = useTextEditingController();
+    final lastNameController = useTextEditingController();
+    final bool isNameEmpty = useListenableSelector(
+        nameController, () => nameController.text.isEmpty);
+    final bool isLastNameEmpty = useListenableSelector(
+        lastNameController, () => lastNameController.text.isEmpty);
+    final bool isEmailEmpty = useListenableSelector(
+        emailController, () => emailController.text.isEmpty);
+    final bool isPassEmpty = useListenableSelector(
+        passwordController, () => passwordController.text.isEmpty);
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -90,7 +101,10 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
               ),
               CtaButton(
                   isTransparent: false,
-                  isDisabled: false,
+                  isDisabled: (isNameEmpty ||
+                      isLastNameEmpty ||
+                      isEmailEmpty ||
+                      isPassEmpty),
                   text: "Registrarse",
                   onPressedFunction: _handleHomeButton(context, ref)),
               const SizedBox(

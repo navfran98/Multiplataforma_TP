@@ -43,6 +43,8 @@ dependencies:
   firebase_core: ^2.16.0
   firebase_auth: ^4.10.0
   flutter_launcher_icons: ^0.13.1
+  flutter_hooks: ^0.20.2
+  hooks_riverpod: ^2.4.2
 
 dev_dependencies:
   flutter_test:

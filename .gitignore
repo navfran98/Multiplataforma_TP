@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+*.lock
 
 # IntelliJ related
 *.iml
@@ -49,7 +50,6 @@ app.*.map.json
 #LO SAQUE DEL GIT DE FLUTTER
 
 *.class
-*.lock
 *.log
 *.pyc
 *.swp
@@ -182,7 +182,6 @@ app.*.symbols
 
 
 #PUBSPEC.LOCK LO AGREGUE YO
-multi_tp/pubspec.lock
 
 multi_tp/linux/
 
@@ -191,3 +190,9 @@ multi_tp/macos/
 multi_tp/windows/
 
 multi_tp/web/
+
+multi_tp/ios/Podfile
+
+multi_tp/ios/Flutter/Debug.xcconfig
+
+multi_tp/ios/Flutter/Release.xcconfig
