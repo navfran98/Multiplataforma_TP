@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/presentation/design_system/cells/cards/info_card.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/short_button.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 import 'package:multi_tp/presentation/screens/edit_profile.dart';
+import 'package:multi_tp/presentation/screens/login_screen.dart';
 import 'package:multi_tp/router.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -20,12 +22,14 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: ColorPalette.neutral0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: renderNewProfile(),
+      child: renderCompletedProfile(),
     );
   }
 
@@ -33,6 +37,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     return () {
       ref.read(mainBeamerDelegateProvider).beamToNamed(EditProfileScreen.route);
     };
+  }
+
+  void _handleLogOut() async {
+    setState(() {
+      isLoading = true;
+    });
+    await ref.read(authRepositoryProvider).signOut();
+    ref.read(mainBeamerDelegateProvider).beamToNamed(LoginScreen.route);
   }
 
   Widget renderCompletedProfile() {
@@ -92,11 +104,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   const SizedBox(
                     height: 8,
                   ),
-                  CtaButton(
+                  isLoading
+                  ? const CircularProgressIndicator(
+                      color: ColorPalette.primary100,
+                    )
+                  : CtaButton(
                       isTransparent: true,
                       isDisabled: false,
                       text: "Cerrar sesion",
-                      onPressedFunction: () {})
+                      onPressedFunction: () {
+                        _handleLogOut();
+                      })
                 ],
               ),
             )
