@@ -38,22 +38,22 @@ BeamGuard getLoggerGuard() {
 }
 
 // BeamGuard getAuthGuard() {
-  // AuthRepositoryImpl authRepository = AuthRepositoryImpl();
-  // return BeamGuard(
-  //   pathPatterns: [
-  //     '/home',
-  //     '/home/tickets/:ticketId',
-  //     '/home/tickets/purchase',
-  //     '/home/tickets/purchase/bus/*',
-  //     '/home/tickets/purchase/bus/:line/summary'
-  //   ],
-  //   check: (context, location) {
-  //     logger.d(
-  //         "Navigation from Main Beamer -> ${location.state.routeInformation.location}");
-  //     return authRepository.currentUser != null;
-  //   },
-  //   beamToNamed: (origin, target) => LoginScreen.route,
-  // );
+// AuthRepositoryImpl authRepository = AuthRepositoryImpl();
+// return BeamGuard(
+//   pathPatterns: [
+//     '/home',
+//     '/home/tickets/:ticketId',
+//     '/home/tickets/purchase',
+//     '/home/tickets/purchase/bus/*',
+//     '/home/tickets/purchase/bus/:line/summary'
+//   ],
+//   check: (context, location) {
+//     logger.d(
+//         "Navigation from Main Beamer -> ${location.state.routeInformation.location}");
+//     return authRepository.currentUser != null;
+//   },
+//   beamToNamed: (origin, target) => LoginScreen.route,
+// );
 // }
 
 String _getInitialPath() {
@@ -66,29 +66,31 @@ String _getInitialPath() {
 }
 
 BeamLocation<RouteInformationSerializable<dynamic>> _locationBuilder(
-    RouteInformation routeInformation,
-    BeamParameters? beamParameters,
-    ) {
-    if(routeInformation.location!.contains(WelcomeScreen.routeName)) {
-      return WelcomeLocation(routeInformation);
-    }
-    if(routeInformation.location!.contains(UserWelcomeScreen.routeName)) {
-      return UserWelcomeLocation(routeInformation);
-    }
-    if(routeInformation.location!.contains(LoginScreen.routeName)) {
-      return LoginLocation(routeInformation);
-    }
-    if(routeInformation.location!.contains(SignupScreen.routeName)) {
-      return SignupLocation(routeInformation);
-    }
-    if(routeInformation.location!.contains(VolunteeringScreen.routeName)) {
-      return VolunteeringLocation(routeInformation);
-    }
-    if(routeInformation.location!.contains(ProfileScreen.routeName)) {
-      return ProfileLocation(routeInformation);
-    }
-    if(routeInformation.location!.contains(NewsScreen.routeName)) {
-      return NewsLocation(routeInformation);
-    }
-    return HomeLocation(routeInformation);
+  RouteInformation routeInformation,
+  BeamParameters? beamParameters,
+) {
+  if (routeInformation.location!.contains(UserWelcomeScreen.routeName)) {
+    print("buenas");
+    return UserWelcomeLocation(routeInformation);
+  }
+  if (routeInformation.location!.contains(WelcomeScreen.routeName)) {
+    print("chau");
+    return WelcomeLocation(routeInformation);
+  }
+  if (routeInformation.location!.contains(LoginScreen.routeName)) {
+    return LoginLocation(routeInformation);
+  }
+  if (routeInformation.location!.contains(SignupScreen.routeName)) {
+    return SignupLocation(routeInformation);
+  }
+  if (routeInformation.location!.contains(VolunteeringScreen.routeName)) {
+    return VolunteeringLocation(routeInformation);
+  }
+  if (routeInformation.location!.contains(ProfileScreen.routeName)) {
+    return ProfileLocation(routeInformation);
+  }
+  if (routeInformation.location!.contains(NewsScreen.routeName)) {
+    return NewsLocation(routeInformation);
+  }
+  return HomeLocation(routeInformation);
 }

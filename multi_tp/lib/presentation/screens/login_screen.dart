@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:multi_tp/application/controllers/login_controller.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
+import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/screens/signup_screen.dart';
+import 'package:multi_tp/presentation/screens/user_welcome_screen.dart';
+import 'package:multi_tp/presentation/utils/new_snackbar.dart';
 import 'package:multi_tp/presentation/utils/validators.dart';
 import 'package:multi_tp/router.dart';
 
@@ -27,7 +31,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     };
   }
 
-  void _handleLogin(String email, String password) async {}
+  void _handleLogin(String email, String password) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      await ref
+          .read(loginControllerProvider.notifier)
+          .logIn(context, email, password);
+      ref.read(mainBeamerDelegateProvider).beamToNamed(UserWelcomeScreen.route);
+    } on Exception catch (e) {
+      setState(() {
+        isLoading = false;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: NewSnackbar(text: e.toString()),
+          behavior: SnackBarBehavior.fixed,
+          backgroundColor: ColorPalette.error100,
+          elevation: 0,
+        ));
+      });
+    }
+    return;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +94,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               Expanded(child: Container()),
               isLoading
-                  ? const CircularProgressIndicator()
+                  ? const CircularProgressIndicator(
+                      color: ColorPalette.primary100,
+                    )
                   : CtaButton(
                       isTransparent: false,
                       isDisabled: (isEmailEmpty || isPassEmpty),

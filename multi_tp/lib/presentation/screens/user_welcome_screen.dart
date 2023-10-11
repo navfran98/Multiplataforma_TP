@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
+import 'package:multi_tp/presentation/screens/volunteering_screen.dart';
+import 'package:multi_tp/router.dart';
 
-class UserWelcomeScreen extends StatelessWidget {
+class UserWelcomeScreen extends ConsumerWidget {
   static const route = "/user_welcome";
   static const routeName = "user_welcome";
 
   const UserWelcomeScreen({Key? key}) : super(key: key);
 
-  void Function() _handleOnPressed(BuildContext context) {
+  void Function() _handleGoHome(BuildContext context, WidgetRef ref) {
     return () {
-      context.go('/home');
+      ref
+          .read(mainBeamerDelegateProvider)
+          .beamToNamed(VolunteeringScreen.route);
     };
   }
 
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         body: Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -46,7 +50,10 @@ class UserWelcomeScreen extends StatelessWidget {
             ),
             Expanded(child: Container()),
             CtaButton(
-                isTransparent: false, isDisabled: false, text: "Comenzar", onPressedFunction: _handleOnPressed(context)),
+                isTransparent: false,
+                isDisabled: false,
+                text: "Comenzar",
+                onPressedFunction: _handleGoHome(context, ref)),
             const SizedBox(
               height: 92,
             ),
