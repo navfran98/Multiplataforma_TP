@@ -9,7 +9,7 @@ abstract interface class AuthRepository {
 
   Future<AuthUser> logIn({required String email, required String password});
 
-  Future<void> signUp({required String email, required String password});
+  Future<String> signUp({required String email, required String password});
 
   Future<void> signOut();
 

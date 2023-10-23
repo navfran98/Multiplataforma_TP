@@ -13,7 +13,7 @@ class SignUpController extends _$SignUpController {
   @override
   Future<void> build() async {}
 
-  Future<void> signUp(
+  Future<String> signUp(
       BuildContext context, String email, String password) async {
     return await ref
         .read(authRepositoryProvider)

@@ -63,10 +63,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> signUp({required String email, required String password}) async {
+  Future<String> signUp({required String email, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      final newUser = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      return newUser.user!.uid;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw WeakPasswordAuthException("weak password");

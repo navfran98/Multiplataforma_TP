@@ -68,6 +68,7 @@ class _SearchFieldState extends State<SearchField> {
           boxShadow: [CustomShadow.shadow01_1(), CustomShadow.shadow01_2()]),
       child: TextField(
         controller: _controller,
+        textAlignVertical: TextAlignVertical.center,
         focusNode: _focusNode,
         decoration: InputDecoration(
           fillColor: ColorPalette.neutral0,

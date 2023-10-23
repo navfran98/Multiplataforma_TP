@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_tp/application/controllers/signup_controller.dart';
+import 'package:multi_tp/data/datasources/user_dao.dart';
+import 'package:multi_tp/data/repositories/user_repository_impl.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
@@ -34,15 +36,18 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
     };
   }
 
-  void _handleSignUp(String email, String password) async {
+  void _handleSignUp(String email, String password, String name, String lastName) async {
     setState(() {
       isLoading = true;
     });
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     try {
-      await ref
+      final uid = await ref
           .read(signUpControllerProvider.notifier)
           .signUp(context, email, password);
+      // TODO: crear controller para esto
+      final userRepositoryImpl = UserRepositoryImpl(userDao: UserDaoImpl());
+      userRepositoryImpl.createUser(uid: uid, email: email, name: name, lastName: lastName);
       ref
           .read(mainBeamerDelegateProvider)
           .beamToNamed(UserWelcomeScreen.route);
@@ -138,7 +143,7 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
                     onPressedFunction: () {
                       if (_formKey.currentState!.validate()) {
                         _handleSignUp(
-                            emailController.text, passwordController.text);
+                            emailController.text, passwordController.text, nameController.text, lastNameController.text);
                       }
                     }),
                 const SizedBox(
