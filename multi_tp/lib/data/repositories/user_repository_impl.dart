@@ -32,5 +32,17 @@ class UserRepositoryImpl implements UserRepository {
     // TODO: implement updateUser
     throw UnimplementedError();
   }
+  
+  @override
+  Future<User?> findLoggedUser() {
+    // TODO: implement findLoggedUser
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<User?> findUserById({required String id}) {
+    // TODO: implement findUserById
+    throw UnimplementedError();
+  }
 
 }

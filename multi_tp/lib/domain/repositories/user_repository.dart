@@ -10,4 +10,10 @@ abstract interface class UserRepository {
 
   // Update user info
   Future<void> updateUser({required String userId, required User newUser});
+
+  // Find user from ID
+  Future<User?> findUserById({required String id});
+
+  // Find ogged user
+  Future<User?> findLoggedUser();
 }
