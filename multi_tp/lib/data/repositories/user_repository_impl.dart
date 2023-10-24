@@ -14,5 +14,23 @@ class UserRepositoryImpl implements UserRepository {
     final newUser = await userDao.createUser(uid, email, name, lastName);
     return newUser;    
   }
+  
+  @override
+  Future<void> addFavorite({required String volunteeringId}) {
+    // TODO: implement addFavorite
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<void> deleteFavorite({required String volunteeringId}) {
+    // TODO: implement deleteFavorite
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<void> updateUser({required String userId, required User newUser}) {
+    // TODO: implement updateUser
+    throw UnimplementedError();
+  }
 
 }

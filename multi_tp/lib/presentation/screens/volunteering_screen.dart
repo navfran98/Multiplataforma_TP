@@ -71,7 +71,7 @@ class VolunteeringScreen extends ConsumerWidget {
             minVerticalPadding: 0,
             contentPadding: EdgeInsets.symmetric(horizontal: 16),
             //TODO: aca iria el id del volunteering actual de la card
-            title: VolunteeringCard(id: "1"),
+            title: VolunteeringCard(id: "1", isFavorite: false,),
             subtitle: SizedBox(height: 24),
           );
         },

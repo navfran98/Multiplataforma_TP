@@ -1,6 +1,3 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
-
 class User {
   final String email;
   final String name;
@@ -8,7 +5,7 @@ class User {
   final String? genre;
   final String? birthDate;
   final String? phoneNumber;
-  // final String? imageUrl; // this is FireStorage url to the image
+  final String? imageUrl; // this is FireStorage url to the image
 
 
   User({
@@ -18,7 +15,7 @@ class User {
     this.genre,
     this.birthDate,
     this.phoneNumber,
-    // this.imageUrl,
+    this.imageUrl,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -28,7 +25,8 @@ class User {
       lastName: json['lastName'] as String,
       genre: json['genre'] as String,
       birthDate: json['birthDate'] as String,
-      phoneNumber: json['phoneNumber'] as String
+      phoneNumber: json['phoneNumber'] as String,
+      imageUrl: json['imageUrl'] as String
     );
   }
 
@@ -39,7 +37,8 @@ class User {
       'lastName': lastName,
       'genre': genre,
       'birthDate': birthDate,
-      'phoneNumber': phoneNumber
+      'phoneNumber': phoneNumber,
+      'imageUrl': imageUrl
     };
   }
 

@@ -70,11 +70,9 @@ BeamLocation<RouteInformationSerializable<dynamic>> _locationBuilder(
   BeamParameters? beamParameters,
 ) {
   if (routeInformation.location!.contains(UserWelcomeScreen.routeName)) {
-    print("buenas");
     return UserWelcomeLocation(routeInformation);
   }
   if (routeInformation.location!.contains(WelcomeScreen.routeName)) {
-    print("chau");
     return WelcomeLocation(routeInformation);
   }
   if (routeInformation.location!.contains(LoginScreen.routeName)) {
