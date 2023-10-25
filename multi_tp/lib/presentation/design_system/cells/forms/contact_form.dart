@@ -3,14 +3,15 @@ import 'package:flutter/rendering.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
+import 'package:multi_tp/presentation/utils/validators.dart';
 
 class ContactForm extends StatelessWidget {
-  const ContactForm({Key? key}) : super(key: key);
+  ContactForm({Key? key, required this.phoneController, required this.emailController}) : super(key: key);
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
-    TextEditingController controller2 = TextEditingController();
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -37,7 +38,8 @@ class ContactForm extends StatelessWidget {
             floatingLabel: true,
             labelText: "Telefono",
             hintText: "Ej: +541178445459",
-            controller: controller,
+            controller: phoneController,
+            validator: Validators.validatePhoneNumber,
           ),
           const SizedBox(
             height: 24,
@@ -47,7 +49,8 @@ class ContactForm extends StatelessWidget {
             floatingLabel: true,
             labelText: "Email",
             hintText: "Ej: mimail@mail.com",
-            controller: controller2,
+            controller: emailController,
+            validator: Validators.validateContactEmail,
           ),
         ],
       ),

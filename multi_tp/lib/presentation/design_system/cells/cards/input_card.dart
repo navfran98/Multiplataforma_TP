@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 
 class InputCard extends StatefulWidget {
-  const InputCard({Key? key}) : super(key: key);
+   final void Function(String?)? onGenderSelected;
+
+  const InputCard({Key? key, this.onGenderSelected}) : super(key: key);
 
   @override
   State<InputCard> createState() => _InputCardState();
@@ -43,7 +44,7 @@ class _InputCardState extends State<InputCard> {
               return ListTile(
                 title: Text(
                   _options.elementAt(index),
-                  style: CustomFont.body01(ColorPalette.neutral100),
+                  style: const CustomFont.body01(ColorPalette.neutral100),
                 ),
                 leading: Radio<String>(
                   value: _options.elementAt(index),
@@ -54,6 +55,7 @@ class _InputCardState extends State<InputCard> {
                     setState(() {
                       _selected = value;
                     });
+                    widget.onGenderSelected?.call(value);
                   },
                 ),
               );

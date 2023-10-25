@@ -46,6 +46,7 @@ dependencies:
   flutter_hooks: ^0.20.2
   hooks_riverpod: ^2.4.2
   cloud_firestore: ^4.11.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
