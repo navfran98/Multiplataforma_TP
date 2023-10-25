@@ -47,7 +47,6 @@ class AuthRepositoryImpl implements AuthRepository {
         throw UserNotLoggedInAuthException("user not logged in");
       }
     } on FirebaseAuthException catch (e) {
-      print(e.code);
       if (e.code == 'user-not-found') {
         throw UserNotFoundAuthException("user not found");
       } else if (e.code == 'wrong-password') {

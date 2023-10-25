@@ -45,15 +45,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mainBeamerDelegate = ref.watch(mainBeamerDelegateProvider);
-    // return MaterialApp.router(
-    //   title: 'Flutter Demo',
-    //   theme: ThemeData(
-    //     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    //     useMaterial3: true,
-    //   ),
-    //   routerConfig: router,
-    //   debugShowCheckedModeBanner: false,
-    // );
+    
     return MaterialApp.router(
       title: 'Ser Manos',
       // Routing

@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_tp/presentation/screens/login_screen.dart';
 import 'package:multi_tp/presentation/screens/news_screen.dart';
@@ -57,11 +58,10 @@ BeamGuard getLoggerGuard() {
 // }
 
 String _getInitialPath() {
-  // if (FirebaseAuth.instance.currentUser != null) {
-  //   return HomeScreen.route;
-  // }
-  //
-  // return LoginScreen.route;
+  if (FirebaseAuth.instance.currentUser != null) {
+    return VolunteeringScreen.route;
+  }
+  
   return WelcomeScreen.route;
 }
 

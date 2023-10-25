@@ -29,7 +29,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     return Container(
       color: ColorPalette.neutral0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: renderCompletedProfile(),
+      // child: renderCompletedProfile(),
+      child: renderNewProfile(),
     );
   }
 
@@ -105,16 +106,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     height: 8,
                   ),
                   isLoading
-                  ? const CircularProgressIndicator(
-                      color: ColorPalette.primary100,
-                    )
-                  : CtaButton(
-                      isTransparent: true,
-                      isDisabled: false,
-                      text: "Cerrar sesion",
-                      onPressedFunction: () {
-                        _handleLogOut();
-                      })
+                      ? const CircularProgressIndicator(
+                          color: ColorPalette.primary100,
+                        )
+                      : CtaButton(
+                          isTransparent: true,
+                          isDisabled: false,
+                          text: "Cerrar sesion",
+                          onPressedFunction: () {
+                            _handleLogOut();
+                          })
                 ],
               ),
             )

@@ -14,6 +14,6 @@ abstract interface class UserRepository {
   // Find user from ID
   Future<User?> findUserById({required String id});
 
-  // Find ogged user
+  // Find logged user
   Future<User?> findLoggedUser();
 }
