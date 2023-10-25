@@ -2,16 +2,18 @@
 
 import 'package:multi_tp/data/datasources/user_dao.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
+import 'package:multi_tp/domain/repositories/auth_repository.dart';
 import 'package:multi_tp/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  UserRepositoryImpl({required this.userDao});
+  UserRepositoryImpl({required this.userDao, required this.authRepository});
 
   final UserDao userDao;
+  final AuthRepository authRepository;
   
   @override
   Future<User> createUser({required String uid, required String email, required String name, required String lastName}) async {
-    final newUser = await userDao.createUser(uid, email, name, lastName);
+    final newUser = await userDao.createUser(uid: uid, email: email, name: name, lastName: lastName);
     return newUser;    
   }
   
@@ -34,15 +36,18 @@ class UserRepositoryImpl implements UserRepository {
   }
   
   @override
-  Future<User?> findLoggedUser() {
-    // TODO: implement findLoggedUser
-    throw UnimplementedError();
+  Future<User?> findLoggedUser() async {
+    final loggedUser = authRepository.currentUser;
+    if(loggedUser == null) {
+      return null;
+    } else {
+      return await findUserById(id: loggedUser.id);
+    }
   }
   
   @override
-  Future<User?> findUserById({required String id}) {
-    // TODO: implement findUserById
-    throw UnimplementedError();
+  Future<User?> findUserById({required String id}) async {
+    return await userDao.findUserById(id: id);
   }
 
 }

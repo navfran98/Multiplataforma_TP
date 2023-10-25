@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_tp/application/controllers/signup_controller.dart';
 import 'package:multi_tp/data/datasources/user_dao.dart';
+import 'package:multi_tp/data/repositories/auth_repository_impl.dart';
 import 'package:multi_tp/data/repositories/user_repository_impl.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
@@ -45,8 +46,8 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
       final uid = await ref
           .read(signUpControllerProvider.notifier)
           .signUp(context, email, password);
-      // TODO: crear controller para esto
-      final userRepositoryImpl = UserRepositoryImpl(userDao: UserDaoImpl());
+      // TODO: crear controller para esto y los providers
+      final userRepositoryImpl = UserRepositoryImpl(userDao: UserDaoImpl(), authRepository: AuthRepositoryImpl());
       userRepositoryImpl.createUser(uid: uid, email: email, name: name, lastName: lastName);
       ref
           .read(mainBeamerDelegateProvider)
