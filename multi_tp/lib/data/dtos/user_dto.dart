@@ -3,10 +3,10 @@ class User {
   final String email;
   final String name;
   final String lastName;
-  final String? genre;
-  final String? birthDate;
-  final String? phoneNumber;
-  final String? imageUrl; // this is FireStorage url to the image
+  String? genre;
+  String? birthDate;
+  String? phoneNumber;
+  String? imageUrl; // this is FireStorage url to the image
 
 
   User({
@@ -26,10 +26,10 @@ class User {
       email: json['email'] as String,
       name: json['name'] as String,
       lastName: json['lastName'] as String,
-      genre: json['genre'] as String,
-      birthDate: json['birthDate'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      imageUrl: json['imageUrl'] as String
+      genre: json['genre'] as String?,
+      birthDate: json['birthDate'] as String?,
+      phoneNumber: json['phoneNumber'] as String?,
+      imageUrl: json['imageUrl'] as String?
     );
   }
 
@@ -43,6 +43,12 @@ class User {
       'phoneNumber': phoneNumber,
       'imageUrl': imageUrl
     };
+  }
+
+  @override
+  String toString() {
+    return 'User {\nid: $id, \nemail: $email, \nname: $name, \nlastName: $lastName, \ngenre: $genre, '
+        '\nbirthDate: $birthDate, \nphoneNumber: $phoneNumber, \nimageUrl: $imageUrl\n}';
   }
 
 }

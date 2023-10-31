@@ -1,25 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../providers.dart';
+part of '../controllers/get_logged_user_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authRepositoryHash() => r'14cef0de648cf4472222968e1d97329e2eb8963d';
+String _$getLoggedUserControllerHash() =>
+    r'98fcc664bbf578649947ee62e2d96c99134e53ad';
 
-/// See also [authRepository].
-@ProviderFor(authRepository)
-final authRepositoryProvider = Provider<AuthRepository>.internal(
-  authRepository,
-  name: r'authRepositoryProvider',
+/// See also [getLoggedUserController].
+@ProviderFor(getLoggedUserController)
+final getLoggedUserControllerProvider =
+    AutoDisposeFutureProvider<User?>.internal(
+  getLoggedUserController,
+  name: r'getLoggedUserControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$authRepositoryHash,
+      : _$getLoggedUserControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef AuthRepositoryRef = ProviderRef<AuthRepository>;
+typedef GetLoggedUserControllerRef = AutoDisposeFutureProviderRef<User?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

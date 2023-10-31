@@ -31,8 +31,7 @@ class UserRepositoryImpl implements UserRepository {
   
   @override
   Future<void> updateUser({required String userId, required User newUser}) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+    return userDao.updateUser(userId: userId, newUser: newUser);
   }
   
   @override

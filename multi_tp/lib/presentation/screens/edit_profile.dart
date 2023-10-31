@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_tp/application/controllers/get_logged_user_controller.dart';
 import 'package:multi_tp/data/datasources/user_dao.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/repositories/auth_repository_impl.dart';
@@ -38,25 +39,27 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     };
   }
 
-  void _handleSaveChanges() async {
+  void _handleSaveChanges(User loggedUser) async {
     if(dateController.text.isNotEmpty){
-      print(dateController.text);
+      loggedUser.birthDate = dateController.text;
     }
     if(_selectedGender != null){
-      print(_selectedGender);
+      loggedUser.genre = _selectedGender;
     }
     if(phoneController.text.isNotEmpty){
-      print(phoneController.text);
+      loggedUser.phoneNumber = phoneController.text;
     }
-    if(emailController.text.isNotEmpty){
-      print(emailController.text);
-    }
-    // Get de logged user
-    // Create new user with logged user's ID, email, name and lastname and then call userUpdate
+    //TODO: Esto no se si cambia solo el email de la coleccion user o tmb el de auth
+    // if(emailController.text.isNotEmpty){
+      
+    // }
+    print(loggedUser);
+    // Call update user
   }
 
   @override
   Widget build(BuildContext context) {
+    final loggedUserController = ref.watch(getLoggedUserControllerProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorPalette.neutral0,
@@ -71,36 +74,42 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         ),
         centerTitle: false,
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Container(
-            color: ColorPalette.neutral0,
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-            child: Column(
-              children: [
-                PersonalForm(dateController: dateController, onGenderSelected: (value) => {_selectedGender = value},),
-                const SizedBox(
-                  height: 32,
+      body: loggedUserController.when(
+        data: (user) {
+          return SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Container(
+                color: ColorPalette.neutral0,
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+                child: Column(
+                  children: [
+                    PersonalForm(dateController: dateController, onGenderSelected: (value) => {_selectedGender = value},),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    ContactForm(phoneController: phoneController, emailController: emailController,),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    CtaButton(
+                        isTransparent: false,
+                        isDisabled: false,
+                        text: "Guardar cambios",
+                        onPressedFunction: () {
+                          if (_formKey.currentState!.validate()) {
+                            _handleSaveChanges(user!);
+                          }
+                        })
+                  ],
                 ),
-                ContactForm(phoneController: phoneController, emailController: emailController,),
-                const SizedBox(
-                  height: 32,
-                ),
-                CtaButton(
-                    isTransparent: false,
-                    isDisabled: false,
-                    text: "Guardar cambios",
-                    onPressedFunction: () {
-                      if (_formKey.currentState!.validate()) {
-                        _handleSaveChanges();
-                      }
-                    })
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        },
+        error: (error, stackTrace) => const Center(child: Text("Error"),),
+        loading: () => const Center(child: CircularProgressIndicator(),), 
+      )
     );
   }
 }

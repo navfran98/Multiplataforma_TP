@@ -33,7 +33,7 @@ class Validators {
           return 'La fecha debe ser anterior a la fecha actual';
         }
       } on FormatException {
-        return 'Formato de fecha inválido';
+        return 'La fecha no existe';
       }
     }
     return null;

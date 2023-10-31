@@ -29,6 +29,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     return Container(
       color: ColorPalette.neutral0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
+      //TODO: aca chequear si ya esta completo o no el perfil
       // child: renderCompletedProfile(),
       child: renderNewProfile(),
     );
