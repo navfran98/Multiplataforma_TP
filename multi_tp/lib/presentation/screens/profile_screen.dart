@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_tp/application/controllers/get_logged_user_controller.dart';
 import 'package:multi_tp/application/providers.dart';
+import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/presentation/design_system/cells/cards/info_card.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/short_button.dart';
@@ -21,17 +23,35 @@ class ProfileScreen extends ConsumerStatefulWidget {
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+//TODO: ver de hacerlo stream porq no se reflejan los cambios cuando editas
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool isLoading = false;
 
+  bool checkCompletedProfile(User loggedUser) {
+    //TODO: agregar imagen y contactEmail
+    if(loggedUser.birthDate != null && loggedUser.genre != null && loggedUser.phoneNumber != null) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final loggedUser = ref.watch(getLoggedUserControllerProvider);
     return Container(
       color: ColorPalette.neutral0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      //TODO: aca chequear si ya esta completo o no el perfil
-      // child: renderCompletedProfile(),
-      child: renderNewProfile(),
+      child: loggedUser.when(
+        data: (user) {
+          if(checkCompletedProfile(user!)){
+            return renderCompletedProfile(user);
+          } else {
+            return renderNewProfile();
+          }
+        }, 
+         error: (error, stackTrace) => const Center(child: Text("Error"),),
+        loading: () => const Center(child: CircularProgressIndicator(),), 
+      )
     );
   }
 
@@ -49,10 +69,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     ref.read(mainBeamerDelegateProvider).beamToNamed(LoginScreen.route);
   }
 
-  Widget renderCompletedProfile() {
+  Widget renderCompletedProfile(User user) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 32),
+        padding: const EdgeInsets.symmetric(vertical: 32),
         child: Column(
           children: [
             SizedBox(
@@ -72,25 +92,35 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             const SizedBox(
               height: 2,
             ),
-            const Text(
-              "Juan Cruz Gonzalez",
-              style: CustomFont.subtitle01(ColorPalette.neutral100),
+            Text(
+              '${user.name} ${user.lastName}',
+              style: const CustomFont.subtitle01(ColorPalette.neutral100),
             ),
             const SizedBox(
               height: 2,
             ),
-            const Text(
-              "mimail@mail.com",
-              style: CustomFont.body01(ColorPalette.secondary200),
+            Text(
+              user.email,
+              style: const CustomFont.body01(ColorPalette.secondary200),
             ),
             const SizedBox(
               height: 32,
             ),
-            const InfoCard(),
+            InfoCard(
+              title: 'Informacion Personal', 
+              firstLabel: 'FECHA DE NACIMIENTO', 
+              firstContent: user.birthDate!, 
+              secondLabel: 'GENERO', 
+              secondContent: user.genre!,),
             const SizedBox(
               height: 32,
             ),
-            const InfoCard(),
+            InfoCard(
+              title: 'Datos de contacto', 
+              firstLabel: 'TELEFONO', 
+              firstContent: user.phoneNumber!, 
+              secondLabel: 'E-MAIL', 
+              secondContent: user.email!,),
             const SizedBox(
               height: 32,
             ),

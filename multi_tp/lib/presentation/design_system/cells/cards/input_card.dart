@@ -4,8 +4,9 @@ import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 
 class InputCard extends StatefulWidget {
    final void Function(String?)? onGenderSelected;
+   final String? initialValue;
 
-  const InputCard({Key? key, this.onGenderSelected}) : super(key: key);
+  const InputCard({Key? key, this.onGenderSelected, required this.initialValue}) : super(key: key);
 
   @override
   State<InputCard> createState() => _InputCardState();
@@ -14,6 +15,14 @@ class InputCard extends StatefulWidget {
 class _InputCardState extends State<InputCard> {
   String? _selected;
   final List<String> _options = ["Hombre", "Mujer", "No Binario"];
+
+  @override
+  void initState() {
+    if(widget.initialValue != null) {
+      _selected = widget.initialValue;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

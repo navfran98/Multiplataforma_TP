@@ -10,8 +10,9 @@ import 'package:multi_tp/presentation/utils/validators.dart';
 
 class PersonalForm extends StatelessWidget {
   final void Function(String?)? onGenderSelected;
-  const PersonalForm({Key? key, required this.dateController, this.onGenderSelected}) : super(key: key);
+  const PersonalForm({Key? key, required this.dateController, this.onGenderSelected, required this.initialValue}) : super(key: key);
   final TextEditingController dateController;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class PersonalForm extends StatelessWidget {
             onGenderSelected: (value) {
               onGenderSelected?.call(value);
             },
+            initialValue: initialValue
           ),
           const SizedBox(height: 24,),
           ProfilePicCard()

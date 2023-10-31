@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multi_tp/application/controllers/get_logged_user_controller.dart';
+import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/datasources/user_dao.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/repositories/auth_repository_impl.dart';
@@ -51,10 +52,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     }
     //TODO: Esto no se si cambia solo el email de la coleccion user o tmb el de auth
     // if(emailController.text.isNotEmpty){
-      
     // }
-    print(loggedUser);
-    // Call update user
+    // TODO: cambiar esto por controller
+    ref.read(userRepositoryProvider).updateUser(userId: loggedUser.id, newUser: loggedUser);
+    ref.read(mainBeamerDelegateProvider).beamToNamed(ProfileScreen.route);
+  }
+
+  setInitialvalues(User user) {
+    dateController.text = user.birthDate != null ? user.birthDate! : "";
+    phoneController.text = user.phoneNumber != null ? user.phoneNumber! : "";
+    // emailController.text = user.birthDate != null ? user.birthDate! : "";
   }
 
   @override
@@ -76,6 +83,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       ),
       body: loggedUserController.when(
         data: (user) {
+          setInitialvalues(user!);
           return SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -84,7 +92,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
                 child: Column(
                   children: [
-                    PersonalForm(dateController: dateController, onGenderSelected: (value) => {_selectedGender = value},),
+                    PersonalForm(dateController: dateController, onGenderSelected: (value) => {_selectedGender = value}, initialValue: user.genre),
                     const SizedBox(
                       height: 32,
                     ),
