@@ -5,6 +5,7 @@ import 'package:multi_tp/application/controllers/get_logged_user_controller.dart
 import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/presentation/design_system/cells/cards/info_card.dart';
+import 'package:multi_tp/presentation/design_system/cells/custom_modal.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/short_button.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
@@ -61,12 +62,21 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     };
   }
 
-  void _handleLogOut() async {
-    setState(() {
-      isLoading = true;
-    });
-    await ref.read(authRepositoryProvider).signOut();
-    ref.read(mainBeamerDelegateProvider).beamToNamed(LoginScreen.route);
+  void _handleLogOut(BuildContext context) async {
+    // ignore: use_build_context_synchronously
+    showDialog(
+      barrierDismissible: false,
+      context: context, 
+      builder: (BuildContext context) => 
+        Center(
+          child: CustomModal(
+            title: '¿Estás seguro que quieres cerrar sesión?', 
+            onPressedFunction: () async { 
+              await ref.read(authRepositoryProvider).signOut();
+              ref.read(mainBeamerDelegateProvider).beamToNamed(LoginScreen.route); },
+          )
+        )
+    );
   }
 
   Widget renderCompletedProfile(User user) {
@@ -145,7 +155,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           isDisabled: false,
                           text: "Cerrar sesion",
                           onPressedFunction: () {
-                            _handleLogOut();
+                            _handleLogOut(context);
                           })
                 ],
               ),
