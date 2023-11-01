@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 import 'package:multi_tp/presentation/utils/validators.dart';
 
-class ContactForm extends StatelessWidget {
-  ContactForm({Key? key, required this.phoneController, required this.emailController}) : super(key: key);
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+class ContactForm extends ConsumerStatefulWidget {
+  const ContactForm({Key? key, required this.phoneController, required this.emailController}) : super(key: key);
+  final TextEditingController phoneController;
+  final TextEditingController emailController;
+  
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _ContactFormState();
 
+}
+
+class _ContactFormState extends ConsumerState<ContactForm> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -38,7 +44,7 @@ class ContactForm extends StatelessWidget {
             floatingLabel: true,
             labelText: "Telefono",
             hintText: "Ej: +541178445459",
-            controller: phoneController,
+            controller: widget.phoneController,
             validator: Validators.validatePhoneNumber,
           ),
           const SizedBox(
@@ -49,7 +55,7 @@ class ContactForm extends StatelessWidget {
             floatingLabel: true,
             labelText: "Email",
             hintText: "Ej: mimail@mail.com",
-            controller: emailController,
+            controller: widget.emailController,
             validator: Validators.validateContactEmail,
           ),
         ],

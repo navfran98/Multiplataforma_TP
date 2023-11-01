@@ -12,6 +12,7 @@ import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 import 'package:multi_tp/presentation/screens/edit_profile.dart';
 import 'package:multi_tp/presentation/screens/login_screen.dart';
+import 'package:multi_tp/presentation/screens/welcome_screen.dart';
 import 'package:multi_tp/router.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -29,11 +30,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool isLoading = false;
 
   bool checkCompletedProfile(User loggedUser) {
-    //TODO: agregar imagen y contactEmail
-    if(loggedUser.birthDate != null && loggedUser.genre != null && loggedUser.phoneNumber != null) {
-      return true;
-    }
-    return false;
+    // //TODO: agregar imagen y contactEmail
+    // if(loggedUser.birthDate != null && loggedUser.genre != null && loggedUser.phoneNumber != null) {
+    //   return true;
+    // }
+    // return false;
+    return true;
   }
 
   @override
@@ -73,7 +75,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             title: '¿Estás seguro que quieres cerrar sesión?', 
             onPressedFunction: () async { 
               await ref.read(authRepositoryProvider).signOut();
-              ref.read(mainBeamerDelegateProvider).beamToNamed(LoginScreen.route); },
+              ref.read(mainBeamerDelegateProvider).beamToNamed(WelcomeScreen.route); },
           )
         )
     );
@@ -130,7 +132,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               firstLabel: 'TELEFONO', 
               firstContent: user.phoneNumber!, 
               secondLabel: 'E-MAIL', 
-              secondContent: user.email!,),
+              secondContent: user.contactEmail!,),
             const SizedBox(
               height: 32,
             ),

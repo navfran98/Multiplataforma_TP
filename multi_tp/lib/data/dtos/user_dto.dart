@@ -3,6 +3,7 @@ class User {
   final String email;
   final String name;
   final String lastName;
+  String? contactEmail;
   String? genre;
   String? birthDate;
   String? phoneNumber;
@@ -18,6 +19,7 @@ class User {
     this.birthDate,
     this.phoneNumber,
     this.imageUrl,
+    this.contactEmail
   });
 
   factory User.fromJson(String id, Map<String, dynamic> json) {
@@ -29,7 +31,8 @@ class User {
       genre: json['genre'] as String?,
       birthDate: json['birthDate'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
-      imageUrl: json['imageUrl'] as String?
+      imageUrl: json['imageUrl'] as String?,
+      contactEmail: json['contactEmail'] as String?
     );
   }
 
@@ -41,14 +44,15 @@ class User {
       'genre': genre,
       'birthDate': birthDate,
       'phoneNumber': phoneNumber,
-      'imageUrl': imageUrl
+      'imageUrl': imageUrl,
+      'contactEmail': contactEmail
     };
   }
 
   @override
   String toString() {
     return 'User {\nid: $id, \nemail: $email, \nname: $name, \nlastName: $lastName, \ngenre: $genre, '
-        '\nbirthDate: $birthDate, \nphoneNumber: $phoneNumber, \nimageUrl: $imageUrl\n}';
+        '\nbirthDate: $birthDate, \nphoneNumber: $phoneNumber, \nimageUrl: $imageUrl\n, \ncontactEmail: $contactEmail\n}';
   }
 
 }

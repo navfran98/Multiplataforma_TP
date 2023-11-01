@@ -29,9 +29,9 @@ class CustomModal extends StatelessWidget {
             style: const CustomFont.subtitle01(ColorPalette.neutral100),
           ),
           if(subtitle != null) 
-            const Text(
-              "Un Techo para mi País",
-              style: CustomFont.headline02(ColorPalette.neutral100),
+            Text(
+              subtitle!,
+              style: const CustomFont.headline02(ColorPalette.neutral100),
             ),
           const SizedBox(height: 8,),
           Row(
