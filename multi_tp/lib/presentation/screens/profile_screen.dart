@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:multi_tp/application/controllers/get_logged_user_controller.dart';
+import 'package:multi_tp/application/controllers/logged_user_controller.dart';
 import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/presentation/design_system/cells/cards/info_card.dart';
@@ -29,33 +29,27 @@ class ProfileScreen extends ConsumerStatefulWidget {
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool isLoading = false;
 
-  bool checkCompletedProfile(User loggedUser) {
-    // //TODO: agregar imagen y contactEmail
-    // if(loggedUser.birthDate != null && loggedUser.genre != null && loggedUser.phoneNumber != null) {
-    //   return true;
-    // }
-    // return false;
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final loggedUser = ref.watch(getLoggedUserControllerProvider);
+    final loggedUser = ref.watch(loggedUserControllerProvider);
     return Container(
-      color: ColorPalette.neutral0,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: loggedUser.when(
-        data: (user) {
-          if(checkCompletedProfile(user!)){
-            return renderCompletedProfile(user);
-          } else {
-            return renderNewProfile();
-          }
-        }, 
-         error: (error, stackTrace) => const Center(child: Text("Error"),),
-        loading: () => const Center(child: CircularProgressIndicator(),), 
-      )
-    );
+        color: ColorPalette.neutral0,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: loggedUser.when(
+          data: (user) {
+            if (user!.isCompleted()) {
+              return renderCompletedProfile(user);
+            } else {
+              return renderNewProfile(user);
+            }
+          },
+          error: (error, stackTrace) => const Center(
+            child: Text("Error"),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ));
   }
 
   void Function() _handleEdit(BuildContext context, WidgetRef ref) {
@@ -67,18 +61,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   void _handleLogOut(BuildContext context) async {
     // ignore: use_build_context_synchronously
     showDialog(
-      barrierDismissible: false,
-      context: context, 
-      builder: (BuildContext context) => 
-        Center(
-          child: CustomModal(
-            title: '¿Estás seguro que quieres cerrar sesión?', 
-            onPressedFunction: () async { 
-              await ref.read(authRepositoryProvider).signOut();
-              ref.read(mainBeamerDelegateProvider).beamToNamed(WelcomeScreen.route); },
-          )
-        )
-    );
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => Center(
+                child: CustomModal(
+              title: '¿Estás seguro que quieres cerrar sesión?',
+              onPressedFunction: () async {
+                await ref.read(authRepositoryProvider).signOut();
+                ref
+                    .read(mainBeamerDelegateProvider)
+                    .beamToNamed(WelcomeScreen.route);
+              },
+            )));
   }
 
   Widget renderCompletedProfile(User user) {
@@ -119,20 +113,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               height: 32,
             ),
             InfoCard(
-              title: 'Informacion Personal', 
-              firstLabel: 'FECHA DE NACIMIENTO', 
-              firstContent: user.birthDate!, 
-              secondLabel: 'GENERO', 
-              secondContent: user.genre!,),
+              title: 'Informacion Personal',
+              firstLabel: 'FECHA DE NACIMIENTO',
+              firstContent: user.birthDate!,
+              secondLabel: 'GENERO',
+              secondContent: user.genre!,
+            ),
             const SizedBox(
               height: 32,
             ),
             InfoCard(
-              title: 'Datos de contacto', 
-              firstLabel: 'TELEFONO', 
-              firstContent: user.phoneNumber!, 
-              secondLabel: 'E-MAIL', 
-              secondContent: user.contactEmail!,),
+              title: 'Datos de contacto',
+              firstLabel: 'TELEFONO',
+              firstContent: user.phoneNumber!,
+              secondLabel: 'E-MAIL',
+              secondContent: user.contactEmail!,
+            ),
             const SizedBox(
               height: 32,
             ),
@@ -168,7 +164,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  Widget renderNewProfile() {
+  Widget renderNewProfile(User user) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -192,9 +188,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               const SizedBox(
                 height: 8,
               ),
-              const Text(
-                "Juan Cruz Gonzalez",
-                style: CustomFont.subtitle01(ColorPalette.neutral100),
+              Text(
+                "${user.name} ${user.lastName}",
+                style: const CustomFont.subtitle01(ColorPalette.neutral100),
               ),
               const SizedBox(
                 height: 8,
