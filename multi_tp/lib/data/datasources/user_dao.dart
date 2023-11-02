@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
+import 'package:multi_tp/utils/logger.dart';
 
 abstract interface class UserDao {
   // Create user after signup
@@ -20,6 +24,9 @@ abstract interface class UserDao {
   Future<User?> findUserById({required String id});
 
   Stream<User?> streamUser({required String userId});
+
+  Future<void> uploadProfilePicture(
+      {required String userId, required String filePath});
 }
 
 class UserDaoImpl extends UserDao {
@@ -29,6 +36,7 @@ class UserDaoImpl extends UserDao {
   UserDaoImpl();
   factory UserDaoImpl.instance() => UserDaoImpl();
 
+  final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
 
   @override
@@ -87,5 +95,29 @@ class UserDaoImpl extends UserDao {
         return null;
       }
     });
+  }
+
+  @override
+  Future<void> uploadProfilePicture(
+      {required String userId, required String filePath}) async {
+    try {
+      File file = File(filePath);
+
+      User user = await findUserById(id: userId) as User;
+
+      Reference storageReference =
+          _storage.ref().child('profile_pictures/$userId.jpg');
+      // Upload file to Firebase Storage
+      await storageReference.putFile(file);
+      // Get download URL
+      String imageUrl = await storageReference.getDownloadURL();
+      user.imageUrl = imageUrl;
+      updateUser(userId: userId, newUser: user);
+
+    } catch (e) {
+      // Handle the exception here
+      logger.e('Error uploading profile picture: $e');
+      rethrow;
+    }
   }
 }
