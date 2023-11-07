@@ -27,6 +27,9 @@ abstract interface class UserDao {
 
   Future<void> uploadProfilePicture(
       {required String userId, required String filePath});
+
+  Future<File?> getUserProfilePicture(String? imageUrl);
+
 }
 
 class UserDaoImpl extends UserDao {
@@ -97,6 +100,29 @@ class UserDaoImpl extends UserDao {
     });
   }
 
+
+   Future<File?> getUserProfilePicture(String? imageUrl) async {
+    if (imageUrl == null || imageUrl.isEmpty) {
+      // If the user does not have a profile picture, you can return null or a default image file
+      return null;
+    }
+
+    try {
+      // Get the reference from the image URL
+      Reference imageReference = _storage.refFromURL(imageUrl);
+
+      // Download the image to a temporary file
+      File tempFile = File('tmp/temp_image.jpg');
+      await imageReference.writeToFile(tempFile);
+
+      return tempFile;
+    } catch (e) {
+      // Handle the exception here
+      logger.e('Error getting user profile picture: $e');
+      return null; // Return null in case of an error
+    }
+  }
+
   @override
   Future<void> uploadProfilePicture(
       {required String userId, required String filePath}) async {
@@ -112,12 +138,12 @@ class UserDaoImpl extends UserDao {
       // Get download URL
       String imageUrl = await storageReference.getDownloadURL();
       user.imageUrl = imageUrl;
-      updateUser(userId: userId, newUser: user);
-
+      await updateUser(userId: userId, newUser: user);
     } catch (e) {
       // Handle the exception here
       logger.e('Error uploading profile picture: $e');
       rethrow;
     }
   }
+
 }

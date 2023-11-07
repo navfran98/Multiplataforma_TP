@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:multi_tp/data/datasources/user_dao.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/domain/repositories/auth_repository.dart';
@@ -65,5 +67,11 @@ class UserRepositoryImpl implements UserRepository {
     } else {
       return userDao.streamUser(userId: loggedUser.id);
     }
+  }
+
+
+  @override
+  Future<File?> getUserProfilePicture(User user){
+    return userDao.getUserProfilePicture(user.imageUrl);
   }
 }

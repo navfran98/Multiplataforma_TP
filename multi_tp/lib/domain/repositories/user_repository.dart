@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:multi_tp/data/dtos/user_dto.dart';
 
 abstract interface class UserRepository {
@@ -22,4 +24,6 @@ abstract interface class UserRepository {
 
   // FindLoggedUser
   Future<User?> findLoggedUser();
+
+  Future<File?> getUserProfilePicture(User user);
 }

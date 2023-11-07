@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_tp/application/controllers/get_profile_pic_controller.dart';
 import 'package:multi_tp/application/controllers/logged_user_controller.dart';
 import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
@@ -76,18 +77,44 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Widget renderCompletedProfile(User user) {
+
+    final userProfilePic = ref.read(getProfilePicControllerProvider(user: user));
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 32),
         child: Column(
           children: [
-            SizedBox(
+
+            userProfilePic.when(
+              data: (file) => file != null
+                  ? SizedBox(
+                      width: 110,
+                      height: 110,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.file(
+                          file,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    )
+                  : SizedBox(
                 width: 110,
                 height: 110,
                 child: Image.asset(
                   'images/profile_pic.png',
                   fit: BoxFit.fill,
                 )),
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stackTrace) => SizedBox(
+                width: 110,
+                height: 110,
+                child: Image.asset(
+                  'images/profile_pic.png',
+                  fit: BoxFit.fill,
+                )),
+            ),
+            
             const SizedBox(
               height: 16,
             ),
