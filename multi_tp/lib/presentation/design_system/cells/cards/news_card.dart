@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multi_tp/data/dtos/news_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
@@ -8,12 +9,12 @@ import 'package:multi_tp/presentation/screens/single_news_screen.dart';
 import 'package:multi_tp/router.dart';
 
 class NewsCard extends ConsumerWidget {
-  const NewsCard({Key? key, required this.id}) : super(key: key);
-  final String id;
+  const NewsCard({Key? key, required this.news}) : super(key: key);
+  final News news;
 
   void Function() _handleNews(BuildContext context, WidgetRef ref) {
     return () {
-      ref.read(mainBeamerDelegateProvider).beamToNamed(SingleNewsScreen.routeFromId(id));
+      ref.read(mainBeamerDelegateProvider).beamToNamed(SingleNewsScreen.routeFromId(news.id));
     };
   }
 
@@ -38,9 +39,10 @@ class NewsCard extends ConsumerWidget {
             ),
             child: SizedBox(
               width: 118.0,
-              child: Image.asset(
-                'images/news_card.png',
-                fit: BoxFit.fill,
+              height: 156,
+              child: Image.network(
+                news.imageUrl,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -52,17 +54,17 @@ class NewsCard extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "reporte 2820",
-                    style: CustomFont.overline(ColorPalette.neutral75),
+                  Text(
+                    news.reportNumber,
+                    style: const CustomFont.overline(ColorPalette.neutral75),
                   ),
-                  const Text(
-                    "Ser donante voluntario ",
-                    style: CustomFont.subtitle01(ColorPalette.neutral100),
+                  Text(
+                    news.title,
+                    style: const CustomFont.subtitle01(ColorPalette.neutral100),
                   ),
-                  const Text(
-                    "Desde el Hospital Centenario recalcan la importancia de la donación voluntaria de Sangre",
-                    style: CustomFont.body02(ColorPalette.neutral75),
+                  Text(
+                    news.subtitle,
+                    style: const CustomFont.body02(ColorPalette.neutral75),
                     softWrap: true,
                   ),
                   const SizedBox(

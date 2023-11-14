@@ -28,13 +28,6 @@ class ProfilePicCardState extends ConsumerState<ProfilePicCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(42),
         ),
-        // child: Image.file(
-        //   File(picPath!),
-        //   width: 84,
-        //   height: 84,
-        //   fit: BoxFit.cover,
-        //   // fit: BoxFit.fitHeight,
-        // ),
         child: CircleAvatar(
             radius: 42,
             backgroundImage: FileImage(File(picPath!))

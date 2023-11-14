@@ -1,4 +1,4 @@
-import 'package:multi_tp/data/dtos/new_dto.dart';
+import 'package:multi_tp/data/dtos/news_dto.dart';
 
 abstract interface class NewsRepository {
   // Find news from ID

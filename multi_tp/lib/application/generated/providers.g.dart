@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'providers.dart';
+part of '../providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -24,6 +24,20 @@ final userDaoProvider = Provider<UserDao>.internal(
 );
 
 typedef UserDaoRef = ProviderRef<UserDao>;
+String _$newsDaoHash() => r'76ac7cbc2543bdc4934db538341abff36c5a9047';
+
+/// See also [newsDao].
+@ProviderFor(newsDao)
+final newsDaoProvider = Provider<NewsDao>.internal(
+  newsDao,
+  name: r'newsDaoProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$newsDaoHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef NewsDaoRef = ProviderRef<NewsDao>;
 String _$authRepositoryHash() => r'14cef0de648cf4472222968e1d97329e2eb8963d';
 
 ///
@@ -43,6 +57,21 @@ final authRepositoryProvider = Provider<AuthRepository>.internal(
 );
 
 typedef AuthRepositoryRef = ProviderRef<AuthRepository>;
+String _$newsRepositoryHash() => r'12050bf0bbc0355f32621322312770b19b9ae77d';
+
+/// See also [newsRepository].
+@ProviderFor(newsRepository)
+final newsRepositoryProvider = Provider<NewsRepository>.internal(
+  newsRepository,
+  name: r'newsRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$newsRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef NewsRepositoryRef = ProviderRef<NewsRepository>;
 String _$userRepositoryHash() => r'a56ca75c16060fe77622a678af95c2a57b772e29';
 
 /// See also [userRepository].
