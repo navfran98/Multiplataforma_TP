@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:multi_tp/application/controllers/logged_user_controller.dart';
 import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
@@ -24,6 +25,7 @@ class EditProfileScreen extends StatefulHookConsumerWidget {
 
 class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
+  String? filePath;
 
   void Function() _handleCancel(BuildContext context, WidgetRef ref) {
     return () {
@@ -40,7 +42,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     // TODO: cambiar esto por controller
     ref
         .read(loggedUserControllerProvider.notifier)
-        .updateUser(newUser: loggedUser);
+        .updateUser(newUser: loggedUser, localImagePath: filePath);
     ref.read(mainBeamerDelegateProvider).beamToNamed(ProfileScreen.route);
   }
 
@@ -97,6 +99,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           onGenderSelected: (value) {
                             setState(() {
                               genderController.text = value!;
+                            });
+                          },
+                          onProfilePicSelected: (value) {
+                            setState(() {
+                              filePath = value;
                             });
                           },
                           initialValue: user.genre),

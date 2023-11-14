@@ -39,7 +39,7 @@ class _InputCardState extends State<InputCard> {
         children: [
           Container(
               width: double.infinity,
-              padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               color: ColorPalette.secondary25,
               child: const Text(
                 "Información de perfil",

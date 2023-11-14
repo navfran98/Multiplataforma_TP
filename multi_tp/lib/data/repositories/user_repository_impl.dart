@@ -35,7 +35,15 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> updateUser({required String userId, required User newUser}) {
+  Future<void> updateUser(
+      {required String userId,
+      required User newUser,
+      String? localImagePath}) async {
+        
+    if (localImagePath != null) {
+      newUser.imageUrl = await userDao.uploadProfilePicture(
+          userId: userId, filePath: localImagePath);
+    }
     return userDao.updateUser(userId: userId, newUser: newUser);
   }
 
@@ -69,9 +77,4 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-
-  @override
-  Future<File?> getUserProfilePicture(User user){
-    return userDao.getUserProfilePicture(user.imageUrl);
-  }
 }

@@ -15,7 +15,7 @@ abstract interface class UserRepository {
   Future<void> deleteFavorite({required String volunteeringId});
 
   // Update user info
-  Future<void> updateUser({required String userId, required User newUser});
+  Future<void> updateUser({required String userId, required User newUser, String? localImagePath});
 
   // Find user from ID
   Future<User?> findUserById({required String id});
@@ -25,5 +25,4 @@ abstract interface class UserRepository {
   // FindLoggedUser
   Future<User?> findLoggedUser();
 
-  Future<File?> getUserProfilePicture(User user);
 }

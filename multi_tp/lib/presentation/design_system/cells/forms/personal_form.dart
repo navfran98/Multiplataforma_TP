@@ -9,7 +9,8 @@ import 'package:multi_tp/presentation/utils/validators.dart';
 
 class PersonalForm extends ConsumerStatefulWidget {
   final void Function(String?)? onGenderSelected;
-  const PersonalForm({Key? key, required this.dateController, this.onGenderSelected, required this.initialValue}) : super(key: key);
+  final void Function(String?)? onProfilePicSelected;
+  const PersonalForm({Key? key, required this.dateController, this.onGenderSelected, required this.initialValue,this.onProfilePicSelected}) : super(key: key);
   final TextEditingController dateController;
   final String? initialValue;
   
@@ -42,7 +43,11 @@ class _PersonalFormState extends ConsumerState<PersonalForm> {
             initialValue: widget.initialValue
           ),
           const SizedBox(height: 24,),
-          ProfilePicCard()
+          ProfilePicCard(
+            onProfilePicSelected: (value) {
+              widget.onProfilePicSelected?.call(value);
+            },
+          )
         ],
       ),
     );

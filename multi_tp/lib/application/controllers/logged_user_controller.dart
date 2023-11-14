@@ -14,10 +14,10 @@ class LoggedUserController extends _$LoggedUserController {
     yield* userStream;
   }
 
-  Future<void> updateUser({required User newUser}) async {
+  Future<void> updateUser({required User newUser, String? localImagePath}) async {
     await ref
         .read(userRepositoryProvider)
-        .updateUser(newUser: newUser, userId: newUser.id);
+        .updateUser(newUser: newUser, userId: newUser.id, localImagePath: localImagePath);
   }
 }
 

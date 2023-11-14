@@ -25,10 +25,8 @@ abstract interface class UserDao {
 
   Stream<User?> streamUser({required String userId});
 
-  Future<void> uploadProfilePicture(
+  Future<String?> uploadProfilePicture(
       {required String userId, required String filePath});
-
-  Future<File?> getUserProfilePicture(String? imageUrl);
 
 }
 
@@ -100,50 +98,20 @@ class UserDaoImpl extends UserDao {
     });
   }
 
-
-   Future<File?> getUserProfilePicture(String? imageUrl) async {
-    if (imageUrl == null || imageUrl.isEmpty) {
-      // If the user does not have a profile picture, you can return null or a default image file
-      return null;
-    }
-
-    try {
-      // Get the reference from the image URL
-      Reference imageReference = _storage.refFromURL(imageUrl);
-
-      // Download the image to a temporary file
-      File tempFile = File('tmp/temp_image.jpg');
-      await imageReference.writeToFile(tempFile);
-
-      return tempFile;
-    } catch (e) {
-      // Handle the exception here
-      logger.e('Error getting user profile picture: $e');
-      return null; // Return null in case of an error
-    }
-  }
-
   @override
-  Future<void> uploadProfilePicture(
+  Future<String?> uploadProfilePicture(
       {required String userId, required String filePath}) async {
     try {
-      File file = File(filePath);
-
-      User user = await findUserById(id: userId) as User;
-
       Reference storageReference =
           _storage.ref().child('profile_pictures/$userId.jpg');
       // Upload file to Firebase Storage
-      await storageReference.putFile(file);
+      await storageReference.putFile(File(filePath));
       // Get download URL
-      String imageUrl = await storageReference.getDownloadURL();
-      user.imageUrl = imageUrl;
-      await updateUser(userId: userId, newUser: user);
+      return await storageReference.getDownloadURL();
     } catch (e) {
       // Handle the exception here
       logger.e('Error uploading profile picture: $e');
       rethrow;
     }
   }
-
 }
