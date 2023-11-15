@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multi_tp/application/controllers/single_volunteering_controller.dart';
+import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/vacante.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
@@ -34,116 +37,132 @@ class _SingleVolunteeringScreenState extends ConsumerState<SingleVolunteeringScr
 
   @override
   Widget build(BuildContext context) {
+    final volunteering = ref.watch(singleVolunteeringControllerProvider(widget.id));
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              Image.asset(
-                'images/vol.png', // Reemplaza con la URL de tu imagen
-                width: double.infinity, // Para ocupar todo el ancho
-                height: 240, // Altura fija de 240
-                fit: BoxFit.cover, // Ajustar la imagen al tamaño del contenedor
-              ),
-              Positioned(
-                top: 20, // Espacio superior
-                left: 16, // Espacio izquierdo
-                child: BackButton(
-                  color: ColorPalette.neutral0,
-                  onPressed: _handleBack(context, ref),
+      body: volunteering.when(
+        data: (vol) {
+          final disponibility = vol!.disponibility.split("\\n");
+          final requirement = vol.requirements.split("\\n");
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Image.network(
+                      vol.imageUrl, // Reemplaza con la URL de tu imagen
+                      width: double.infinity, // Para ocupar todo el ancho
+                      height: 240, // Altura fija de 240
+                      fit: BoxFit.cover, // Ajustar la imagen al tamaño del contenedor
+                    ),
+                    Positioned(
+                      top: 20, // Espacio superior
+                      left: 16, // Espacio izquierdo
+                      child: BackButton(
+                        color: ColorPalette.neutral0,
+                        onPressed: _handleBack(context, ref),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Container(
+                    padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          vol.type,
+                          style: const CustomFont.overline(ColorPalette.neutral75),
+                        ),
+                        Text(
+                          vol.title,
+                          style: const CustomFont.headline01(ColorPalette.neutral100),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          vol.purpose,
+                          style: const CustomFont.body01(ColorPalette.secondary200),
+                          softWrap: true,
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text(
+                          "Sobre la actividad",
+                          style: CustomFont.headline02(ColorPalette.neutral100),
+                          softWrap: true,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          vol.detail,
+                          style: const CustomFont.body01(ColorPalette.neutral100),
+                          softWrap: true,
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text(
+                          "ACA VA CARD MAPA",
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text(
+                          "Participar del voluntariado",
+                          style: CustomFont.headline02(ColorPalette.neutral100),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          "Requisitos",
+                          style: CustomFont.subtitle01(ColorPalette.neutral100),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Markdown(data: requirement[0], shrinkWrap: true, softLineBreak: true, padding: const EdgeInsets.all(0),),
+                        Markdown(data: requirement[1], shrinkWrap: true, softLineBreak: true, padding: const EdgeInsets.all(0),),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          "Disponibilidad",
+                          style: CustomFont.subtitle01(ColorPalette.neutral100),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Markdown(data: disponibility[0], shrinkWrap: true, softLineBreak: true, padding: const EdgeInsets.all(0),),
+                        Markdown(data: disponibility[1], shrinkWrap: true, softLineBreak: true, padding: const EdgeInsets.all(0),),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Vacante(number: vol.vacancies),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        renderButton(vol)
+                      ],
+                    )),
+              ],
+            ),
+          );
+        }, 
+        error: (error, stackTrace) => const Center(
+            child: Text("Error"),
           ),
-          Container(
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "ACCION SOCIAL",
-                    style: CustomFont.overline(ColorPalette.neutral75),
-                  ),
-                  const Text(
-                    "Un Techo para mi País",
-                    style: CustomFont.headline01(ColorPalette.neutral100),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const Text(
-                    "El propósito principal de \"Un techo para mi país\" es reducir el déficit habitacional y mejorar las condiciones de vida de las personas que no tienen acceso a una vivienda adecuada.",
-                    style: CustomFont.body01(ColorPalette.secondary200),
-                    softWrap: true,
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  const Text(
-                    "Sobre la actividad",
-                    style: CustomFont.headline02(ColorPalette.neutral100),
-                    softWrap: true,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const Text(
-                    "Te necesitamos para construir las viviendas de las personas que necesitan un techo. Estas están prefabricadas en madera y deberás ayudar en carpintería, montaje, pintura y demás actividades de la construcción.",
-                    style: CustomFont.body01(ColorPalette.neutral100),
-                    softWrap: true,
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  const Text(
-                    "ACA VA CARD MAPA",
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  const Text(
-                    "Participar del voluntariado",
-                    style: CustomFont.headline02(ColorPalette.neutral100),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const Text(
-                    "Requisitos",
-                    style: CustomFont.subtitle01(ColorPalette.neutral100),
-                  ),
-                  const Text(
-                    "\t\u2022\t Mayor de edad.\n\t\u2022\t Poder levantar cosas pesadas.",
-                    style: CustomFont.body01(ColorPalette.neutral100),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const Text(
-                    "Disponibilidad",
-                    style: CustomFont.subtitle01(ColorPalette.neutral100),
-                  ),
-                  const Text(
-                    "\t\u2022\t Mayor de edad.\n\t\u2022\t Poder levantar cosas pesadas.",
-                    style: CustomFont.body01(ColorPalette.neutral100),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Vacante(number: _freeSpaces),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  renderButton()
-                ],
-              )),
-        ],
-      ),
-    ));
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      )
+    );
   }
 
-  Widget renderButton() {
+  Widget renderButton(Volunteering vol) {
     if (_alreadyVolunteering) {
       return Container(
         child: Column(
