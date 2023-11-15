@@ -27,8 +27,6 @@ class NewsScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: 32, bottom: 8),
                       itemCount: news.length,
                       itemBuilder: (BuildContext context, int index) {
-                       
-
                         return ListTile(
                           //TODO: aca iria el id de la news
                           title: NewsCard(news: news[index]),

@@ -1,16 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Volunteering {
+  final String id;
   final String type; //TODO: esto podria ser una especie de enum
   final String title;
   final String purpose;
   final String detail;
-  final String location; //TODO: coordenadas geograficas
+  final GeoPoint location; //TODO: coordenadas geograficas
   final String address;
-  final String requirements; //TODO: aca no entiendo porque dice markdown en la consigna
-  final String creationDate;
+  final String requirements;
+  final String disponibility;
+  final Timestamp creationDate;
   final int vacancies;
+  final String imageUrl;
+  bool isFavorite;
 
 
   Volunteering({
+    required this.id,
     required this.type,
     required this.title,
     required this.purpose,
@@ -18,22 +25,29 @@ class Volunteering {
     required this.location,
     required this.address,
     required this.requirements,
+    required this.disponibility,
     required this.creationDate,
-    required this.vacancies
+    required this.vacancies,
+    required this.imageUrl,
+    this.isFavorite = false
   });
 
 
-  factory Volunteering.fromJson(Map<String, dynamic> json) {
+  factory Volunteering.fromJson(String id,Map<String, dynamic> json) {
     return Volunteering(
+      id: id,
       type: json['type'] as String, 
       title: json['title'] as String, 
       purpose: json['purpose'] as String, 
       detail: json['detail'] as String, 
-      location: json['location'] as String, 
+      location: json['location'] as GeoPoint, 
       address: json['address'] as String, 
       requirements: json['requirements'] as String, 
-      creationDate: json['creationDate'] as String, 
-      vacancies: json['vacancies'] as int
+      disponibility: json['disponibility'] as String,
+      creationDate: json['creationDate'], 
+      vacancies: json['vacancies'] as int,
+      imageUrl: json['imageUrl'] as String,
+      isFavorite: json['isFavorite'] as bool
     );
   }
 
@@ -46,8 +60,11 @@ class Volunteering {
       'location': location,
       'address': address,
       'requirements': requirements,
+      'disponibility': disponibility,
       'creationDate':creationDate,
-      'vacancies': vacancies
+      'vacancies': vacancies,
+      'imageUrl': imageUrl,
+      'isFavorite': isFavorite
     };
   }
 

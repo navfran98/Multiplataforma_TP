@@ -1,7 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/vacante.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
@@ -11,26 +11,25 @@ import 'package:multi_tp/router.dart';
 import 'package:multi_tp/utils/logger.dart';
 
 class VolunteeringCard extends ConsumerStatefulWidget {
-  const VolunteeringCard({Key? key, required this.id, required this.isFavorite}) : super(key: key);
-  final String id;
-  final bool isFavorite;
+  const VolunteeringCard({Key? key, required this.volunteering}) : super(key: key);
+  final Volunteering volunteering;
   
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _VolunteeringCardState();
 }
 
 class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
-  late bool isFavorite;
+  late Volunteering vol;
 
   @override
   void initState() {
     super.initState();
-    isFavorite = widget.isFavorite;
+    vol = widget.volunteering;
   }
 
   void Function() _handleVolunteering(BuildContext context) {
     return () {
-      ref.read(mainBeamerDelegateProvider).beamToNamed(SingleVolunteeringScreen.routeFromId(widget.id));
+      ref.read(mainBeamerDelegateProvider).beamToNamed(SingleVolunteeringScreen.routeFromId(vol.id));
     };
   }
 
@@ -39,8 +38,9 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
   }
 
   void  _handleFavorite(BuildContext context) {
+    //TODO: update volunteering in database and in users list
     setState(() {
-      isFavorite = !isFavorite;
+      vol.isFavorite = !vol.isFavorite;
     });
   }
 
@@ -68,9 +68,9 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
               child: SizedBox(
                 height: 138,
                 width: double.infinity,
-                child: Image.asset(
-                  'images/Landscape-Color.jpg',
-                  fit: BoxFit.fitWidth,
+                child: Image.network(
+                  vol.imageUrl,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -79,24 +79,24 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Column(
+                  Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "ACCION SOCIAL",
-                        style: CustomFont.overline(ColorPalette.neutral75),
+                        vol.type,
+                        style: const CustomFont.overline(ColorPalette.neutral75),
                         textAlign: TextAlign.start,
                       ),
                       Text(
-                        "Un Techo para mi Pais",
-                        style: CustomFont.subtitle01(ColorPalette.neutral100),
+                        vol.title,
+                        style: const CustomFont.subtitle01(ColorPalette.neutral100),
                         textAlign: TextAlign.start,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
-                      Vacante(number: 10),
+                      Vacante(number: vol.vacancies),
                     ],
                   ),
                   Expanded(
@@ -107,7 +107,7 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
                     children: [
                       InkWell(
                         onTap: () => _handleFavorite(context),
-                        child: isFavorite ? 
+                        child: vol.isFavorite ? 
                           const Icon(
                             Icons.favorite,
                             size: 24,

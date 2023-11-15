@@ -38,6 +38,21 @@ final newsDaoProvider = Provider<NewsDao>.internal(
 );
 
 typedef NewsDaoRef = ProviderRef<NewsDao>;
+String _$volunteeringDaoHash() => r'45a68a42a6d1c901f648ad524b75f83943b4fe8c';
+
+/// See also [volunteeringDao].
+@ProviderFor(volunteeringDao)
+final volunteeringDaoProvider = Provider<VolunteeringDao>.internal(
+  volunteeringDao,
+  name: r'volunteeringDaoProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$volunteeringDaoHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef VolunteeringDaoRef = ProviderRef<VolunteeringDao>;
 String _$authRepositoryHash() => r'14cef0de648cf4472222968e1d97329e2eb8963d';
 
 ///
@@ -72,6 +87,23 @@ final newsRepositoryProvider = Provider<NewsRepository>.internal(
 );
 
 typedef NewsRepositoryRef = ProviderRef<NewsRepository>;
+String _$volunteeringRepositoryHash() =>
+    r'12f1a012fb1c3e545e305d1043a2f097a7bb14f3';
+
+/// See also [volunteeringRepository].
+@ProviderFor(volunteeringRepository)
+final volunteeringRepositoryProvider =
+    Provider<VolunteeringRepository>.internal(
+  volunteeringRepository,
+  name: r'volunteeringRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$volunteeringRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef VolunteeringRepositoryRef = ProviderRef<VolunteeringRepository>;
 String _$userRepositoryHash() => r'a56ca75c16060fe77622a678af95c2a57b772e29';
 
 /// See also [userRepository].

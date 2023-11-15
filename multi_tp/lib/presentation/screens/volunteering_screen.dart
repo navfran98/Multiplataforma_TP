@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multi_tp/application/controllers/volunteerings_list_controller.dart';
+import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/currentvolcard.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/volunteering_card.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/searchfield.dart';
@@ -15,7 +17,12 @@ class VolunteeringScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
+    final volunteeringsList = ref.watch(volunteeringsListControllerProvider);
+
+    return volunteeringsList.when(
+      data: (volunteerings) {
+        //TODO: sortear como dice la consigna
+        return Container(
               color: ColorPalette.secondary10,
               child: Column(
                 children: [
@@ -56,23 +63,30 @@ class VolunteeringScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  renderVolunteering(),
+                  renderVolunteering(volunteerings),
                 ],
               ),
             );
+      }, 
+      error: (error, stackTrace) => const Center(
+            child: Text("Error"),
+          ),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 
-  Widget renderVolunteering() {
+  Widget renderVolunteering(List<Volunteering> volunteerings) {
     return Expanded(
       child: ListView.builder(
-        itemCount: 3,
+        itemCount: volunteerings.length,
         itemBuilder: (BuildContext context, int index) {
-          return const ListTile(
+          return ListTile(
             minVerticalPadding: 0,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16),
-            //TODO: aca iria el id del volunteering actual de la card
-            title: VolunteeringCard(id: "1", isFavorite: false,),
-            subtitle: SizedBox(height: 24),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            title: VolunteeringCard(volunteering: volunteerings[index],),
+            subtitle: const SizedBox(height: 24),
           );
         },
       ),
