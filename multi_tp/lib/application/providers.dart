@@ -54,4 +54,4 @@ UserRepository userRepository(
 ) =>
     UserRepositoryImpl(
         userDao: ref.watch(userDaoProvider),
-        authRepository: ref.watch(authRepositoryProvider));
+        authRepository: ref.watch(authRepositoryProvider), volunteeringDao: ref.watch(volunteeringDaoProvider));

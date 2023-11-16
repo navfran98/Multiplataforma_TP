@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
+import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/utils/logger.dart';
 
 abstract interface class UserDao {
@@ -29,6 +30,14 @@ abstract interface class UserDao {
 
   Future<String?> uploadProfilePicture(
       {required String userId, required String filePath});
+
+  Future<void> applyToVolunteering(
+      {required String userId, required Volunteering volunteering});
+
+  Future<void> leaveVolunteering({
+    required String userId,
+    required String volunteeringId,
+  });
 }
 
 class UserDaoImpl extends UserDao {
@@ -133,4 +142,28 @@ class UserDaoImpl extends UserDao {
       rethrow;
     }
   }
+
+  @override
+  Future<void> applyToVolunteering(
+      {required String userId, required Volunteering volunteering}) async {
+    final ret = {
+      'activeVolunteering': {
+        'id': volunteering.id,
+        'type': volunteering.type,
+        'title': volunteering.title,
+        'location': volunteering.location
+      }
+    };
+    await _firestoreInstance.collection(userCollection).doc(userId).update(ret);
+  }
+  
+  @override
+  Future<void> leaveVolunteering({required String userId, required String volunteeringId}) async {
+    final ret = {
+      'activeVolunteering': FieldValue.delete()
+    };
+    await _firestoreInstance.collection(userCollection).doc(userId).update(ret);
+  }
+
+
 }

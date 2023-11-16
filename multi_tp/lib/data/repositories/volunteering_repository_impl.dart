@@ -13,9 +13,7 @@ class VolunteeringRepositoryImpl implements VolunteeringRepository {
   }
 
   @override
-  Future<Volunteering?> findById({required String id}) async {
-    return await volunteeringDao.findById(id: id);
+  Stream<Volunteering?> findById({required String id}) {
+    return volunteeringDao.findById(id: id);
   }
-
-  
 }
