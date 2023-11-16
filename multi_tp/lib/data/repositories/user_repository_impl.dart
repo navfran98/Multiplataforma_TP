@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:multi_tp/data/datasources/user_dao.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/domain/repositories/auth_repository.dart';
@@ -23,15 +21,15 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> addFavorite({required String volunteeringId}) {
-    // TODO: implement addFavorite
-    throw UnimplementedError();
+  Future<void> addFavorite(
+      {required String userId, required String volunteeringId}) async {
+    return userDao.addFavorite(userId: userId, volunteeringId: volunteeringId);
   }
 
   @override
-  Future<void> deleteFavorite({required String volunteeringId}) {
-    // TODO: implement deleteFavorite
-    throw UnimplementedError();
+  Future<void> deleteFavorite(
+      {required String userId, required String volunteeringId}) {
+    return userDao.deleteFavorite(userId: userId, volunteeringId: volunteeringId);
   }
 
   @override
@@ -39,7 +37,6 @@ class UserRepositoryImpl implements UserRepository {
       {required String userId,
       required User newUser,
       String? localImagePath}) async {
-        
     if (localImagePath != null) {
       newUser.imageUrl = await userDao.uploadProfilePicture(
           userId: userId, filePath: localImagePath);
@@ -64,11 +61,6 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Stream<User?> streamLoggedUser() {
-    // final loggedUser = authRepository.currentUser;
-    // if (loggedUser == null) {
-    //   throw Exception();
-    // }
-
     final loggedUser = authRepository.currentUser;
     if (loggedUser == null) {
       throw Exception();
@@ -76,5 +68,4 @@ class UserRepositoryImpl implements UserRepository {
       return userDao.streamUser(userId: loggedUser.id);
     }
   }
-
 }

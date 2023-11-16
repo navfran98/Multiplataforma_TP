@@ -14,8 +14,10 @@ abstract interface class UserDao {
       required String lastName});
 
   // Manage favorites
-  Future<void> addFavorite({required String volunteeringId});
-  Future<void> deleteFavorite({required String volunteeringId});
+  Future<void> addFavorite(
+      {required String userId, required String volunteeringId});
+  Future<void> deleteFavorite(
+      {required String userId, required String volunteeringId});
 
   // Update user info
   Future<void> updateUser({required String userId, required User newUser});
@@ -60,15 +62,27 @@ class UserDaoImpl extends UserDao {
   }
 
   @override
-  Future<void> addFavorite({required String volunteeringId}) async {
-    // TODO: implement addFavorite
-    throw UnimplementedError();
+  Future<void> addFavorite(
+      {required String userId, required String volunteeringId}) async {
+    final Map<Object, Object> params = {
+      'favorites': FieldValue.arrayUnion([volunteeringId])
+    };
+    await _firestoreInstance
+        .collection(userCollection)
+        .doc(userId)
+        .update(params);
   }
 
   @override
-  Future<void> deleteFavorite({required String volunteeringId}) async {
-    // TODO: implement deleteFavorite
-    throw UnimplementedError();
+  Future<void> deleteFavorite(
+      {required String userId, required String volunteeringId}) async {
+    final Map<Object, Object> params = {
+      'favorites': FieldValue.arrayRemove([volunteeringId])
+    };
+    await _firestoreInstance
+        .collection(userCollection)
+        .doc(userId)
+        .update(params);
   }
 
   @override

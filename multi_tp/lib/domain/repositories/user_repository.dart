@@ -11,8 +11,8 @@ abstract interface class UserRepository {
       required String lastName});
 
   // Manage favorites
-  Future<void> addFavorite({required String volunteeringId});
-  Future<void> deleteFavorite({required String volunteeringId});
+  Future<void> addFavorite({required String userId,required String volunteeringId});
+  Future<void> deleteFavorite({required String userId,required String volunteeringId});
 
   // Update user info
   Future<void> updateUser({required String userId, required User newUser, String? localImagePath});

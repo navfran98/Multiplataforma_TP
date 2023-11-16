@@ -14,13 +14,23 @@ class LoggedUserController extends _$LoggedUserController {
     yield* userStream;
   }
 
-  Future<void> updateUser({required User newUser, String? localImagePath}) async {
+  Future<void> updateUser(
+      {required User newUser, String? localImagePath}) async {
+    await ref.read(userRepositoryProvider).updateUser(
+        newUser: newUser, userId: newUser.id, localImagePath: localImagePath);
+  }
+
+  Future<void> addFavorite(
+      {required String userId, required String volunteeringId}) async {
     await ref
         .read(userRepositoryProvider)
-        .updateUser(newUser: newUser, userId: newUser.id, localImagePath: localImagePath);
+        .addFavorite(userId: userId, volunteeringId: volunteeringId);
+  }
+
+  Future<void> deleteFavorite(
+      {required String userId, required String volunteeringId}) async {
+    await ref
+        .read(userRepositoryProvider)
+        .deleteFavorite(userId: userId, volunteeringId: volunteeringId);
   }
 }
-
-// Future<User?> getLoggedUserController(LoggedUserControllerRef ref) async {
-//   return await ref.read(userRepositoryProvider).findLoggedUser();
-// }
