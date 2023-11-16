@@ -6,4 +6,11 @@ abstract interface class VolunteeringRepository {
 
   // Find all volunteerings
   Future<List<Volunteering>> findAllVolunteerings();
+
+  List<Volunteering> searchVolunteering({
+    required String search,
+    required List<Volunteering> volunteerings,
+  });
+
+
 }
