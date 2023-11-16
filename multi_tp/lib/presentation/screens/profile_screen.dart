@@ -19,13 +19,12 @@ class ProfileScreen extends ConsumerStatefulWidget {
   static const route = "/home/profile";
   static const routeName = "profile";
 
-  const ProfileScreen( {Key? key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-//TODO: ver de hacerlo stream porq no se reflejan los cambios cuando editas
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool isLoading = false;
 
@@ -37,7 +36,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: loggedUser.when(
           data: (user) {
-            if (user!.isCompleted()) {
+            if (user!.profileCompleted) {
               return renderCompletedProfile(user);
             } else {
               return renderNewProfile(user);
@@ -76,24 +75,21 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Widget renderCompletedProfile(User user) {
-
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 32),
         child: Column(
           children: [
-            user.imageUrl != null ? CircleAvatar(
-                        radius: 42,
-                        backgroundImage: NetworkImage(
-                          user.imageUrl!
-                        ))
-                  : SizedBox(
-                width: 110,
-                height: 110,
-                child: Image.asset(
-                  'images/profile_pic.png',
-                  fit: BoxFit.fill,
-                )),            
+            user.imageUrl != null
+                ? CircleAvatar(
+                    radius: 42, backgroundImage: NetworkImage(user.imageUrl!))
+                : SizedBox(
+                    width: 110,
+                    height: 110,
+                    child: Image.asset(
+                      'images/profile_pic.png',
+                      fit: BoxFit.fill,
+                    )),
             const SizedBox(
               height: 16,
             ),

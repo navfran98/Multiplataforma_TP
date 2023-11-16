@@ -27,7 +27,6 @@ abstract interface class UserDao {
 
   Future<String?> uploadProfilePicture(
       {required String userId, required String filePath});
-
 }
 
 class UserDaoImpl extends UserDao {
@@ -47,8 +46,13 @@ class UserDaoImpl extends UserDao {
       required String name,
       required String lastName}) async {
     final docUser = _firestoreInstance.collection(userCollection).doc(uid);
-    final User user =
-        User(id: uid, email: email, name: name, lastName: lastName);
+    final User user = User(
+        id: uid,
+        email: email,
+        name: name,
+        lastName: lastName,
+        favorites: [],
+        profileCompleted: false);
     final json = user.toJson();
 
     await docUser.set(json);
@@ -81,6 +85,7 @@ class UserDaoImpl extends UserDao {
   @override
   Future<void> updateUser(
       {required String userId, required User newUser}) async {
+    newUser.profileCompleted = true;
     final userRef = _firestoreInstance.collection(userCollection).doc(userId);
     await userRef.update(newUser.toJson());
   }

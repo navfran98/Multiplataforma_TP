@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:multi_tp/data/dtos/volunteering_dto.dart';
+
 class User {
   final String id;
   final String email;
@@ -8,17 +11,24 @@ class User {
   String? birthDate;
   String? phoneNumber;
   String? imageUrl; // this is FireStorage url to the image
+  Map<String, dynamic>? activeVolunteering;
+  List<String> favorites;
+  bool profileCompleted;
 
-  User(
-      {required this.id,
-      required this.email,
-      required this.name,
-      required this.lastName,
-      this.genre,
-      this.birthDate,
-      this.phoneNumber,
-      this.imageUrl,
-      this.contactEmail});
+  User({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.lastName,
+    required this.favorites,
+    this.activeVolunteering,
+    required this.profileCompleted,
+    this.genre,
+    this.birthDate,
+    this.phoneNumber,
+    this.imageUrl,
+    this.contactEmail,
+  });
 
   factory User.fromJson(String id, Map<String, dynamic> json) {
     return User(
@@ -30,7 +40,11 @@ class User {
         birthDate: json['birthDate'] as String?,
         phoneNumber: json['phoneNumber'] as String?,
         imageUrl: json['imageUrl'] as String?,
-        contactEmail: json['contactEmail'] as String?);
+        contactEmail: json['contactEmail'] as String?,
+        profileCompleted: json['profileCompleted'] as bool,
+        favorites: List<String>.from(json['favorites'] as List<dynamic>),
+        activeVolunteering:
+            json['activeVolunteering'] as Map<String, dynamic>?);
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +56,10 @@ class User {
       'birthDate': birthDate,
       'phoneNumber': phoneNumber,
       'imageUrl': imageUrl,
-      'contactEmail': contactEmail
+      'contactEmail': contactEmail,
+      'profileCompleted': profileCompleted,
+      'favorites': favorites,
+      'activeVolunteering': activeVolunteering
     };
   }
 
@@ -57,7 +74,8 @@ class User {
     if (birthDate != null &&
         genre != null &&
         phoneNumber != null &&
-        contactEmail != null) {
+        contactEmail != null &&
+        imageUrl != null) {
       return true;
     }
     return false;

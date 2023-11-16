@@ -39,7 +39,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     loggedUser.genre = gender;
     loggedUser.phoneNumber = phone;
     loggedUser.contactEmail = email;
-    // TODO: cambiar esto por controller
     ref
         .read(loggedUserControllerProvider.notifier)
         .updateUser(newUser: loggedUser, localImagePath: filePath);
