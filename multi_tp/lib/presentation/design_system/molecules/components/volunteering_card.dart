@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/application/controllers/logged_user_controller.dart';
+import 'package:multi_tp/application/controllers/open_google_maps_controller.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/vacante.dart';
@@ -44,7 +45,9 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
   }
 
   void _handleMap() {
-    // TODO: open Google Maps with volunteering location
+    ref.read(OpenGoogleMapsControllerProvider(
+      location: vol.location,
+    ));
   }
 
   void _handleFavorite() {

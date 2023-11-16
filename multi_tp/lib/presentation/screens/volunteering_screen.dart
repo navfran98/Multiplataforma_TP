@@ -36,7 +36,7 @@ class VolunteeringScreen extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SearchField(),
+                          const SearchField(),
                           const SizedBox(
                             height: 32,
                           ),
@@ -44,7 +44,7 @@ class VolunteeringScreen extends ConsumerWidget {
                               visible: loggedUser!.activeVolunteering != null,
                               child: Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Tu Actividad",
                                     style: CustomFont.headline01(
                                         ColorPalette.neutral100),
@@ -52,19 +52,19 @@ class VolunteeringScreen extends ConsumerWidget {
                                   const SizedBox(
                                     height: 16,
                                   ),
-                                  CurrentVolCard(),
+                                  CurrentVolCard(loggedUser: loggedUser),
                                   const SizedBox(
                                     height: 24,
                                   )
                                 ],
                               )),
-                          Text(
+                          const Text(
                             "Voluntariados",
                             style:
                                 CustomFont.headline01(ColorPalette.neutral100),
                             textAlign: TextAlign.start,
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                         ],
                       ),
                     ),
