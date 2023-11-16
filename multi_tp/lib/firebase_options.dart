@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '184584972042',
     projectId: 'ser-manos-2c2023',
     storageBucket: 'ser-manos-2c2023.appspot.com',
-    iosBundleId: 'com.example.multiTp',
+    iosBundleId: 'com.example.multiplataformaTP',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -76,6 +76,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '184584972042',
     projectId: 'ser-manos-2c2023',
     storageBucket: 'ser-manos-2c2023.appspot.com',
-    iosBundleId: 'com.example.multiTp.RunnerTests',
+    iosBundleId: 'com.example.multiplataformaTP.RunnerTests',
   );
 }
