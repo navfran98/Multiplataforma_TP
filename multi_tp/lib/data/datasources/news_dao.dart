@@ -17,7 +17,6 @@ class NewsDaoImpl extends NewsDao {
   NewsDaoImpl();
   factory NewsDaoImpl.instance() => NewsDaoImpl();
 
-  final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
 
   @override

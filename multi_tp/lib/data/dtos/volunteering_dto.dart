@@ -13,8 +13,8 @@ class Volunteering {
   final Timestamp creationDate;
   final int vacancies;
   final String imageUrl;
-  bool isFavorite;
-
+  final List<String> pending;
+  final List<String> accepted;
 
   Volunteering({
     required this.id,
@@ -29,29 +29,30 @@ class Volunteering {
     required this.creationDate,
     required this.vacancies,
     required this.imageUrl,
-    this.isFavorite = false
+    required this.accepted,
+    required this.pending,
   });
 
-
-  factory Volunteering.fromJson(String id,Map<String, dynamic> json) {
+  factory Volunteering.fromJson(String id, Map<String, dynamic> json) {
     return Volunteering(
       id: id,
-      type: json['type'] as String, 
-      title: json['title'] as String, 
-      purpose: json['purpose'] as String, 
-      detail: json['detail'] as String, 
-      location: json['location'] as GeoPoint, 
-      address: json['address'] as String, 
-      requirements: json['requirements'] as String, 
+      type: json['type'] as String,
+      title: json['title'] as String,
+      purpose: json['purpose'] as String,
+      detail: json['detail'] as String,
+      location: json['location'] as GeoPoint,
+      address: json['address'] as String,
+      requirements: json['requirements'] as String,
       disponibility: json['disponibility'] as String,
-      creationDate: json['creationDate'], 
+      creationDate: json['creationDate'],
       vacancies: json['vacancies'] as int,
       imageUrl: json['imageUrl'] as String,
-      isFavorite: json['isFavorite'] as bool
+      accepted: List<String>.from(json['accepted'] as List<dynamic>),
+      pending: List<String>.from(json['pending'] as List<dynamic>),
     );
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
       'type': type,
       'title': title,
@@ -61,11 +62,11 @@ class Volunteering {
       'address': address,
       'requirements': requirements,
       'disponibility': disponibility,
-      'creationDate':creationDate,
+      'creationDate': creationDate,
       'vacancies': vacancies,
       'imageUrl': imageUrl,
-      'isFavorite': isFavorite
+      'accepted': accepted,
+      'pending': pending,
     };
   }
-
 }

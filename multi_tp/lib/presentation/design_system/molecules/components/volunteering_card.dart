@@ -1,6 +1,9 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multi_tp/application/controllers/logged_user_controller.dart';
+import 'package:multi_tp/application/controllers/open_google_maps_controller.dart';
+import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/vacante.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
@@ -11,37 +14,55 @@ import 'package:multi_tp/router.dart';
 import 'package:multi_tp/utils/logger.dart';
 
 class VolunteeringCard extends ConsumerStatefulWidget {
-  const VolunteeringCard({Key? key, required this.volunteering}) : super(key: key);
+  const VolunteeringCard(
+      {Key? key, required this.volunteering, required this.user})
+      : super(key: key);
   final Volunteering volunteering;
-  
+  final User user;
+
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _VolunteeringCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _VolunteeringCardState();
 }
 
 class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
   late Volunteering vol;
+  late bool isFavorite;
 
   @override
   void initState() {
     super.initState();
     vol = widget.volunteering;
+    isFavorite = widget.user.favorites.contains(vol.id);
   }
 
   void Function() _handleVolunteering(BuildContext context) {
     return () {
-      ref.read(mainBeamerDelegateProvider).beamToNamed(SingleVolunteeringScreen.routeFromId(vol.id));
+      ref
+          .read(mainBeamerDelegateProvider)
+          .beamToNamed(SingleVolunteeringScreen.routeFromId(vol.id));
     };
   }
 
   void _handleMap() {
-    // TODO: open Google Maps with volunteering location
+    ref.read(OpenGoogleMapsControllerProvider(
+      location: vol.location,
+    ));
   }
 
-  void  _handleFavorite(BuildContext context) {
-    //TODO: update volunteering in database and in users list
+  void _handleFavorite() {
     setState(() {
-      vol.isFavorite = !vol.isFavorite;
+      isFavorite = !isFavorite;
     });
+    if (isFavorite) {
+      ref
+          .read(loggedUserControllerProvider.notifier)
+          .addFavorite(userId: widget.user.id, volunteeringId: vol.id);
+    } else {
+      ref
+          .read(loggedUserControllerProvider.notifier)
+          .deleteFavorite(userId: widget.user.id, volunteeringId: vol.id);
+    }
   }
 
   @override
@@ -85,12 +106,14 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
                     children: [
                       Text(
                         vol.type,
-                        style: const CustomFont.overline(ColorPalette.neutral75),
+                        style:
+                            const CustomFont.overline(ColorPalette.neutral75),
                         textAlign: TextAlign.start,
                       ),
                       Text(
                         vol.title,
-                        style: const CustomFont.subtitle01(ColorPalette.neutral100),
+                        style: const CustomFont.subtitle01(
+                            ColorPalette.neutral100),
                         textAlign: TextAlign.start,
                       ),
                       const SizedBox(
@@ -106,17 +129,15 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       InkWell(
-                        onTap: () => _handleFavorite(context),
-                        child: vol.isFavorite ? 
-                          const Icon(
-                            Icons.favorite,
-                            size: 24,
-                            color: ColorPalette.primary100) :
-                          const Icon(
-                            Icons.favorite_border,
-                            size: 24,
-                            color: ColorPalette.primary100,
-                          ),
+                        onTap: () => _handleFavorite(),
+                        child: isFavorite
+                            ? const Icon(Icons.favorite,
+                                size: 24, color: ColorPalette.primary100)
+                            : const Icon(
+                                Icons.favorite_border,
+                                size: 24,
+                                color: ColorPalette.primary100,
+                              ),
                       ),
                       const SizedBox(
                         width: 16,

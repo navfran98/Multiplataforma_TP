@@ -5,9 +5,17 @@ import 'package:multi_tp/utils/logger.dart';
 
 abstract interface class VolunteeringDao {
   // Find user from ID
-  Future<Volunteering?> findById({required String id});
+  Stream<Volunteering?> findById({required String id});
 
   Future<List<Volunteering>> findAllVolunteerings();
+
+  Future<void> addPending({required String userId, required String volunteeringId});
+
+  Future<void> deletePending({required String userId, required String volunteeringId});
+
+  Future<void> addAccepted({required String userId, required String volunteeringId});
+
+  Future<void> deleteAccepted({required String userId, required String volunteeringId});
 }
 
 class VolunteeringDaoImpl extends VolunteeringDao {
@@ -17,7 +25,6 @@ class VolunteeringDaoImpl extends VolunteeringDao {
   VolunteeringDaoImpl();
   factory VolunteeringDaoImpl.instance() => VolunteeringDaoImpl();
 
-  final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
 
   @override
@@ -29,14 +36,40 @@ class VolunteeringDaoImpl extends VolunteeringDao {
   }
 
   @override
-  Future<Volunteering?> findById({required String id}) async {
+  Stream<Volunteering?> findById({required String id}) {
     final docVolunteering = _firestoreInstance.collection(volunteeringCollection).doc(id);
-    final snapshot = await docVolunteering.get();
-    if (snapshot.exists) {
-      Volunteering aux = Volunteering.fromJson(id, snapshot.data()!);
-      return aux;
-    } else {
-      return Future.value(null);
-    }
+    return docVolunteering.snapshots().map((snapshot) {
+      if (snapshot.exists) {
+        return Volunteering.fromJson(id, snapshot.data()!);
+      } else {
+        return null;
+      }
+    });
   }
+
+  @override
+  Future<void> addPending({required String userId, required String volunteeringId}) async {
+    final docVolunteering = _firestoreInstance.collection(volunteeringCollection).doc(volunteeringId);
+    docVolunteering.update({'pending': FieldValue.arrayUnion([userId])});
+  }
+
+  @override
+  Future<void> deletePending({required String userId, required String volunteeringId}) async {
+    final docVolunteering = _firestoreInstance.collection(volunteeringCollection).doc(volunteeringId);
+    docVolunteering.update({'pending': FieldValue.arrayRemove([userId])});
+  }
+
+  @override
+  Future<void> addAccepted({required String userId, required String volunteeringId}) async {
+    final docVolunteering = _firestoreInstance.collection(volunteeringCollection).doc(volunteeringId);
+    docVolunteering.update({'accepted': FieldValue.arrayUnion([userId])});
+  }
+
+  @override
+  Future<void> deleteAccepted({required String userId, required String volunteeringId}) async {
+    final docVolunteering = _firestoreInstance.collection(volunteeringCollection).doc(volunteeringId);
+    docVolunteering.update({'accepted': FieldValue.arrayRemove([userId])});
+  }
+
+
 }

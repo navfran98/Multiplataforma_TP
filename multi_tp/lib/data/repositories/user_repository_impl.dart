@@ -1,14 +1,18 @@
-import 'dart:io';
-
 import 'package:multi_tp/data/datasources/user_dao.dart';
+import 'package:multi_tp/data/datasources/volunteering_dao.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
+import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/domain/repositories/auth_repository.dart';
 import 'package:multi_tp/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  UserRepositoryImpl({required this.userDao, required this.authRepository});
+  UserRepositoryImpl(
+      {required this.volunteeringDao,
+      required this.userDao,
+      required this.authRepository});
 
   final UserDao userDao;
+  final VolunteeringDao volunteeringDao;
   final AuthRepository authRepository;
 
   @override
@@ -23,15 +27,16 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> addFavorite({required String volunteeringId}) {
-    // TODO: implement addFavorite
-    throw UnimplementedError();
+  Future<void> addFavorite(
+      {required String userId, required String volunteeringId}) async {
+    return userDao.addFavorite(userId: userId, volunteeringId: volunteeringId);
   }
 
   @override
-  Future<void> deleteFavorite({required String volunteeringId}) {
-    // TODO: implement deleteFavorite
-    throw UnimplementedError();
+  Future<void> deleteFavorite(
+      {required String userId, required String volunteeringId}) {
+    return userDao.deleteFavorite(
+        userId: userId, volunteeringId: volunteeringId);
   }
 
   @override
@@ -39,7 +44,6 @@ class UserRepositoryImpl implements UserRepository {
       {required String userId,
       required User newUser,
       String? localImagePath}) async {
-        
     if (localImagePath != null) {
       newUser.imageUrl = await userDao.uploadProfilePicture(
           userId: userId, filePath: localImagePath);
@@ -64,11 +68,6 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Stream<User?> streamLoggedUser() {
-    // final loggedUser = authRepository.currentUser;
-    // if (loggedUser == null) {
-    //   throw Exception();
-    // }
-
     final loggedUser = authRepository.currentUser;
     if (loggedUser == null) {
       throw Exception();
@@ -77,4 +76,26 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
+  @override
+  Future<void> applyToVolunteering(
+      {required String userId, required Volunteering volunteering}) async {
+    await volunteeringDao.addPending(
+        volunteeringId: volunteering.id, userId: userId);
+    await userDao.applyToVolunteering(
+        userId: userId, volunteering: volunteering);
+  }
+
+  @override
+  Future<void> leaveVolunteering(
+      {required String userId, required Volunteering volunteering}) async {
+    await userDao.leaveVolunteering(userId: userId, volunteeringId: volunteering.id);
+    if (volunteering.accepted.contains(userId)) {
+      return await volunteeringDao.deleteAccepted(
+          volunteeringId: volunteering.id, userId: userId);
+    }
+    if (volunteering.pending.contains(userId)) {
+      return await volunteeringDao.deletePending(
+          volunteeringId: volunteering.id, userId: userId);
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:multi_tp/data/dtos/user_dto.dart';
+import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 
 abstract interface class UserRepository {
   // Create user after signup
@@ -11,11 +12,14 @@ abstract interface class UserRepository {
       required String lastName});
 
   // Manage favorites
-  Future<void> addFavorite({required String volunteeringId});
-  Future<void> deleteFavorite({required String volunteeringId});
+  Future<void> addFavorite(
+      {required String userId, required String volunteeringId});
+  Future<void> deleteFavorite(
+      {required String userId, required String volunteeringId});
 
   // Update user info
-  Future<void> updateUser({required String userId, required User newUser, String? localImagePath});
+  Future<void> updateUser(
+      {required String userId, required User newUser, String? localImagePath});
 
   // Find user from ID
   Future<User?> findUserById({required String id});
@@ -25,4 +29,9 @@ abstract interface class UserRepository {
   // FindLoggedUser
   Future<User?> findLoggedUser();
 
+  Future<void> applyToVolunteering(
+      {required String userId, required Volunteering volunteering});
+
+  Future<void> leaveVolunteering({required String userId, required Volunteering volunteering});
+  
 }

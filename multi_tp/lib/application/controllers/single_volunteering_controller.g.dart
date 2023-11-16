@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../controllers/single_volunteering_controller.dart';
+part of 'single_volunteering_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$singleVolunteeringControllerHash() =>
-    r'04df1ac1317b61af994cb74bc54652ca60190424';
+    r'382f965a1dd3b98eb359eb720f94c261643bba20';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,10 +31,10 @@ class _SystemHash {
 }
 
 abstract class _$SingleVolunteeringController
-    extends BuildlessAutoDisposeAsyncNotifier<Volunteering?> {
+    extends BuildlessAutoDisposeStreamNotifier<Volunteering?> {
   late final dynamic id;
 
-  Future<Volunteering?> build(
+  Stream<Volunteering?> build(
     dynamic id,
   );
 }
@@ -85,7 +85,7 @@ class SingleVolunteeringControllerFamily
 
 /// See also [SingleVolunteeringController].
 class SingleVolunteeringControllerProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<SingleVolunteeringController,
+    extends AutoDisposeStreamNotifierProviderImpl<SingleVolunteeringController,
         Volunteering?> {
   /// See also [SingleVolunteeringController].
   SingleVolunteeringControllerProvider(
@@ -117,7 +117,7 @@ class SingleVolunteeringControllerProvider
   final dynamic id;
 
   @override
-  Future<Volunteering?> runNotifierBuild(
+  Stream<Volunteering?> runNotifierBuild(
     covariant SingleVolunteeringController notifier,
   ) {
     return notifier.build(
@@ -142,7 +142,7 @@ class SingleVolunteeringControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<SingleVolunteeringController,
+  AutoDisposeStreamNotifierProviderElement<SingleVolunteeringController,
       Volunteering?> createElement() {
     return _SingleVolunteeringControllerProviderElement(this);
   }
@@ -162,13 +162,13 @@ class SingleVolunteeringControllerProvider
 }
 
 mixin SingleVolunteeringControllerRef
-    on AutoDisposeAsyncNotifierProviderRef<Volunteering?> {
+    on AutoDisposeStreamNotifierProviderRef<Volunteering?> {
   /// The parameter `id` of this provider.
   dynamic get id;
 }
 
 class _SingleVolunteeringControllerProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<
+    extends AutoDisposeStreamNotifierProviderElement<
         SingleVolunteeringController,
         Volunteering?> with SingleVolunteeringControllerRef {
   _SingleVolunteeringControllerProviderElement(super.provider);

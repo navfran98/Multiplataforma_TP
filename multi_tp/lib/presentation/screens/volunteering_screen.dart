@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/application/controllers/logged_user_controller.dart';
 import 'package:multi_tp/application/controllers/volunteerings_list_controller.dart';
+import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/currentvolcard.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/volunteering_card.dart';
@@ -32,32 +33,32 @@ class VolunteeringScreen extends ConsumerWidget {
                     Container(
                       color: ColorPalette.secondary10,
                       padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SearchField(),
-                          SizedBox(
+                          const SearchField(),
+                          const SizedBox(
                             height: 32,
                           ),
                           Visibility(
-                              visible: true,
+                              visible: loggedUser!.activeVolunteering != null,
                               child: Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Tu Actividad",
                                     style: CustomFont.headline01(
                                         ColorPalette.neutral100),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 16,
                                   ),
-                                  CurrentVolCard(),
-                                  SizedBox(
+                                  CurrentVolCard(loggedUser: loggedUser),
+                                  const SizedBox(
                                     height: 24,
                                   )
                                 ],
                               )),
-                          Text(
+                          const Text(
                             "Voluntariados",
                             style:
                                 CustomFont.headline01(ColorPalette.neutral100),
@@ -67,7 +68,7 @@ class VolunteeringScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    renderVolunteering(volunteerings),
+                    renderVolunteering(volunteerings, loggedUser!),
                   ],
                 ),
               );
@@ -88,7 +89,7 @@ class VolunteeringScreen extends ConsumerWidget {
             ));
   }
 
-  Widget renderVolunteering(List<Volunteering> volunteerings) {
+  Widget renderVolunteering(List<Volunteering> volunteerings, User loggedUser) {
     return Expanded(
       child: ListView.builder(
         itemCount: volunteerings.length,
@@ -98,6 +99,7 @@ class VolunteeringScreen extends ConsumerWidget {
             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             title: VolunteeringCard(
               volunteering: volunteerings[index],
+              user: loggedUser,
             ),
             subtitle: const SizedBox(height: 24),
           );

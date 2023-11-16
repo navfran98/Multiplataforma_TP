@@ -11,7 +11,6 @@ import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 import 'package:multi_tp/utils/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:share_plus/share_plus.dart';
 
 class SingleNewsScreen extends ConsumerStatefulWidget {
   static const route = "/home/news/:id";
