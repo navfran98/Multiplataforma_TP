@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Volunteering {
   final String id;
-  final String type; //TODO: esto podria ser una especie de enum
+  final String type;
   final String title;
   final String purpose;
   final String detail;
-  final GeoPoint location; //TODO: coordenadas geograficas
+  final GeoPoint location;
   final String address;
   final String requirements;
   final String disponibility;

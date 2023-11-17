@@ -7,7 +7,7 @@ part of 'volunteerings_list_controller.dart';
 // **************************************************************************
 
 String _$volunteeringsListControllerHash() =>
-    r'6c3e2d8f553ae7be95d45584ae72466a1c41433c';
+    r'a441020a7b450f2fda7441df738188c5facf524e';
 
 /// See also [VolunteeringsListController].
 @ProviderFor(VolunteeringsListController)

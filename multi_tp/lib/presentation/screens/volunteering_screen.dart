@@ -20,11 +20,9 @@ class VolunteeringScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
     final volunteeringsList = ref.watch(volunteeringsListControllerProvider);
     final loggedUser = ref.watch(loggedUserControllerProvider);
- 
-
-
     return loggedUser.when(
         data: (loggedUser) {
           return volunteeringsList.when(

@@ -20,6 +20,7 @@ class SearchVolunteeringsController extends _$SearchVolunteeringsController {
         .searchVolunteering(search: searchTerm, volunteerings: volunteerings);
     return filteredVolunteerings;
   }
+  
 
   void search({required String term}) {
     logger.w("OnChanged!! searchTerm: $term");
