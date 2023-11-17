@@ -82,6 +82,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvide
         title: Image.asset(
           'images/Logo_rectangular.png',
           fit: BoxFit.fill,
+          width: 147,
+          height: 25,
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(52),

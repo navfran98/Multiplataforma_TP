@@ -44,7 +44,6 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
       final uid = await ref
           .read(signUpControllerProvider.notifier)
           .signUp(context, email, password);
-      // TODO: crear controller para esto y los providers
       final userRepositoryImpl = UserRepositoryImpl(userDao: UserDaoImpl(), authRepository: AuthRepositoryImpl(), volunteeringDao: VolunteeringDaoImpl());
       userRepositoryImpl.createUser(uid: uid, email: email, name: name, lastName: lastName);
       ref
@@ -91,7 +90,7 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
                 const SizedBox(
                   height: 50,
                 ),
-                Image.asset('images/Welcome_logo.png', fit: BoxFit.fill),
+                Image.asset('images/Welcome_logo.png', fit: BoxFit.fill, width: 150, height: 150,),
                 const SizedBox(
                   height: 31,
                 ),
