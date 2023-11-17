@@ -1,6 +1,5 @@
 import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
-import 'package:multi_tp/utils/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'search_volunteerings_controller.g.dart';
@@ -20,7 +19,6 @@ class SearchVolunteeringsController extends _$SearchVolunteeringsController {
   
 
   void search({required String term}) {
-    logger.w("OnChanged!! searchTerm: $term");
 
     ref.read(analyticsRepositoryProvider).sendEvent(type: "Volunteer search",data: {"searchTerm": term});
     

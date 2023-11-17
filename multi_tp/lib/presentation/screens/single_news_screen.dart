@@ -149,7 +149,6 @@ class SingleNewsScreenState extends ConsumerState<SingleNewsScreen> {
         ),
         body: news.when(
           data: (news) {
-            logger.w("news: $news");
             if (news != null) {
               return renderNews(news);
             }

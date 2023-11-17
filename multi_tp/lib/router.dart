@@ -38,24 +38,6 @@ BeamGuard getLoggerGuard() {
   );
 }
 
-// BeamGuard getAuthGuard() {
-// AuthRepositoryImpl authRepository = AuthRepositoryImpl();
-// return BeamGuard(
-//   pathPatterns: [
-//     '/home',
-//     '/home/tickets/:ticketId',
-//     '/home/tickets/purchase',
-//     '/home/tickets/purchase/bus/*',
-//     '/home/tickets/purchase/bus/:line/summary'
-//   ],
-//   check: (context, location) {
-//     logger.d(
-//         "Navigation from Main Beamer -> ${location.state.routeInformation.location}");
-//     return authRepository.currentUser != null;
-//   },
-//   beamToNamed: (origin, target) => LoginScreen.route,
-// );
-// }
 
 String _getInitialPath() {
   if (FirebaseAuth.instance.currentUser != null) {

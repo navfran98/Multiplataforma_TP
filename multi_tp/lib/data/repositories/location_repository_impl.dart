@@ -20,7 +20,6 @@ class LocationRepositoryImpl implements LocationRepository {
     // Obtener la ubicación
     try {
       Position position = await Geolocator.getCurrentPosition();
-      logger.i('Ubicación actual: ${position.latitude}, ${position.longitude}');
       return position;
     } catch (e) {
       logger.e('Error al obtener la ubicación: $e');

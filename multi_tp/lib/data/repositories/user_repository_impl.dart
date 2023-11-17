@@ -90,7 +90,6 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> leaveVolunteering(
       {required String userId, required String volunteeringId}) async {
     
-    logger.d("Attempting to leave Voluteering ");
     await userDao.leaveVolunteering(
         userId: userId, volunteeringId: volunteeringId);
 
