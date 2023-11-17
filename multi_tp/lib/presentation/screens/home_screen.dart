@@ -33,7 +33,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvide
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
     final location = ref.read(mainBeamerDelegateProvider).configuration.location;
-    _tabController.index = getCurrentIndex(location!);
+    _tabController.index = getCurrentIndex(location);
   }
 
   int getCurrentIndex(String location) {

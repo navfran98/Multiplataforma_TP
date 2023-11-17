@@ -4,7 +4,9 @@ import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 import 'package:multi_tp/presentation/design_system/tokens/shadows.dart';
 
 class SearchField extends StatefulWidget {
-  const SearchField({Key? key}) : super(key: key);
+  const SearchField({Key? key, required this.onChanged}) : super(key: key);
+
+  final void Function(String) onChanged;
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -12,7 +14,7 @@ class SearchField extends StatefulWidget {
 
 class _SearchFieldState extends State<SearchField> {
   final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode = FocusNode(); 
+  final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
   bool _isEmpty = true;
 
@@ -21,17 +23,16 @@ class _SearchFieldState extends State<SearchField> {
     super.initState();
     _focusNode.addListener(_handleFocusChange);
     _controller.addListener(() {
-      if(_controller.text.isNotEmpty){
+      if (_controller.text.isNotEmpty) {
         setState(() {
           _isEmpty = false;
         });
-      }
-      else {
+      } else {
         setState(() {
           _isEmpty = true;
         });
       }
-     });
+    });
   }
 
   void _handleFocusChange() {
@@ -67,6 +68,7 @@ class _SearchFieldState extends State<SearchField> {
           color: ColorPalette.neutral0,
           boxShadow: [CustomShadow.shadow01_1(), CustomShadow.shadow01_2()]),
       child: TextField(
+        onChanged: widget.onChanged,
         controller: _controller,
         textAlignVertical: TextAlignVertical.center,
         focusNode: _focusNode,
@@ -75,18 +77,18 @@ class _SearchFieldState extends State<SearchField> {
           hintText: "Buscar", // Add a placeholder text
           hintStyle: const CustomFont.subtitle01(ColorPalette.neutral50),
           prefixIcon: (() {
-              if(_isEmpty){
-                return const Padding(
-                  padding: EdgeInsets.only(left: 16, right: 8),
-                  child: Icon(
-                    Icons.search,
-                    color: ColorPalette.neutral75,
-                  ),
-                );
-              }
-            }()),
+            if (_isEmpty) {
+              return const Padding(
+                padding: EdgeInsets.only(left: 16, right: 8),
+                child: Icon(
+                  Icons.search,
+                  color: ColorPalette.neutral75,
+                ),
+              );
+            }
+          }()),
           suffixIcon: Padding(
-            padding: const EdgeInsets.only(left: 8,right: 12), 
+            padding: const EdgeInsets.only(left: 8, right: 12),
             child: (() {
               if (_isFocused || !_isEmpty) {
                 return InkWell(
@@ -95,7 +97,8 @@ class _SearchFieldState extends State<SearchField> {
                 );
               }
               return const Icon(Icons.map, color: ColorPalette.primary100);
-          }()),),
+            }()),
+          ),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(2.0),

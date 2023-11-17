@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/application/controllers/logged_user_controller.dart';
+import 'package:multi_tp/application/controllers/search_volunteerings_controller.dart';
 import 'package:multi_tp/application/controllers/volunteerings_list_controller.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/currentvolcard.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/volunteering_card.dart';
+import 'package:multi_tp/presentation/design_system/molecules/components/volunteerings_list.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/searchfield.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
@@ -21,10 +22,18 @@ class VolunteeringScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final volunteeringsList = ref.watch(volunteeringsListControllerProvider);
     final loggedUser = ref.watch(loggedUserControllerProvider);
+ 
+
+
     return loggedUser.when(
         data: (loggedUser) {
           return volunteeringsList.when(
             data: (volunteerings) {
+              final searchVolunteerProvider = ref.watch(
+                searchVolunteeringsControllerProvider(
+                    volunteerings: volunteerings).notifier);
+
+              onChanged(searchTerm) => searchVolunteerProvider.search(term: searchTerm);
               //TODO: sortear como dice la consigna
               return Container(
                 color: ColorPalette.secondary10,
@@ -36,7 +45,7 @@ class VolunteeringScreen extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SearchField(),
+                          SearchField(onChanged: onChanged),
                           const SizedBox(
                             height: 32,
                           ),
@@ -68,7 +77,7 @@ class VolunteeringScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    renderVolunteering(volunteerings, loggedUser!),
+                    VolunteeringList(loggedUser: loggedUser, volunteerings: volunteerings)
                   ],
                 ),
               );

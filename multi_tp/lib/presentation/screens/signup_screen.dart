@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_tp/application/controllers/signup_controller.dart';
-import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/datasources/user_dao.dart';
 import 'package:multi_tp/data/datasources/volunteering_dao.dart';
 import 'package:multi_tp/data/repositories/auth_repository_impl.dart';
@@ -12,10 +10,8 @@ import 'package:multi_tp/data/repositories/user_repository_impl.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/textfield.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
-import 'package:multi_tp/presentation/screens/home_screen.dart';
 import 'package:multi_tp/presentation/screens/login_screen.dart';
 import 'package:multi_tp/presentation/screens/user_welcome_screen.dart';
-import 'package:multi_tp/presentation/screens/volunteering_screen.dart';
 import 'package:multi_tp/presentation/utils/new_snackbar.dart';
 import 'package:multi_tp/router.dart';
 

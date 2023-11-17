@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../controllers/volunteerings_list_controller.dart';
+part of 'volunteerings_list_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
