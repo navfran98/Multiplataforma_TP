@@ -32,6 +32,6 @@ abstract interface class UserRepository {
   Future<void> applyToVolunteering(
       {required String userId, required Volunteering volunteering});
 
-  Future<void> leaveVolunteering({required String userId, required Volunteering volunteering});
+  Future<void> leaveVolunteering({required String userId, required String volunteeringId});
   
 }

@@ -14,7 +14,9 @@ class NewsCard extends ConsumerWidget {
 
   void Function() _handleNews(BuildContext context, WidgetRef ref) {
     return () {
-      ref.read(mainBeamerDelegateProvider).beamToNamed(SingleNewsScreen.routeFromId(news.id));
+      ref
+          .read(mainBeamerDelegateProvider)
+          .beamToNamed(SingleNewsScreen.routeFromId(news.id));
     };
   }
 
@@ -40,10 +42,7 @@ class NewsCard extends ConsumerWidget {
             child: SizedBox(
               width: 118.0,
               height: 156,
-              child: Image.network(
-                news.imageUrl,
-                fit: BoxFit.cover,
-              ),
+              child: renderNewsPic(imageUrl: news.imageUrl),
             ),
           ),
           Expanded(
@@ -88,6 +87,20 @@ class NewsCard extends ConsumerWidget {
           )
         ],
       ),
+    );
+  }
+
+  Widget renderNewsPic({required String imageUrl}) {
+    return Image.network(
+      imageUrl,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        // This widget will be displayed if the image fails to load
+        return Image.asset(
+          'images/offline_post.jpeg', // Replace 'default_image.png' with your default image asset path
+          fit: BoxFit.cover,
+        );
+      },
     );
   }
 }

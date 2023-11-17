@@ -11,7 +11,6 @@ class SingleVolunteeringController extends _$SingleVolunteeringController {
   @override
   Stream<Volunteering?> build(id) async* {
     final aux = ref.read(volunteeringRepositoryProvider).findById(id: id);
-    logger.w(aux);
     yield* aux;
   }
 }

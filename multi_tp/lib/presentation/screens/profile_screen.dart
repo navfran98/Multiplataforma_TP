@@ -81,13 +81,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         child: Column(
           children: [
             user.imageUrl != null
-                ? CircleAvatar(
-                    radius: 42, backgroundImage: NetworkImage(user.imageUrl!))
+                ? renderPic(user.imageUrl!)
                 : SizedBox(
                     width: 110,
                     height: 110,
                     child: Image.asset(
-                      'images/profile_pic.png',
+                      'images/default_pic.png',
                       fit: BoxFit.fill,
                     )),
             const SizedBox(
@@ -222,5 +221,35 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         Expanded(flex: 1, child: Container())
       ],
     );
+  }
+
+  Widget renderPic(String imageUrl) {
+
+    
+
+
+
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(42),
+        ),
+        child: CircleAvatar(
+          radius: 42,
+          child: ClipOval(
+            child: Image.network(
+                
+                imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  // This widget will be displayed if the image fails to load
+                  return Image.asset(
+                    'images/offline_post.jpeg', // Replace 'default_image.png' with your default image asset path
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
+          ),
+          ),
+        );
   }
 }

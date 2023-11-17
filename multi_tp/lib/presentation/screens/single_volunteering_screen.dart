@@ -5,12 +5,15 @@ import 'package:multi_tp/application/controllers/logged_user_controller.dart';
 import 'package:multi_tp/application/controllers/single_volunteering_controller.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
+import 'package:multi_tp/presentation/design_system/cells/custom_modal.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/vacante.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
+import 'package:multi_tp/presentation/screens/edit_profile.dart';
 import 'package:multi_tp/presentation/screens/volunteering_screen.dart';
 import 'package:multi_tp/router.dart';
+import 'package:multi_tp/utils/logger.dart';
 
 class SingleVolunteeringScreen extends ConsumerStatefulWidget {
   static const route = "/home/volunteering/:id";
@@ -29,6 +32,9 @@ class SingleVolunteeringScreen extends ConsumerStatefulWidget {
 
 class _SingleVolunteeringScreenState
     extends ConsumerState<SingleVolunteeringScreen> {
+    bool fromProfile = false;
+    bool modalOpened = false;
+
   void Function() _handleBack(BuildContext context, WidgetRef ref) {
     return () {
       ref
@@ -39,14 +45,33 @@ class _SingleVolunteeringScreenState
 
   @override
   Widget build(BuildContext context) {
+    final arguments =
+      ref.watch(mainBeamerDelegateProvider).currentBeamLocation.data;
+
+    if (arguments != null && arguments is Map<String, dynamic>) {
+      fromProfile = arguments['fromProfile'];
+    }
     final volunteering =
         ref.watch(singleVolunteeringControllerProvider(widget.id));
     final loggedUser = ref.watch(loggedUserControllerProvider);
     return Scaffold(
-      body: loggedUser.when(
+        body: loggedUser.when(
       data: (loggedUser) {
         return volunteering.when(
           data: (vol) {
+            Future.delayed(Duration.zero, () {
+              if(fromProfile && !modalOpened) {
+                _handleModal(context, "Te estas por postular a", vol!.title, () { ref
+                          .read(loggedUserControllerProvider.notifier)
+                          .applyToVolunteering(userId: loggedUser!.id, volunteering: vol);
+                        Navigator.pop(context);});
+                setState(() {
+                  modalOpened = true;
+                });
+                 ref.read(mainBeamerDelegateProvider).currentBeamLocation.data={};
+                  
+              }
+            });
             final disponibility = vol!.disponibility.split("\\n");
             final requirement = vol.requirements.split("\\n");
             return SingleChildScrollView(
@@ -204,54 +229,21 @@ class _SingleVolunteeringScreenState
     ));
   }
 
+  void _handleModal(BuildContext context, String title, String? subtitle, void Function() onPressed) async {
+    // ignore: use_build_context_synchronously
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) => Center(
+              child: CustomModal(
+              title: title,
+              subtitle: subtitle,
+              onPressedFunction: onPressed
+            )));
+  }
+
   Widget renderButton(Volunteering vol, User loggedUser) {
-    if (loggedUser.activeVolunteering != null &&
-        loggedUser.activeVolunteering!['id'] != vol.id) {
-      return Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              "Ya estas participando en otro voluntariado, debes abandonarlo primero para postularte a este.",
-              style: CustomFont.body01(ColorPalette.neutral100),
-              softWrap: true,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            CtaButton(
-                isTransparent: true,
-                isDisabled: false,
-                text: "Abandonar voluntariado actual",
-                onPressedFunction: () {}),
-            const SizedBox(
-              height: 24,
-            ),
-            CtaButton(
-                isTransparent: false,
-                isDisabled: true,
-                text: "Postularme",
-                onPressedFunction: () {
-                  final actualVolunteering = ref.read(
-                      singleVolunteeringControllerProvider(
-                          loggedUser.activeVolunteering!['id']));
-                  return actualVolunteering.when(
-                      data: (actualVol) => ref
-                          .read(loggedUserControllerProvider.notifier)
-                          .leaveVolunteering(
-                              userId: loggedUser.id, volunteering: actualVol!),
-                      error: (error, stackTrace) => const Center(
-                            child: Text("Error"),
-                          ),
-                      loading: () => const Center(
-                            child: CircularProgressIndicator(),
-                          ));
-                })
-          ],
-        ),
-      );
-    } else if (vol.vacancies == 0) {
+    if (vol.vacancies == 0) {
       return Container(
           child: Column(
         children: [
@@ -271,6 +263,42 @@ class _SingleVolunteeringScreenState
               onPressedFunction: () {})
         ],
       ));
+    } else if (loggedUser.activeVolunteering != null &&
+        loggedUser.activeVolunteering!['id'] != vol.id) {
+      return Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              "Ya estas participando en otro voluntariado, debes abandonarlo primero para postularte a este.",
+              style: CustomFont.body01(ColorPalette.neutral100),
+              softWrap: true,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            CtaButton(
+                isTransparent: true,
+                isDisabled: false,
+                text: "Abandonar voluntariado actual",
+                onPressedFunction: () => _handleModal(context, "¿Estás seguro que querés abandonar tu voluntariado actual?", loggedUser.activeVolunteering!['title'], () {ref
+                    .read(loggedUserControllerProvider.notifier)
+                    .leaveVolunteering(
+                        userId: loggedUser.id,
+                        volunteeringId: loggedUser.activeVolunteering!['id']);
+                        Navigator.pop(context);})),
+            const SizedBox(
+              height: 24,
+            ),
+            CtaButton(
+                isTransparent: false,
+                isDisabled: true,
+                text: "Postularme",
+                onPressedFunction: () {})
+          ],
+        ),
+      );
     } else if (vol.accepted.contains(loggedUser.id)) {
       return Container(
           child: Column(
@@ -298,12 +326,11 @@ class _SingleVolunteeringScreenState
               isTransparent: true,
               isDisabled: false,
               text: "Abandonar voluntariado",
-              onPressedFunction: () {
-                ref
+              onPressedFunction: () => _handleModal(context, "¿Estás seguro que querés abandonar tu voluntariado?", vol.title, () { ref
                     .read(loggedUserControllerProvider.notifier)
                     .leaveVolunteering(
-                        userId: loggedUser.id, volunteering: vol);
-              })
+                        userId: loggedUser.id, volunteeringId: vol.id);
+                    Navigator.pop(context);  }))
         ],
       ));
     } else if (vol.pending.contains(loggedUser.id)) {
@@ -333,12 +360,11 @@ class _SingleVolunteeringScreenState
               isTransparent: true,
               isDisabled: false,
               text: "Retirar postulacion",
-              onPressedFunction: () {
-                ref
+              onPressedFunction: () => _handleModal(context, "¿Estás seguro que querés retirar tu postulación?", vol.title, () {ref
                     .read(loggedUserControllerProvider.notifier)
                     .leaveVolunteering(
-                        userId: loggedUser.id, volunteering: vol);
-              })
+                        userId: loggedUser.id, volunteeringId: vol.id);
+                    Navigator.pop(context); }))
         ],
       ));
     }
@@ -346,10 +372,18 @@ class _SingleVolunteeringScreenState
         isTransparent: false,
         isDisabled: false,
         text: "Postularme",
-        onPressedFunction: () {
-          ref
-              .read(loggedUserControllerProvider.notifier)
-              .applyToVolunteering(userId: loggedUser.id, volunteering: vol);
-        });
+        onPressedFunction: () { 
+          if(loggedUser.profileCompleted) {
+             _handleModal(context, "Te estas por postular a", vol.title, () { ref
+                .read(loggedUserControllerProvider.notifier)
+                .applyToVolunteering(userId: loggedUser.id, volunteering: vol);
+              Navigator.pop(context);});
+          } else {
+             _handleModal(context, "Para postularte debes primero completar tus datos.", null, () { ref.read(mainBeamerDelegateProvider).beamToNamed(EditProfileScreen.route, data: {'fromVolunteering': true, 'volId':vol.id} );
+              Navigator.pop(context);});
+            
+          }
+         
+  });
   }
 }

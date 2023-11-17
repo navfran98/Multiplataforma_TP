@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/application/controllers/logged_user_controller.dart';
@@ -11,7 +10,6 @@ import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 import 'package:multi_tp/presentation/design_system/tokens/shadows.dart';
 import 'package:multi_tp/presentation/screens/single_volunteering_screen.dart';
 import 'package:multi_tp/router.dart';
-import 'package:multi_tp/utils/logger.dart';
 
 class VolunteeringCard extends ConsumerStatefulWidget {
   const VolunteeringCard(
@@ -89,10 +87,7 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
               child: SizedBox(
                 height: 138,
                 width: double.infinity,
-                child: Image.network(
-                  vol.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+                child: renderVolPic(imageUrl: vol.imageUrl),
               ),
             ),
             Container(
@@ -160,4 +155,18 @@ class _VolunteeringCardState extends ConsumerState<VolunteeringCard> {
       ),
     );
   }
+}
+
+Widget renderVolPic({required String imageUrl}) {
+  return Image.network(
+    imageUrl,
+    fit: BoxFit.cover,
+    errorBuilder: (context, error, stackTrace) {
+      // This widget will be displayed if the image fails to load
+      return Image.asset(
+        'images/offline_post.jpeg', // Replace 'default_image.png' with your default image asset path
+        fit: BoxFit.cover,
+      );
+    },
+  );
 }

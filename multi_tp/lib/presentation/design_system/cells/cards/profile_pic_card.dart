@@ -9,8 +9,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:multi_tp/utils/logger.dart';
 
 class ProfilePicCard extends ConsumerStatefulWidget {
-  const ProfilePicCard({Key? key, this.onProfilePicSelected}) : super(key: key);
+  const ProfilePicCard({Key? key, this.onProfilePicSelected, required this.imageUrl}) : super(key: key);
   final void Function(String?)? onProfilePicSelected;
+  final String? imageUrl;
   
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => ProfilePicCardState();
@@ -22,15 +23,27 @@ class ProfilePicCardState extends ConsumerState<ProfilePicCard> {
 
   Widget renderPic() {
     if (picPath != null) {
-      logger.d("Pic path: $picPath");
-      // return Image.asset(picPath!, fit: BoxFit.fill);
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(42),
+        ),
+        child: CircleAvatar(
+          radius: 42,
+          child: ClipOval(
+            child: Image.file(
+              File(picPath!), 
+              fit: BoxFit.cover),
+          ),
+        ),
+      );
+    }else if (widget.imageUrl != null) {
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(42),
         ),
         child: CircleAvatar(
             radius: 42,
-            backgroundImage: FileImage(File(picPath!))
+            backgroundImage: NetworkImage(widget.imageUrl!)
         )
       );
     }
@@ -63,7 +76,7 @@ class ProfilePicCardState extends ConsumerState<ProfilePicCard> {
                 "Foto de perfil",
                 style: CustomFont.subtitle01(ColorPalette.neutral100),
               ),
-              if (picPath != null)
+              if (picPath != null || widget.imageUrl != null)
                 Container(
                     margin: const EdgeInsets.only(top: 8),
                     child: ShortButton(

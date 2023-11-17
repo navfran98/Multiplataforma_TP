@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/application/controllers/news_list_controller.dart';
-import 'package:multi_tp/data/dtos/news_dto.dart';
 import 'package:multi_tp/presentation/design_system/cells/cards/news_card.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 
@@ -28,7 +27,6 @@ class NewsScreen extends ConsumerWidget {
                       itemCount: news.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          //TODO: aca iria el id de la news
                           title: NewsCard(news: news[index]),
                           minVerticalPadding: 0,
                           contentPadding: const EdgeInsets.symmetric(

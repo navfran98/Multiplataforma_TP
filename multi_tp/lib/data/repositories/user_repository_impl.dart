@@ -4,6 +4,7 @@ import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/domain/repositories/auth_repository.dart';
 import 'package:multi_tp/domain/repositories/user_repository.dart';
+import 'package:multi_tp/utils/logger.dart';
 
 class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(
@@ -87,15 +88,18 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> leaveVolunteering(
-      {required String userId, required Volunteering volunteering}) async {
-    await userDao.leaveVolunteering(userId: userId, volunteeringId: volunteering.id);
-    if (volunteering.accepted.contains(userId)) {
-      return await volunteeringDao.deleteAccepted(
-          volunteeringId: volunteering.id, userId: userId);
-    }
-    if (volunteering.pending.contains(userId)) {
-      return await volunteeringDao.deletePending(
-          volunteeringId: volunteering.id, userId: userId);
-    }
+      {required String userId, required String volunteeringId}) async {
+    
+    logger.d("Attempting to leave Voluteering ");
+    await userDao.leaveVolunteering(
+        userId: userId, volunteeringId: volunteeringId);
+
+   
+    await volunteeringDao.deleteAccepted(
+          volunteeringId: volunteeringId, userId: userId);
+   
+    await volunteeringDao.deletePending(
+          volunteeringId: volunteeringId, userId: userId);
+    
   }
 }

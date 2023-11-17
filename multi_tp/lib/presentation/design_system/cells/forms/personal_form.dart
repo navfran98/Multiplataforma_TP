@@ -10,9 +10,10 @@ import 'package:multi_tp/presentation/utils/validators.dart';
 class PersonalForm extends ConsumerStatefulWidget {
   final void Function(String?)? onGenderSelected;
   final void Function(String?)? onProfilePicSelected;
-  const PersonalForm({Key? key, required this.dateController, this.onGenderSelected, required this.initialValue,this.onProfilePicSelected}) : super(key: key);
+  const PersonalForm({Key? key, required this.dateController, this.onGenderSelected, required this.initialValue,this.onProfilePicSelected, required this.imageUrl}) : super(key: key);
   final TextEditingController dateController;
   final String? initialValue;
+  final String? imageUrl;
   
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _PersonalFormState();
@@ -44,6 +45,7 @@ class _PersonalFormState extends ConsumerState<PersonalForm> {
           ),
           const SizedBox(height: 24,),
           ProfilePicCard(
+            imageUrl: widget.imageUrl,
             onProfilePicSelected: (value) {
               widget.onProfilePicSelected?.call(value);
             },

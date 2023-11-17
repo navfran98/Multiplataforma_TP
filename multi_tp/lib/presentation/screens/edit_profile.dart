@@ -10,6 +10,7 @@ import 'package:multi_tp/presentation/design_system/cells/forms/personal_form.da
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/screens/profile_screen.dart';
+import 'package:multi_tp/presentation/screens/single_volunteering_screen.dart';
 import 'package:multi_tp/router.dart';
 
 class EditProfileScreen extends StatefulHookConsumerWidget {
@@ -26,6 +27,8 @@ class EditProfileScreen extends StatefulHookConsumerWidget {
 class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   String? filePath;
+  bool fromVolunteering = false;
+  String? volId;
 
   void Function() _handleCancel(BuildContext context, WidgetRef ref) {
     return () {
@@ -39,14 +42,25 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     loggedUser.genre = gender;
     loggedUser.phoneNumber = phone;
     loggedUser.contactEmail = email;
-    ref
+     ref
         .read(loggedUserControllerProvider.notifier)
         .updateUser(newUser: loggedUser, localImagePath: filePath);
-    ref.read(mainBeamerDelegateProvider).beamToNamed(ProfileScreen.route);
+    if(fromVolunteering) {
+      ref.read(mainBeamerDelegateProvider).beamToNamed(SingleVolunteeringScreen.routeFromId(volId!), data: {"fromProfile": true});
+    } else {
+      ref.read(mainBeamerDelegateProvider).beamToNamed(ProfileScreen.route);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final arguments =
+        ref.watch(mainBeamerDelegateProvider).currentBeamLocation.data;
+
+    if (arguments != null && arguments is Map<String, dynamic>) {
+      fromVolunteering = arguments['fromVolunteering'];
+      volId = arguments['volId'];
+    }
     final loggedUserController = ref.watch(loggedUserControllerProvider);
     return Scaffold(
         appBar: AppBar(
@@ -94,6 +108,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   child: Column(
                     children: [
                       PersonalForm(
+                          imageUrl: user.imageUrl,
                           dateController: dateController,
                           onGenderSelected: (value) {
                             setState(() {
@@ -121,7 +136,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           isDisabled: (isEmailEmpty ||
                               isPhoneEmpty ||
                               isDateEmpty ||
-                              isGenderEmpty),
+                              isGenderEmpty || (filePath == null && user.imageUrl == null)),
                           text: "Guardar cambios",
                           onPressedFunction: () {
                             if (_formKey.currentState!.validate()) {

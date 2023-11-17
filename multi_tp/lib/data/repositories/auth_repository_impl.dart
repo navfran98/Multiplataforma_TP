@@ -54,15 +54,16 @@ class AuthRepositoryImpl implements AuthRepository {
       } else if (e.code == 'invalid-credential') {
         throw InvalidCredentialsException("invalid credentials");
       } else {
-        throw GenericAuthException("generic error");
+        throw GenericAuthException("Connection failed");
       }
     } catch (_) {
-      throw GenericAuthException("generic error");
+      throw GenericAuthException("Connection failed!");
     }
   }
 
   @override
-  Future<String> signUp({required String email, required String password}) async {
+  Future<String> signUp(
+      {required String email, required String password}) async {
     try {
       final newUser = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);

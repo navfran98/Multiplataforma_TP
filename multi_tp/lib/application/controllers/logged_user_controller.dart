@@ -43,9 +43,10 @@ class LoggedUserController extends _$LoggedUserController {
   }
 
   Future<void> leaveVolunteering(
-      {required String userId, required Volunteering volunteering}) async {
+      {required String userId, required String volunteeringId}) async {
+    
     await ref
         .read(userRepositoryProvider)
-        .leaveVolunteering(userId: userId, volunteering: volunteering);
+        .leaveVolunteering(userId: userId, volunteeringId: volunteeringId);
   }
 }
