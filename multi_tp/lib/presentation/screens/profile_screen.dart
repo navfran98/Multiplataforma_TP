@@ -243,6 +243,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   return Image.asset(
                     'images/offline_post.jpeg', // Replace 'default_image.png' with your default image asset path
                     fit: BoxFit.cover,
+                    width: 84,
+                    height: 84,
                   );
                 },
               ),

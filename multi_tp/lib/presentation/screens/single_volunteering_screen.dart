@@ -305,7 +305,7 @@ class _SingleVolunteeringScreenState
           ],
         ),
       );
-    } else if (vol.accepted.contains(loggedUser.id)) {
+    } else if (loggedUser.activeVolunteering != null && vol.accepted.contains(loggedUser.id)) {
       return Container(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -339,7 +339,7 @@ class _SingleVolunteeringScreenState
                     Navigator.pop(context);  }))
         ],
       ));
-    } else if (vol.pending.contains(loggedUser.id)) {
+    } else if (loggedUser.activeVolunteering != null && vol.pending.contains(loggedUser.id)) {
       return Container(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

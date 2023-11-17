@@ -66,7 +66,7 @@ class User {
   @override
   String toString() {
     return 'User {\nid: $id, \nemail: $email, \nname: $name, \nlastName: $lastName, \ngenre: $genre, '
-        '\nbirthDate: $birthDate, \nphoneNumber: $phoneNumber, \nimageUrl: $imageUrl\n, \ncontactEmail: $contactEmail\n}';
+        '\nbirthDate: $birthDate, \nphoneNumber: $phoneNumber, \nimageUrl: $imageUrl\n, \ncontactEmail: $contactEmail\n, \nprofileCompleted: $profileCompleted\n, \nfavorites: $favorites\n, \nactiveVolunteering: $activeVolunteering\n}';
   }
 
   bool isCompleted() {

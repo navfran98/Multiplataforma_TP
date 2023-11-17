@@ -40,10 +40,27 @@ class ProfilePicCardState extends ConsumerState<ProfilePicCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(42),
         ),
-        child: CircleAvatar(
-            radius: 42,
-            backgroundImage: NetworkImage(widget.imageUrl!)
-        )
+         child: CircleAvatar(
+          radius: 42,
+          child: ClipOval(
+            child: Image.network(
+                
+                widget.imageUrl!,
+                fit: BoxFit.cover,
+                width: 84,
+                height: 84,
+                errorBuilder: (context, error, stackTrace) {
+                  // This widget will be displayed if the image fails to load
+                  return Image.asset(
+                    'images/offline_post.jpeg', // Replace 'default_image.png' with your default image asset path
+                    fit: BoxFit.cover,
+                    width: 84,
+                    height: 84,
+                  );
+                },
+              ),
+          ),
+          ),
       );
     }
     return ShortButton(
