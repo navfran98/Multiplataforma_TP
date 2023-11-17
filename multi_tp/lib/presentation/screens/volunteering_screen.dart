@@ -6,6 +6,7 @@ import 'package:multi_tp/application/controllers/volunteerings_list_controller.d
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/currentvolcard.dart';
+import 'package:multi_tp/presentation/design_system/molecules/components/novolunteering.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/volunteering_card.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/volunteerings_list.dart';
 import 'package:multi_tp/presentation/design_system/molecules/inputs/searchfield.dart';
@@ -75,7 +76,7 @@ class VolunteeringScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    VolunteeringList(loggedUser: loggedUser, volunteerings: volunteerings)
+                    volunteerings.isEmpty ? const NoVolunteering() : VolunteeringList(loggedUser: loggedUser, volunteerings: volunteerings)
                   ],
                 ),
               );

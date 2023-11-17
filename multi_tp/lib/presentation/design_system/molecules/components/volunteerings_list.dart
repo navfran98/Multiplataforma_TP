@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_tp/application/controllers/search_volunteerings_controller.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
+import 'package:multi_tp/presentation/design_system/molecules/components/novolunteering.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/volunteering_card.dart';
 
 class VolunteeringList extends ConsumerStatefulWidget {
@@ -23,7 +24,18 @@ class _VolunteeringListState extends ConsumerState<VolunteeringList> {
 
     List<Volunteering> filteredVolunteerings = ref.watch(searchVolunteeringsControllerProvider(volunteerings: widget.volunteerings));
 
-    return renderVolunteering(filteredVolunteerings, widget.loggedUser);
+    if(filteredVolunteerings.isEmpty) {
+      return Expanded(
+        child: Center(
+          child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: const NoVolunteering(text: "No hay voluntariados que cumplan tu busqueda. Vuelva a intentar",),
+          ),
+        ),
+      );
+    }else {
+      return renderVolunteering(filteredVolunteerings, widget.loggedUser);
+    }
   }
 }
 

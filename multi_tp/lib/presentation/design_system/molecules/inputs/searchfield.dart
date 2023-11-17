@@ -58,6 +58,7 @@ class _SearchFieldState extends State<SearchField> {
     setState(() {
       _controller.clear();
     });
+    widget.onChanged("");
   }
 
   @override
