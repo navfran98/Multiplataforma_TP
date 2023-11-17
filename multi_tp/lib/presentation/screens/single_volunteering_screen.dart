@@ -85,7 +85,14 @@ class _SingleVolunteeringScreenState
                         width: double.infinity, // Para ocupar todo el ancho
                         height: 240, // Altura fija de 240
                         fit: BoxFit
-                            .cover, // Ajustar la imagen al tamaño del contenedor
+                            .cover,
+                            
+                        errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'images/offline_post.jpeg', 
+                              fit: BoxFit.cover,
+                            );
+                            },
                       ),
                       Positioned(
                         top: 20, // Espacio superior

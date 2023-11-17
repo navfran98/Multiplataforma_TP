@@ -85,6 +85,12 @@ class SingleNewsScreenState extends ConsumerState<SingleNewsScreen> {
                     child: Image.network(
                       news.imageUrl,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'images/offline_post.jpeg',
+                            fit: BoxFit.cover,
+                          );
+                        },
                     ),
                   )),
               const SizedBox(
