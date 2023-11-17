@@ -25,8 +25,8 @@ Hemos integrado Analytics de Firebase para brindarte información valiosa sobre 
 
 ## Instalación
 
-1. Clona este repositorio: `git clone https://github.com/tu_usuario/ser-manos.git`
-2. Navega al directorio del proyecto: `cd ser-manos`
+1. Clona este repositorio: `git clone https://github.com/navfran98/Multiplataforma_TP`
+2. Navega al directorio del proyecto: `cd multi_tp`
 3. Instala las dependencias: `flutter pub get`
 4. Abre el proyecto en tu editor de código favorito y configura tu entorno Firebase.
 5. Ejecuta la aplicación: `flutter run`
