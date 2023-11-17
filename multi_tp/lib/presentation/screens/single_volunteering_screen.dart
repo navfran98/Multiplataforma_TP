@@ -5,6 +5,7 @@ import 'package:multi_tp/application/controllers/logged_user_controller.dart';
 import 'package:multi_tp/application/controllers/single_volunteering_controller.dart';
 import 'package:multi_tp/data/dtos/user_dto.dart';
 import 'package:multi_tp/data/dtos/volunteering_dto.dart';
+import 'package:multi_tp/presentation/design_system/cells/cards/address_card.dart';
 import 'package:multi_tp/presentation/design_system/cells/custom_modal.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/molecules/components/vacante.dart';
@@ -141,9 +142,7 @@ class _SingleVolunteeringScreenState
                           const SizedBox(
                             height: 24,
                           ),
-                          const Text(
-                            "ACA VA CARD MAPA",
-                          ),
+                          AddressCard(address: vol.address),
                           const SizedBox(
                             height: 24,
                           ),
