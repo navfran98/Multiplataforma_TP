@@ -7,7 +7,7 @@ part of 'search_volunteerings_controller.dart';
 // **************************************************************************
 
 String _$searchVolunteeringsControllerHash() =>
-    r'0642c05a1a24afec41566bbd43ccecad95a73076';
+    r'84e4eea48c25044a6ade618cdb6fb09b5a871086';
 
 /// Copied from Dart SDK
 class _SystemHash {

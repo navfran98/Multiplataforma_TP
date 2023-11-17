@@ -21,6 +21,9 @@ class SearchVolunteeringsController extends _$SearchVolunteeringsController {
 
   void search({required String term}) {
     logger.w("OnChanged!! searchTerm: $term");
+
+    ref.read(analyticsRepositoryProvider).sendEvent(type: "Volunteer search",data: {"searchTerm": term});
+    
     searchTerm = term;
     
     state = ref

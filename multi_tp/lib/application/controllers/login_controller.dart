@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/dtos/auth_user_dto.dart';
@@ -8,12 +7,12 @@ part '../generated/login_controller.g.dart';
 
 @riverpod
 class LoginController extends _$LoginController {
-
   @override
   Future<void> build() async {}
 
   Future<AuthUser> logIn(
       BuildContext context, String email, String password) async {
+    ref.read(analyticsRepositoryProvider).sendEvent(type: "Login attempt",data: {"email": email});
     return await ref
         .read(authRepositoryProvider)
         .logIn(email: email, password: password);

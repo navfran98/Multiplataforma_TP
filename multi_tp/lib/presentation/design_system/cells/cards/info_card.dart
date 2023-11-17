@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
-import 'package:multi_tp/presentation/design_system/tokens/shadows.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({Key? key, required this.title, required this.firstLabel, required this.firstContent, required this.secondLabel, required this.secondContent}) : super(key: key);

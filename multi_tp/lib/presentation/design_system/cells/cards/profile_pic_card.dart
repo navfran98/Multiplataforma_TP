@@ -6,7 +6,6 @@ import 'package:multi_tp/presentation/design_system/molecules/buttons/short_butt
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
 import 'package:multi_tp/presentation/design_system/tokens/font.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_tp/utils/logger.dart';
 
 class ProfilePicCard extends ConsumerStatefulWidget {
   const ProfilePicCard({Key? key, this.onProfilePicSelected, required this.imageUrl}) : super(key: key);

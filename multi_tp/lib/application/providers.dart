@@ -1,12 +1,14 @@
 import 'package:multi_tp/data/datasources/news_dao.dart';
 import 'package:multi_tp/data/datasources/user_dao.dart';
 import 'package:multi_tp/data/datasources/volunteering_dao.dart';
+import 'package:multi_tp/data/repositories/analystics_repository_impl.dart';
 import 'package:multi_tp/data/repositories/auth_repository_impl.dart';
 import 'package:multi_tp/data/repositories/location_repository_impl.dart';
 import 'package:multi_tp/data/repositories/maps_repository_impl.dart';
 import 'package:multi_tp/data/repositories/news_repository_impl.dart';
 import 'package:multi_tp/data/repositories/user_repository_impl.dart';
 import 'package:multi_tp/data/repositories/volunteering_repository_impl.dart';
+import 'package:multi_tp/domain/repositories/analytics_repository.dart';
 import 'package:multi_tp/domain/repositories/auth_repository.dart';
 import 'package:multi_tp/domain/repositories/location_repository.dart';
 import 'package:multi_tp/domain/repositories/maps_repository.dart';
@@ -74,3 +76,10 @@ LocationRepository locationRepository(
   LocationRepositoryRef ref,
 ) =>
     LocationRepositoryImpl();
+
+
+@Riverpod(keepAlive: true)
+AnalyticsRepository analyticsRepository(
+  AnalyticsRepositoryRef ref,
+) =>
+    AnalyticsRepositoryImpl();

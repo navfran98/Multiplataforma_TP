@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:multi_tp/application/controllers/single_news_controller.dart';
+import 'package:multi_tp/application/providers.dart';
 import 'package:multi_tp/data/dtos/news_dto.dart';
 import 'package:multi_tp/presentation/design_system/molecules/buttons/cta_button.dart';
 import 'package:multi_tp/presentation/design_system/tokens/colors.dart';
@@ -54,6 +55,8 @@ class SingleNewsScreenState extends ConsumerState<SingleNewsScreen> {
     setState(() {
       isLoading = false;
     });
+
+    ref.read(analyticsRepositoryProvider).sendEvent(type: "News share",data: {"newsId": news.id});
   }
 
   Widget renderNews(News news) {
