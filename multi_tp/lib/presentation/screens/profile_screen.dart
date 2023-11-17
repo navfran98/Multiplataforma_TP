@@ -46,7 +46,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Text("Error"),
           ),
           loading: () => const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: ColorPalette.primary100),
           ),
         ));
   }

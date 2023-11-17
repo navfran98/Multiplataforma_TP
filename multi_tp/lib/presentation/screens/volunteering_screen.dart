@@ -33,7 +33,6 @@ class VolunteeringScreen extends ConsumerWidget {
                     volunteerings: volunteerings).notifier);
 
               onChanged(searchTerm) => searchVolunteerProvider.search(term: searchTerm);
-              //TODO: sortear como dice la consigna
               return Container(
                 color: ColorPalette.secondary10,
                 child: Column(
@@ -85,7 +84,7 @@ class VolunteeringScreen extends ConsumerWidget {
               child: Text("Error"),
             ),
             loading: () => const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: ColorPalette.primary100),
             ),
           );
         },
@@ -93,7 +92,7 @@ class VolunteeringScreen extends ConsumerWidget {
               child: Text("Error"),
             ),
         loading: () => const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: ColorPalette.primary100),
             ));
   }
 

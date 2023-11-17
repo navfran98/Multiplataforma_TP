@@ -108,7 +108,18 @@ class UserDaoImpl extends UserDao {
   @override
   Future<void> updateUser(
       {required String userId, required User newUser}) async {
-    newUser.profileCompleted = true;
+        
+    if (newUser.name != '' &&
+        newUser.lastName != '' &&
+        newUser.genre != '' &&
+        newUser.birthDate != '' &&
+        newUser.phoneNumber != '' &&
+        newUser.contactEmail != '' &&
+        newUser.imageUrl != '') {
+      newUser.profileCompleted = true;
+    } else {
+      newUser.profileCompleted = false;
+    }
     final userRef = _firestoreInstance.collection(userCollection).doc(userId);
     await userRef.update(newUser.toJson());
   }
@@ -156,14 +167,11 @@ class UserDaoImpl extends UserDao {
     };
     await _firestoreInstance.collection(userCollection).doc(userId).update(ret);
   }
-  
+
   @override
-  Future<void> leaveVolunteering({required String userId, required String volunteeringId}) async {
-    final ret = {
-      'activeVolunteering': FieldValue.delete()
-    };
+  Future<void> leaveVolunteering(
+      {required String userId, required String volunteeringId}) async {
+    final ret = {'activeVolunteering': FieldValue.delete()};
     await _firestoreInstance.collection(userCollection).doc(userId).update(ret);
   }
-
-
 }

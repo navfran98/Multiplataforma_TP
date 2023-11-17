@@ -69,15 +69,4 @@ class User {
         '\nbirthDate: $birthDate, \nphoneNumber: $phoneNumber, \nimageUrl: $imageUrl\n, \ncontactEmail: $contactEmail\n, \nprofileCompleted: $profileCompleted\n, \nfavorites: $favorites\n, \nactiveVolunteering: $activeVolunteering\n}';
   }
 
-  bool isCompleted() {
-    //TODO: agregar imagen
-    if (birthDate != null &&
-        genre != null &&
-        phoneNumber != null &&
-        contactEmail != null &&
-        imageUrl != null) {
-      return true;
-    }
-    return false;
-  }
 }

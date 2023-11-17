@@ -22,7 +22,6 @@ class NewsCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //TODO: tengo un problema con la altura de la card que se ve afectada por la imagen
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(

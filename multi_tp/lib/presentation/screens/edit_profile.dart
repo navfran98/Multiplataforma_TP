@@ -158,7 +158,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             child: Text("Error"),
           ),
           loading: () => const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: ColorPalette.primary100),
           ),
         ));
   }

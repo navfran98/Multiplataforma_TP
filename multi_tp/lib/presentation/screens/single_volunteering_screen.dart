@@ -82,7 +82,7 @@ class _SingleVolunteeringScreenState
                     children: [
                       Image.network(
                         vol.imageUrl, // Reemplaza con la URL de tu imagen
-                        width: double.infinity, // Para ocupar todo el ancho
+                        width: double.infinity, // Para ocupar el ancho
                         height: 240, // Altura fija de 240
                         fit: BoxFit
                             .cover,
@@ -222,7 +222,7 @@ class _SingleVolunteeringScreenState
             child: Text("Error"),
           ),
           loading: () => const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: ColorPalette.primary100),
           ),
         );
       },
@@ -230,7 +230,7 @@ class _SingleVolunteeringScreenState
         child: Text("Error"),
       ),
       loading: () => const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(color: ColorPalette.primary100),
       ),
     ));
   }
