@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_tp/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Inicializar Firebase Crashlytics
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+
+  // Establecer un manejador de errores global
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire
     // application in a "ProviderScope" widget.

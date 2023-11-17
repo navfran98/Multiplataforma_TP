@@ -70,7 +70,7 @@ class ProfilePicCardState extends ConsumerState<ProfilePicCard> {
                         isSmall: true,
                         isDisabled: false,
                         text: "Cambiar foto",
-                        onPressedFunction: () {})),
+                        onPressedFunction: () { selectImage();})),
             ],
           ),
           Expanded(child: Container()),

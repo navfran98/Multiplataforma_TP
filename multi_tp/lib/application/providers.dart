@@ -13,7 +13,7 @@ import 'package:multi_tp/domain/repositories/user_repository.dart';
 import 'package:multi_tp/domain/repositories/volunteering_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'providers.g.dart';
+part 'generated/providers.g.dart';
 
 ///
 /// Daos

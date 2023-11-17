@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'open_google_maps_controller.dart';
+part of '../controllers/open_google_maps_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
