@@ -224,11 +224,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Widget renderPic(String imageUrl) {
-
     
-
-
-
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(42),
@@ -240,6 +236,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 
                 imageUrl,
                 fit: BoxFit.cover,
+                width: 84,
+                height: 84,
                 errorBuilder: (context, error, stackTrace) {
                   // This widget will be displayed if the image fails to load
                   return Image.asset(

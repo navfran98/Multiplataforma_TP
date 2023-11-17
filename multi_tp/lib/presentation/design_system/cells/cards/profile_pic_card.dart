@@ -32,7 +32,7 @@ class ProfilePicCardState extends ConsumerState<ProfilePicCard> {
           child: ClipOval(
             child: Image.file(
               File(picPath!), 
-              fit: BoxFit.cover),
+              fit: BoxFit.cover, width: 84, height:84),
           ),
         ),
       );
@@ -108,3 +108,6 @@ class ProfilePicCardState extends ConsumerState<ProfilePicCard> {
     }
   }
 }
+
+
+
