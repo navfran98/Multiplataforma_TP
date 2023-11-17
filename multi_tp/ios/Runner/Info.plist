@@ -48,17 +48,18 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>googlemaps</string>
-	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library for XYZ reason</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera for ABC reason</string>
+	
+		<array>
+			<string>googlemaps</string>
+		</array>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>This app needs access to location when open.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>This app needs access to location when in the background.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>We need access to your photo library for XYZ reason</string>
+		<key>NSCameraUsageDescription</key>
+		<string>We need access to your camera for ABC reason</string>
 
 </dict>
 </plist>
