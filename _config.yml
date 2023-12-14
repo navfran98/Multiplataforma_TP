@@ -3,7 +3,14 @@ plugins:
 relative_links:
   enabled: true
   collections: true
+
+collections:
+  resumenes:
+    output: true
+    permalink: /resumenes/:path
+
 include:
-  - /resumen/resumen.md
-  - /resumen/clase_1.md
+  - /resumenes/resumen.md
+  - /resumenes/clase_1.md
+
 theme: jekyll-theme-minimal
