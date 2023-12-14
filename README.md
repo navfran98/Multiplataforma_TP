@@ -38,4 +38,6 @@ Las contribuciones son bienvenidas. Si tienes sugerencias, problemas o mejoras, 
 
 ---
 
+Podes encontrar los resumenes en el siguiente [link](resumen/resumen.md)
+
 ¡Gracias por elegir Ser Manos! Esperamos que esta aplicación facilite la conexión entre aquellos que desean hacer el bien y las organizaciones que necesitan ayuda. ¡Haz una diferencia hoy!
