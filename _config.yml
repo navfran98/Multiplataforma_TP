@@ -4,7 +4,7 @@ relative_links:
   enabled: true
   collections: true
 include:
-  - /resumenes/resumen.md
-  - /resumenes/clase_1.md
+  - /resumen/resumen.md
+  - /resumen/clase_1.md
 
 theme: jekyll-theme-minimal
