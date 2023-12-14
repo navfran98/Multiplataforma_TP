@@ -1,3 +1,7 @@
+---
+layout: post
+title: Mi Resumen
+---
 # Resumen Final de Multiplataforma
 
 1. [Dart y Flutter](#dart-y-flutter)

@@ -1,3 +1,7 @@
+---
+layout: post
+title: Mi Resumen
+---
 # Dart y Flutter
 
 ## Dart
