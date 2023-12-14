@@ -3,12 +3,6 @@ plugins:
 relative_links:
   enabled: true
   collections: true
-
-collections:
-  resumenes:
-    output: true
-    permalink: /resumenes/:path
-
 include:
   - /resumenes/resumen.md
   - /resumenes/clase_1.md
