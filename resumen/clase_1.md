@@ -38,5 +38,10 @@ En caso de que querramos que una variable pueda ser null, se aclara agregando un
 Son los elementos que conforman la UI, describen como se ve la app. Cuando el estado de un widget cambia, este se reconstruye y renderiza los cambios en la app.
 Hay dos tipos: **Stateless** y **Statefull**.
 
+- **Stateless** &rarr; Widgets que no necesitan estados. 
+- **Stateful** &rarr; Widgets que necesitan manejar un estado.
+- **Inherited** &rarr; Widgets que permiten que los widget hijos puedan acceder a sus propiedades.
+- **Keys** &rarr; Todo widget deberia tener como primer named argument _super.key_. Se utilizan principalmente cuando tenemos una lista de _StatefulWidgets_ que se modificara. Tiene que ser unica por cada widget de la lista.
+
 ![Widget Types](./widget_types.png "Widget Types")
 
