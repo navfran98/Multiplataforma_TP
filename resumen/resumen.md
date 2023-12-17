@@ -24,3 +24,8 @@
     * [Navigator](clase_4.md#navigator)
         + [Navigator 1.0](clase_4.md#navigator-10)
         + [Navigator 2.0](clase_4.md#navigator-20)
+5. [State Management](clase_5.md#state-management)
+  * [Ephemeral State](clase_5.md#ephemeral-state)
+  * [App State](clase_5.md#app-state)
+  * [Approaches](clase_5.md#approaches)
+    + [Provider](clase_5.md#provider)
