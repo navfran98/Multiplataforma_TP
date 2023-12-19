@@ -62,3 +62,8 @@
         + [Feature Flags Operacionales](clase_10.md#feature-flags-operacionales)
         + [Beta Testing](clase_10.md#beta-testing)
     * [AB Testing](clase_10.md#ab-testing)
+11. [Accesibilidad e Internacionalizacion](clase_11.md#accesibilidad-e-internacionalizacion)
+    * [Accesibilidad](clase_11.md#accesibilidad)
+        + [Principales](clase_11.md#principales)
+        + [Checklist](clase_11.md#checklist)
+    * [Internacionalizacion](clase_11.md#internacionalizacion)
