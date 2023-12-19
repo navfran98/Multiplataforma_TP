@@ -53,3 +53,6 @@
         + [Planificacion](clase_8.md#planificacion)
     * [Rest APIs](clase_8.md#rest-apis)
     * [Back End as a Service](clase_8.md#back-end-as-a-service)
+9. [Metricas y Monitoreo](clase_9.md#metricas-y-monitoreo)
+    * [Porque medir?](clase_9.md#porque-medir-)
+    * [Que medir?](clase_9.md#que-medir-)
